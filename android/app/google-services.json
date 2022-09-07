@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "915678172663",
+    "firebase_url": "https://punchmobile-5f65c.firebaseio.com",
+    "project_id": "punchmobile-5f65c",
+    "storage_bucket": "punchmobile-5f65c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915678172663:android:fe92749d2a35323e",
+        "android_client_info": {
+          "package_name": "punchmobile.punchng"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915678172663-r6n6j5c38qjpq9v9uljdnq9l78avdlku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1n9aA8HeyQSc5UfWwKO7vbokp7h9Ey-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915678172663-r6n6j5c38qjpq9v9uljdnq9l78avdlku.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "915678172663-4vnv4scj08km8693hg9jtq2jmkhl65pd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.punchng.punchnews",
+                "app_store_id": "1416286632"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-7167863529667065~8644136420"
+    }
+  ],
+  "configuration_version": "1"
+}
