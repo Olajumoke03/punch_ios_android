@@ -23,7 +23,7 @@ const String ABOUT_US ="pages/164902";
 // const String CATEGORY_LIST =BASE_URL+"categories?per_page=100";
 const String CATEGORY_LIST ="https://punchng.com/category-payload/?v2";
 
-const String FEATURED_NEWS ="posts?categories=";
+const String FEATURED_NEWS =BASE_URL+"posts?categories=";
 
 
 // newly added

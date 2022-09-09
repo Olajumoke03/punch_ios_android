@@ -185,7 +185,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 250,
                       child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
                           listener: (context, state){
@@ -226,13 +226,11 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                     margin: const EdgeInsets.only(top: 10),
                                     constraints:const BoxConstraints.expand( height: 180 ),
                                     child: imageSlider( state.featuredNews));
-                                // return buildFeaturedNewsList ( state.featuredNews);
                               }else if ( state is FeaturedCachedNewsLoadedState ) {
                                 return Container(
                                     margin: const EdgeInsets.only(top: 10),
                                     constraints: const BoxConstraints.expand( height: 180 ),
                                     child: imageSliderCached( state.cachedNews));
-                                // return buildFeaturedNewsList ( state.featuredNews);
                               }  else if ( state is FeaturedNewsLoadFailureState ) {
                                 return BuildErrorUi (message: state.error );
                               }
