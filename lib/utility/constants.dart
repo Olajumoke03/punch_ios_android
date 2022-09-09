@@ -102,7 +102,7 @@ class Constants {
     primaryColorLight: greenColor,
     accentColor: lightAccent,
     cursorColor: lightAccent,
-    cardColor: Colors.grey[100],
+    cardColor: Colors.grey[50],
     scaffoldBackgroundColor: lightBG,
     primaryColorDark: whiteColor,
 

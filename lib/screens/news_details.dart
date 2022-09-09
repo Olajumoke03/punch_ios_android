@@ -9,6 +9,7 @@ import 'package:punch_ios_android/news_tag/news_tag_bloc.dart';
 import 'package:punch_ios_android/news_tag/news_tag_event.dart';
 import 'package:punch_ios_android/news_tag/news_tag_state.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
+import 'package:punch_ios_android/screens/disqus.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -27,6 +28,7 @@ class NewsDetails extends StatefulWidget {
   late HomeNewsModel? newsModel;
   late SearchResultModel? searchResultModel;
   final String? newsId;
+
 
   NewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel,}) : super( key: key );
 
@@ -193,17 +195,63 @@ class _NewsDetailsState extends State<NewsDetails> {
           return Consumer<DetailsProvider> (
               builder: ( context ,  detailsProvider,  child) {
                 return Scaffold (
+                    // appBar: AppBar (
+                    //   centerTitle: true,
+                    //   title: Text("Punch News", style: TextStyle(color: Theme.of(context).textTheme.headline1!.color, fontSize: 20, fontWeight: FontWeight.w700 ),  ),
+                    //   leading: IconButton(
+                    //       onPressed: (){
+                    //         Navigator.pop(context);
+                    //         _showInterstitialAd();
+                    //       },
+                    //
+                    //    icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.headline1!.color,)
+                    //   ),
+                    //   actions: <Widget>[
+                    //     IconButton (
+                    //       onPressed: () {
+                    //         fontDialog ( );
+                    //       } ,
+                    //       icon: Icon (
+                    //         Icons.text_fields ,
+                    //         color: Theme.of(context).textTheme.headline1!.color,
+                    //       ) ,
+                    //     ) ,
+                    //
+                    //     IconButton (
+                    //       onPressed: () {
+                    //         FlutterShare.share(
+                    //             title: 'Punch News' ,
+                    //             text: 'Read: ' '${widget.newsModel!.title!.rendered}' ', on Punch News'
+                    //                 .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                    //                 .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                    //                 .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                    //                 .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                    //             linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
+                    //             chooserTitle: 'Something for chooser title',
+                    //
+                    //         );
+                    //         print("share text "  '${widget.newsModel!.title!.rendered}');
+                    //         print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
+                    //
+                    //       } ,
+                    //       icon:  Icon (
+                    //         Icons.share ,
+                    //         color: Theme.of(context).textTheme.headline1!.color,
+                    //       ) ,
+                    //     ) ,
+                    //   ] ,
+                    // ) ,
+
+
                     appBar: AppBar (
-                      centerTitle: true,
-                      title: Text("Punch News", style: TextStyle(color: Theme.of(context).textTheme.headline1!.color, fontSize: 20, fontWeight: FontWeight.w700 ),  ),
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                            _showInterstitialAd();
+                             _showInterstitialAd();
                           },
-
-                       icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.headline1!.color,)
+                          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),
+
                       actions: <Widget>[
                         IconButton (
                           onPressed: () {
@@ -211,21 +259,47 @@ class _NewsDetailsState extends State<NewsDetails> {
                           } ,
                           icon: Icon (
                             Icons.text_fields ,
-                            color: Theme.of(context).textTheme.headline1!.color,
+                              color: Theme.of(context).textTheme.bodyText1!.color
                           ) ,
                         ) ,
+                        IconButton (
+                          onPressed: () async {
+                            if ( isSaved == true ) {
+                              detailsProvider.removeFav ( widget.newsModel!.id! );
+                              // detailsProvider.removeFav ( widget.newsModel.id);
 
+                              setState ( () {
+                                isSaved = false;
+                              } );
+                            } else {
+                              detailsProvider.addFav ( widget.newsModel! );
+                              setState ( () {
+                                isSaved = true;
+                              } );
+                            }
+                          } ,
+                          icon: Icon (
+                            isSaved == true
+                                ? Icons.favorite : Icons.favorite_border ,
+                            color: isSaved == true
+                                ? Colors.red
+                                : Theme
+                                .of ( context )
+                                .iconTheme
+                                .color ,
+                          ) ,
+                        ) ,
                         IconButton (
                           onPressed: () {
                             FlutterShare.share(
-                                title: 'Punch News' ,
-                                text: 'Read: ' '${widget.newsModel!.title!.rendered}' ', on Punch News'
-                                    .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
-                                    .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
-                                    .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
-                                    .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
-                                linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
-                                chooserTitle: 'Something for chooser title',
+                              title: 'Punch News' ,
+                              text: 'Read: ' '${widget.newsModel!.title!.rendered}' ', on Punch News'
+                                  .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                                  .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                                  .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                                  .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                              linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
+                              chooserTitle: 'Something for chooser title',
 
                             );
                             print("share text "  '${widget.newsModel!.title!.rendered}');
@@ -234,11 +308,19 @@ class _NewsDetailsState extends State<NewsDetails> {
                           } ,
                           icon:  Icon (
                             Icons.share ,
-                            color: Theme.of(context).textTheme.headline1!.color,
+                              color: Theme.of(context).textTheme.bodyText1!.color
                           ) ,
                         ) ,
                       ] ,
                     ) ,
+                    floatingActionButton:FloatingActionButton(
+                      onPressed: (){
+                        Navigator.push( context, MaterialPageRoute(builder: (context) => DisqusScreen(id:widget.newsModel!.id.toString(),slug: widget.newsModel!.slug,)) );
+
+                      },
+                      child: Icon(Icons.comment,color: Colors.white,),
+                    ),
+
 
                     body: Padding (
                       padding: const EdgeInsets.all( 15.0 ) ,
@@ -251,7 +333,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 borderRadius: const BorderRadius.all (
                                   Radius.circular ( 10.0 ) , ) ,
                                 child: CachedNetworkImage (
-                                  imageUrl: '${widget.newsModel!.jetpackFeaturedMediaUrl}' ,
+                                  imageUrl: '${widget.newsModel!.xFeaturedMediaLarge}' ,
                                   placeholder: (context , url) =>
                                      const Center (
                                       child: CircularProgressIndicator ( ) , ) ,
@@ -285,6 +367,39 @@ class _NewsDetailsState extends State<NewsDetails> {
                                     },
                                   )
                               ) ,
+
+                              const SizedBox  ( height: 9 , ) ,
+
+                              Padding (
+                                padding: const EdgeInsets.symmetric( vertical: 5 ) ,
+                                child: Column(
+                                  children: [
+                                    Row (
+                                      children: <Widget>[
+                                        Container (
+                                          padding: const EdgeInsets.only ( left: 0 ) ,
+                                          child: Icon ( Icons.person ,
+                                            color: Theme.of ( context ).accentColor ,
+                                            size: 12.0 ,
+                                          ) ,
+                                        ) ,
+                                        Expanded (
+                                          child: Container (
+                                              padding: const EdgeInsets.only ( left: 5 ) ,
+                                              child: Text (
+                                                '${widget.newsModel!.xAuthor}',
+                                                style: TextStyle (color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 12 ) ,
+                                                overflow: TextOverflow.ellipsis ,
+                                                maxLines: 2 ,
+                                              )
+                                          ) ,
+                                        ) ,
+                                      ] ,
+                                    ),
+                                  ],
+                                ) ,
+                              ) ,
+
                               const SizedBox ( height: 9 , ) ,
                               Row (
                                 children: [
@@ -332,37 +447,7 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                                 ] ,
                               ) ,
-                              const SizedBox  ( height: 9 , ) ,
 
-                              Padding (
-                                padding: const EdgeInsets.symmetric( vertical: 5 ) ,
-                                child: Column(
-                                  children: [
-                                    Row (
-                                      children: <Widget>[
-                                        Container (
-                                          padding: const EdgeInsets.only ( left: 0 ) ,
-                                          child: Icon ( Icons.person ,
-                                            color: Theme.of ( context ).accentColor ,
-                                            size: 12.0 ,
-                                          ) ,
-                                        ) ,
-                                        Expanded (
-                                          child: Container (
-                                            padding: const EdgeInsets.only ( left: 5 ) ,
-                                            child: Text (
-                                              '${widget.newsModel!.xAuthor}',
-                                              style: TextStyle (color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 12 ) ,
-                                              overflow: TextOverflow.ellipsis ,
-                                              maxLines: 2 ,
-                                            )
-                                          ) ,
-                                        ) ,
-                                      ] ,
-                                    ),
-                                  ],
-                                ) ,
-                              ) ,
                             ] ,
                           ) ,
                           Divider ( color: Theme.of ( context ).textTheme.caption!.color ) ,
@@ -532,7 +617,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       child: Hero(
                         tag: pos,
                         child: CachedNetworkImage(
-                          imageUrl: '${newsTagModel[pos].jetpackFeaturedMediaUrl}',
+                          imageUrl: '${newsTagModel[pos].xFeaturedMediaLarge}',
                           placeholder: (context, url) => const SizedBox(
                               height: 125,
                               width: 248,

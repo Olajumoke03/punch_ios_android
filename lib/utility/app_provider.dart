@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,17 +40,18 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void setNotificationEnabled(isEnabled) {
-  //   isNotificationOn = isEnabled;
-  //   SharedPreferences.getInstance().then((prefs) {
-  //     prefs.setString("isNotificationOn", isEnabled).then((val) {
-  //       isEnabled=="1"? OneSignal.shared.setSubscription(true): OneSignal.shared.setSubscription(false);
-  //
-  //       // print("notificaion on" + isEnabled );
-  //     });
-  //   });
-  //   notifyListeners();
-  // }
+  void setNotificationEnabled(isEnabled) {
+    isNotificationOn = isEnabled;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString("isNotificationOn", isEnabled).then((val) {
+        // isEnabled=="1"? OneSignal.shared.setSubscription(true): OneSignal.shared.setSubscription(false);
+        isEnabled=="1"? OneSignal.shared.consentGranted(true): OneSignal.shared.consentGranted(false);
+
+        // print("notificaion on" + isEnabled );
+      });
+    });
+    notifyListeners();
+  }
 
   ThemeData getTheme(value) {
     return theme;

@@ -62,6 +62,7 @@ dependencies:
   onesignal_flutter: ^3.3.0
   cloud_firestore: ^3.1.9
   flutter_funding_choices: ^0.3.0+2
+  webview_flutter: ^2.0.13
 
 
 dependency_overrides:

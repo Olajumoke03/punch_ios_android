@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
 import 'package:punch_ios_android/category_list/screen.dart';
+import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
 import 'package:punch_ios_android/home_news/home_bloc.dart';
 import 'package:punch_ios_android/home_news/home_screen.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
@@ -33,7 +34,8 @@ class _HomeState extends State<HomePage> {
       child: HomeNewsScreen(),
       providers: [
         BlocProvider(create: (context) => HomeNewsBloc(repository: Repository()),),
-        BlocProvider(create: (context) => CategoryListBloc(repository: Repository()),   ),
+        BlocProvider(create: (context) => CategoryListBloc(repository: Repository()), ),
+        BlocProvider(create: (context) => FeaturedNewsBloc(repository: Repository()))
       ],
     ),
 

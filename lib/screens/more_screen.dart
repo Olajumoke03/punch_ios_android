@@ -308,29 +308,29 @@ class _MoreScreenState extends State<MoreScreen> {
         body: Container(
           child:  ListView(
               children: <Widget>[
-          //       SwitchListTile(
-          //         activeColor: Colors.red,
-          //         secondary: SvgPicture.asset(
-          //             'assets/icons/notification.svg',
-          //                height: 22,
-          //           width: 22,
-          //            color: Theme.of(context).textTheme.bodyText1!.color,
-          // ),
-          //         title: Text(
-          //             "Notifications",
-          //             style: TextStyle(fontSize: 9*fontScale.value, fontWeight: FontWeight.normal)),
-          //
-          //         value: Provider.of<AppProvider>(context).isNotificationOn == "0"
-          //             ? false
-          //             : true,
-          //         onChanged: (v) {
-          //           if (v==true) {
-          //             Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("1");
-          //           } else {
-          //             Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("0");
-          //           }
-          //         },
-          //       ),
+                SwitchListTile(
+                  activeColor: Colors.red,
+                  secondary: SvgPicture.asset(
+                      'assets/icons/notification.svg',
+                         height: 22,
+                    width: 22,
+                     color: Theme.of(context).textTheme.bodyText1!.color,
+          ),
+                  title: Text(
+                      "Notifications",
+                      style: TextStyle(fontSize: 9*fontScale.value, fontWeight: FontWeight.normal)),
+
+                  value: Provider.of<AppProvider>(context).isNotificationOn == "0"
+                      ? false
+                      : true,
+                  onChanged: (v) {
+                    if (v==true) {
+                      Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("1");
+                    } else {
+                      Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("0");
+                    }
+                  },
+                ),
 
                 SwitchListTile(
                   activeColor: Colors.red,

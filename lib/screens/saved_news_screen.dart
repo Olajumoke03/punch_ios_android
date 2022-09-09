@@ -37,7 +37,7 @@ class _SavedNewsScreenState extends State<SavedNewsScreen> {
       builder: ( context,  favoritesProvider,  child) {
 
         return Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).cardColor,
           appBar: AppBar(
             centerTitle: true,
             leading: IconButton(

@@ -30,6 +30,13 @@ class HomeNewsModel {
   String? xCategories;
   String? xAuthor;
   List<String>? articleSplit;
+  String? xFeaturedMediaLarge;
+  List<String>? categoriesString;
+  String? xTags;
+  String? xFeaturedMedia;
+  String? xFeaturedMediaMedium;
+  String? xFeaturedMediaOriginal;
+  String? xDate;
 
 
   HomeNewsModel(
@@ -62,7 +69,14 @@ class HomeNewsModel {
         this.lLinks,
       this.xCategories,
       this.xAuthor,
-      this.articleSplit});
+      this.articleSplit,
+      this.categoriesString,
+      this.xDate,
+      this.xFeaturedMedia,
+      this.xFeaturedMediaLarge,
+      this.xFeaturedMediaMedium,
+      this.xFeaturedMediaOriginal,
+      this.xTags});
 
   HomeNewsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -98,6 +112,17 @@ class HomeNewsModel {
     //     : null;
     jetpackFeaturedMediaUrl = json['jetpack_featured_media_url'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+    featuredMedia = json['featured_media'];
+    categories = json['categories'].cast<int>();
+    categoriesString = json['x_categories'].split(',');
+    xCategories = json['x_categories'];
+    xTags = json['x_tags'];
+    xFeaturedMedia = json['x_featured_media'];
+    xFeaturedMediaMedium = json['x_featured_media_medium'];
+    xFeaturedMediaOriginal = json['x_featured_media_original'];
+    xFeaturedMediaLarge = json['x_featured_media_large'];
+    xDate = json['x_date'];
+    xAuthor = json['x_author'];
   }
 
   Map<String, dynamic> toJson() {
@@ -142,6 +167,18 @@ class HomeNewsModel {
     if (this.lLinks != null) {
       data['_links'] = this.lLinks!.toJson();
     }
+
+    data['author'] = this.author;
+    data['featured_media'] = this.featuredMedia;
+    data['categories'] = this.categories;
+    data['x_categories'] = this.xCategories;
+    data['x_tags'] = this.xTags;
+    data['x_featured_media'] = this.xFeaturedMedia;
+    data['x_featured_media_medium'] = this.xFeaturedMediaMedium;
+    data['x_featured_media_original'] = this.xFeaturedMediaOriginal;
+    data['x_featured_media_large'] = this.xFeaturedMediaLarge;
+    data['x_date'] = this.xDate;
+    data['x_author'] = this.xAuthor;
     return data;
   }
 }
