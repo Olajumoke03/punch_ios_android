@@ -62,16 +62,15 @@ class Repository   {
 
   Future<List<HomeNewsModel>>fetchFeaturedNews() async {
     final response = await _apiClient.get(Constants.FEATURED_NEWS+"34");
+    print("featured constant response " + response);
     var data = json.decode(response);
-    print("featured news  response " + response);
+    print("featured news  data " + data);
 
     FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
     saveAnyStringToCache(response, Constants.Constants.featuredNewsCacheKey);
 
     return featuredNews.featuredNewss;
   }
-
-
 
 
 

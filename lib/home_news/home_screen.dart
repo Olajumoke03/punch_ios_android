@@ -187,20 +187,16 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                   children: [
                     Container(
                       height: 250,
-                      color: Colors.grey,
                       child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
                           listener: (context, state){
                             if ( state is FeaturedNewsRefreshingState ) {
 
-                            } else if ( state is FeaturedNewsLoadedState && state.message != null ) {
+                            } else if ( state is FeaturedNewsLoadedState ) {
 
                             }else if ( state is FeaturedCachedNewsLoadedState  ) {
                               // a message will only come when it is updating the feed.
                             }
                             else if ( state is FeaturedNewsLoadFailureState ) {
-                              // Scaffold.of ( context ).showSnackBar ( SnackBar (
-                              //   content: Text ( "Could not load Featured news at this time" ) , )
-                              // );
                             }
                           },
 
@@ -216,32 +212,32 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                             builder: (context, state) {
                               if ( state is FeaturedNewsInitialState ) {
                                 return Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  constraints: BoxConstraints.expand( height: 180 ),
+                                  margin: const EdgeInsets.only(top: 10),
+                                  constraints: const BoxConstraints.expand( height: 180 ),
                                 );
                               } else if ( state is FeaturedNewsLoadingState ) {
                                 return  Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  constraints: BoxConstraints.expand( height: 180 ),
+                                  margin: const EdgeInsets.only(top: 10),
+                                  constraints: const BoxConstraints.expand( height: 180 ),
                                 );
 
                               } else if ( state is FeaturedNewsLoadedState ) {
                                 return Container(
-                                    margin: EdgeInsets.only(top: 10),
-                                    constraints: BoxConstraints.expand( height: 180 ),
-                                    child: imageSlider( state.featuredNews!));
+                                    margin: const EdgeInsets.only(top: 10),
+                                    constraints:const BoxConstraints.expand( height: 180 ),
+                                    child: imageSlider( state.featuredNews));
                                 // return buildFeaturedNewsList ( state.featuredNews);
                               }else if ( state is FeaturedCachedNewsLoadedState ) {
                                 return Container(
-                                    margin: EdgeInsets.only(top: 10),
-                                    constraints: BoxConstraints.expand( height: 180 ),
-                                    child: imageSliderCached( state.featuredNews!));
+                                    margin: const EdgeInsets.only(top: 10),
+                                    constraints: const BoxConstraints.expand( height: 180 ),
+                                    child: imageSliderCached( state.cachedNews));
                                 // return buildFeaturedNewsList ( state.featuredNews);
                               }  else if ( state is FeaturedNewsLoadFailureState ) {
                                 return BuildErrorUi (message: state.error );
                               }
                               else {
-                                return BuildErrorUi (message: "Something went wrong!" );
+                                return const BuildErrorUi (message: "Something went wrong!" );
                               }
                             },
                           )
@@ -476,7 +472,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                   onTap: () {
                                     CategoryListModel cLM = CategoryListModel ( );
                                     cLM.id = homeNewsModel[pos].categories![0].toString ( );
-                                    cLM.name = homeNewsModel[pos].categoriesString![0];
+                                    cLM.categoryName = homeNewsModel[pos].categoriesString![0];
 
                                     Navigator.push ( context , MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc> (
                                         create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
@@ -650,7 +646,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                 onTap: () {
                                   CategoryListModel cLM = CategoryListModel ( );
                                   cLM.id = homeNewsModel[pos].categories![0].toString ( );
-                                  cLM.name = homeNewsModel[pos].categoriesString![0];
+                                  cLM.categoryName = homeNewsModel[pos].categoriesString![0];
 
                                   Navigator.push ( context , MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc> (
                                       create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
@@ -694,7 +690,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   //FOR FEATURED NEWS
   Widget imageSlider(List<HomeNewsModel> featuredNewsModel){
     return  ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         child: InkWell(
           onTap: (){
             HomeNewsModel fNM = featuredNewsModel[0];
@@ -703,7 +699,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                   create: (context) => NewsTagBloc (repository: Repository ()) ,
                   child: NewsDetails ( newsModel: fNM , )
               ) ,)
-
             );
           },
           child: Stack(
@@ -728,7 +723,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           end: Alignment.topCenter,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
                       child: Html(
                           data:  '${featuredNewsModel[0].title!.rendered}',
                           style: {
@@ -739,17 +734,15 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                             ),
                           },
                         )
-
                     ),
                   ),
-
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel(id:"34",name:"Top Stories");
+                    CategoryListModel cLM = CategoryListModel(id:"34",categoryName:"Top Stories");
                     Navigator.push( context,
                       MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc>(
                           create: (context) => NewsByCategoryBloc(repository: Repository()),
@@ -837,7 +830,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel(id:"13",name:"Featured News");
+                    CategoryListModel cLM = CategoryListModel(id:"34",categoryName:"Top Stories");
                     Navigator.push( context,
                       MaterialPageRoute(builder: (context)=> BlocProvider<NewsByCategoryBloc>(
                           create: (context) => NewsByCategoryBloc(repository: Repository()),

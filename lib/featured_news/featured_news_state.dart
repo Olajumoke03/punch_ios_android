@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 
-
 abstract class FeaturedNewsState extends Equatable {
   @override
   List<Object> get props => [];
@@ -31,47 +30,47 @@ class FeaturedNewsRefreshingState extends FeaturedNewsState {
 }
 
 class FeaturedNewsLoadedState extends FeaturedNewsState {
-  List<HomeNewsModel>? featuredNews;
-  String? message;
-  FeaturedNewsLoadedState({@required this.featuredNews, this.message});
+  List<HomeNewsModel> featuredNews;
+  String message;
+  FeaturedNewsLoadedState({required this.featuredNews, required this.message});
 
   @override
   List<Object> get props => [];
 }
 
 class FeaturedCachedNewsLoadedState extends FeaturedNewsState {
-  List<HomeNewsModel>? featuredNews;
-  String? message;
-  FeaturedCachedNewsLoadedState({@required this.featuredNews, this.message});
+  List<HomeNewsModel> cachedNews;
+  String message;
+  FeaturedCachedNewsLoadedState({required this.cachedNews, required this.message});
 
   @override
   List<Object> get props => [];
 }
 
 class FeaturedNewsRefreshedState extends FeaturedNewsState {
-  List<HomeNewsModel>? featuredNews;
-  String? message;
+  List<HomeNewsModel> featuredNews;
+  String message;
   FeaturedNewsRefreshedState({required this.featuredNews, required this.message});
 
   @override
   List<Object> get props => [];
 }
 
-// class FeaturedNewsMoreLoadedState extends FeaturedNewsState {
-//   List<FeaturedNewsModel> featuredNews;
-//   FeaturedNewsMoreLoadedState({@required this.featuredNews});
-//
-//   @override
-//   List<Object> get props => [];
-// }
-
-class FeaturedNewsMoreFailureState extends FeaturedNewsState {
-  final String? error;
-
-  FeaturedNewsMoreFailureState({ this.error});
+class FeaturedNewsMoreLoadedState extends FeaturedNewsState {
+  List<HomeNewsModel> featuredNews;
+  FeaturedNewsMoreLoadedState({required this.featuredNews});
 
   @override
-  List<Object> get props => [error!];
+  List<Object> get props => [];
+}
+
+class FeaturedNewsMoreFailureState extends FeaturedNewsState {
+  final String error;
+
+  FeaturedNewsMoreFailureState({required this.error});
+
+  @override
+  List<Object> get props => [error];
 }
 
 class FeaturedNewsLoadFailureState extends FeaturedNewsState {

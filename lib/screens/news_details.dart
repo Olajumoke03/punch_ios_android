@@ -249,7 +249,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                             Navigator.pop(context);
                              _showInterstitialAd();
                           },
-                          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyText1!.color,)
+                          icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),
 
                       actions: <Widget>[

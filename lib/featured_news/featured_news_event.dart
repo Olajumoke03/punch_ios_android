@@ -23,8 +23,8 @@ class FetchCachedFeaturedNewsEvent extends FeaturedNewsEvent {
 }
 
 class FetchMoreFeaturedNewsEvent extends FeaturedNewsEvent {
-  final int? page;
-  FetchMoreFeaturedNewsEvent({  this.page});
+  final int page;
+  FetchMoreFeaturedNewsEvent({ required this.page});
 
   @override
   List<Object> get props => [];

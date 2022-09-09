@@ -13,6 +13,7 @@ import 'package:punch_ios_android/news_by_category/news_by_category_event.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_state.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/utility/colors.dart';
+import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -107,13 +108,13 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title:  Text(widget.model.name!, style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500),),
+        title:  Text(widget.model.categoryName!, style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color, fontWeight: FontWeight.bold, fontSize: 18),),
 
       leading: IconButton(
             onPressed: (){
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back_ios, color: mainColor,)
+            icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
         ),
       ),
 
@@ -267,33 +268,30 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                     child: Row(
                       children: <Widget>[
                         Card(
-                          shape: const RoundedRectangleBorder(
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all( Radius.circular(10), ),
                           ),
                           elevation: 4,
                           child: ClipRRect(
                             borderRadius: BorderRadius.all( Radius.circular(10)),
                             child: CachedNetworkImage(
-                              imageUrl:'${newsByCategoryModel[pos].jetpackFeaturedMediaUrl}',
+                              imageUrl:'${newsByCategoryModel[pos].xFeaturedMedia}',
                               placeholder: (context, url) => Container(
                                   height: 125,
                                   width: 248,
                                   child: Center(child: CircularProgressIndicator())),
-                              errorWidget: (context, url, error) =>
-                              const Center(child: Text("Punch News")),
-
-                              //     Image.asset("assets/punchLogo.png",
-                              //   fit: BoxFit.contain,
-                              //   height: 100,
-                              //   width: 100,
-                              // ),
+                              errorWidget: (context, url, error) => Image.asset(
+                                "assets/punchLogo.png",
+                                fit: BoxFit.contain,
+                                height: 100,
+                                width: 100,
+                              ),
                               fit: BoxFit.cover,
                               height: 100,
                               width: 100,
                             ),
                           ),
                         ),
-
                         SizedBox( width: 10),
 
                         Flexible(
@@ -319,14 +317,14 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                    constraints: const BoxConstraints( maxWidth: 120),
-                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                                    constraints: BoxConstraints( maxWidth: 120),
+                                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
-                                      color: mainColor,
+                                      color: Theme.of(context).accentColor,
                                     ),
-                                    child: Text (
-                                      "${newsByCategoryModel[pos].xCategories}",
+                                    child: Text (newsByCategoryModel[pos].categoriesString![0].replaceAll("&amp;", "&") ,
+                                      // "${newsByCategoryModel.xCategories}",
                                       style: TextStyle ( fontSize: 5*_fontSizeController.value , color:Colors.white ,
                                       ) ,
                                     ),
@@ -338,8 +336,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Text(
                                         Jiffy('${newsByCategoryModel[pos].date}').fromNow(),
-                                      // '${newsByCategoryModel[pos].xDate}',
-                                      //   Constants.readTimestamp(newsByCategoryModel[pos].date),
+                                      //   Constants.readTimestamp(newsByCategoryModel[pos].date!),
                                         style: TextStyle( fontSize: 4*_fontSizeController.value, color: Theme.of(context).textTheme.bodyText1!.color,)),
                                   ),
                                 ],
@@ -373,4 +370,9 @@ class _NewsByCategoryState extends State<NewsByCategory> {
   }
 
 }
+
+
+
+
+
 

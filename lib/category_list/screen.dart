@@ -15,7 +15,6 @@ import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:provider/provider.dart';
 
 
-
 class CategoryListScreen extends StatefulWidget {
   late CategoryListModel categoryListModel;
 
@@ -50,13 +49,14 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title:  Text("Categories", style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500),),
-
+                title: Image.asset(
+                    'assets/punchLogo.png', width: 100, height: 40),
               ),
+
               body: SingleChildScrollView(
                 child: Column(
                   children: [
-                    // getSearchBarUI(context),
+                    getSearchBarUI(context),
 
                     SizedBox(height: 10,),
 
@@ -68,11 +68,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         else if (state is CategoryListLoadedState &&
                             state.message != null) {
                           // a message will only come when it is updating the feed.
-                          // Scaffold.of ( context ).showSnackBar ( SnackBar ( content: Text ( "Category List Updated" ) , ) );
                         }
                         else if (state is CategoryListLoadFailureState) {
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Could not load news categories at this time"),));
                         }
                       },
                       child: BlocBuilder<CategoryListBloc, CategoryListState>(
@@ -124,7 +121,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       ),
       itemCount: categoryListModel.length,
       shrinkWrap: true ,
-      physics:NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (ctx, pos) {
         return GestureDetector(
           onTap: () {
@@ -145,24 +142,24 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // CachedNetworkImage(
-                //   imageUrl: "${categoryListModel[pos].imageUrl}",
-                //   color: Theme.of(context).accentColor,
-                //   fit: BoxFit.cover,
-                //   placeholder: (context, url) => Center(
-                //       child: SizedBox(
-                //           height: 10,
-                //           width: 10,
-                //           child: CircularProgressIndicator())),
-                //   errorWidget: (context, url, error) => Container(
-                //     color: Theme.of(context).accentColor,
-                //     height: 20,
-                //     width: 20,
-                //   ),
-                // ),
+                CachedNetworkImage(
+                  imageUrl: "${categoryListModel[pos].imageUrl}",
+                  color: Theme.of(context).accentColor,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Center(
+                      child: SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator())),
+                  errorWidget: (context, url, error) => Container(
+                    color: Theme.of(context).accentColor,
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
                const SizedBox(height: 10,),
                 Text(
-                  "${categoryListModel[pos].name}",
+                  "${categoryListModel[pos].categoryName}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
