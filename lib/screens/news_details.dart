@@ -314,6 +314,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       ] ,
                     ) ,
                     floatingActionButton:FloatingActionButton(
+                      backgroundColor: redColor,
                       onPressed: (){
                         Navigator.push( context, MaterialPageRoute(builder: (context) => DisqusScreen(id:widget.newsModel!.id.toString(),slug: widget.newsModel!.slug,)) );
 
@@ -424,9 +425,8 @@ class _NewsDetailsState extends State<NewsDetails> {
                                                 onTap: () {
                                                 } ,
                                                 child:  Text (
-                                                  "${widget.newsModel!.xCategories}",
-                                                  style: const TextStyle (fontSize: 10 , color: Colors.white,
-                                                  ) ,
+                                                  widget.newsModel!.categoriesString![0].replaceAll("&amp;", "&"),
+                                                  style: const TextStyle (fontSize: 10 , color: Colors.white,) ,
                                                 ) ,
                                               ) ,
                                             ) ,

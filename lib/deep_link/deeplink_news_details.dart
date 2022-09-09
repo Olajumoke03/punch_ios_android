@@ -106,10 +106,10 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                               borderRadius: const BorderRadius.all (
                                 Radius.circular ( 10.0 ) , ) ,
                               child: CachedNetworkImage (
-                                imageUrl: '${newsModel.jetpackFeaturedMediaUrl}' ,
+                                imageUrl: '${newsModel.xFeaturedMediaLarge}' ,
                                 placeholder: (context , url) =>
-                                    const Center (
-                                      child: CircularProgressIndicator ( ) , ) ,
+                                const Center (
+                                  child: CircularProgressIndicator ( ) , ) ,
                                 errorWidget: (context , url , error) =>
                                 // Image.asset ( 'assets/punchLogo.png' ) ,
                                 const Text(" Punch News  "),
@@ -183,7 +183,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                               onTap: () {
                                               } ,
                                               child:  Text (
-                                                "${newsModel.xCategories}",
+                                                newsModel.categoriesString![0].replaceAll("&amp;", "&"),
                                                 style: const TextStyle (fontSize: 10 , color: Colors.white,
                                                 ) ,
                                               ) ,

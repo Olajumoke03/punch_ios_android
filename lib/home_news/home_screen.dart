@@ -464,7 +464,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: Theme.of(context).accentColor,
+                                  color: redColor,
                                 ),
                                 child: GestureDetector (
                                   onTap: () {

@@ -70,8 +70,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   final BannerAd inArticleAds = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.largeBanner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
+    request: const AdRequest(),
+    listener: const BannerAdListener(),
   );
 
   final AdSize adSize = AdSize(width: 300, height: 250);
@@ -348,7 +348,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                               onTap: () {
                                               } ,
                                               child:  Text (
-                                                "${state.model.xCategories}",
+                                                state.model.categoriesString![0].replaceAll("&amp;", "&"),
                                                 style: const TextStyle (fontSize: 10 , color: Colors.white,
                                                 ) ,
                                               ) ,

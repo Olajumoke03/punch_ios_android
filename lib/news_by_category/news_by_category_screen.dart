@@ -321,7 +321,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
-                                      color: Theme.of(context).accentColor,
+                                      color: redColor,
                                     ),
                                     child: Text (newsByCategoryModel[pos].categoriesString![0].replaceAll("&amp;", "&") ,
                                       // "${newsByCategoryModel.xCategories}",
