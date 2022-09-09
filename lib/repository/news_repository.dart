@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:punch_ios_android/about_us/about_model.dart';
 import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/category_list/responses.dart';
 import 'package:punch_ios_android/featured_news/featured_news_response.dart';
@@ -132,6 +133,12 @@ class Repository   {
     var data = json.decode(response);
     NewsTagResponse newsTag = NewsTagResponse.fromJson(data);
     return newsTag.newsTags;
+  }
+
+  Future<AboutUsModel> fetchAboutUs() async {
+    final response = await _apiClient.get ( Constants.ABOUT_US );
+    final data = json.decode ( response );
+    return  AboutUsModel.fromJson ( json.decode ( response ) );
   }
 
 }

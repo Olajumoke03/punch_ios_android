@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:punch_ios_android/about_us/about_screen.dart';
+import 'package:punch_ios_android/about_us/about_us_bloc.dart';
+import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/screens/home_page.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
@@ -296,8 +299,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return   Consumer<FontSizeController>(
-        builder: ( context,  fontScale, child) {
+    return   Consumer<FontSizeController>(builder: ( context,  fontScale, child) {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -306,305 +308,303 @@ class _MoreScreenState extends State<MoreScreen> {
           title:  Text("More", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
               fontWeight: FontWeight.w500),),
         ),
-        body: Container(
-          child:  ListView(
-              children: <Widget>[
-                SwitchListTile(
-                  activeColor: Colors.red,
-                  secondary: SvgPicture.asset(
-                      'assets/icons/notification.svg',
-                         height: 22,
-                    width: 22,
-                     color: Theme.of(context).textTheme.bodyText1!.color,
-          ),
-                  title: Text(
-                      "Notifications",
-                      style: TextStyle(fontSize: 9*fontScale.value, fontWeight: FontWeight.normal)),
+        body: ListView(
+            children: <Widget>[
+              SwitchListTile(
+                activeColor: Colors.red,
+                secondary: SvgPicture.asset(
+                    'assets/icons/notification.svg',
+                       height: 22,
+                  width: 22,
+                   color: Theme.of(context).textTheme.bodyText1!.color,
+        ),
+                title: Text(
+                    "Notifications",
+                    style: TextStyle(fontSize: 9*fontScale.value, fontWeight: FontWeight.normal)),
 
-                  value: Provider.of<AppProvider>(context).isNotificationOn == "0"
-                      ? false
-                      : true,
-                  onChanged: (v) {
-                    if (v==true) {
-                      Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("1");
-                    } else {
-                      Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("0");
-                    }
-                  },
+                value: Provider.of<AppProvider>(context).isNotificationOn == "0"
+                    ? false
+                    : true,
+                onChanged: (v) {
+                  if (v==true) {
+                    Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("1");
+                  } else {
+                    Provider.of<AppProvider>(context, listen: false).setNotificationEnabled("0");
+                  }
+                },
+              ),
+
+              SwitchListTile(
+                activeColor: Colors.red,
+                secondary: SvgPicture.asset(
+                  'assets/icons/setting.svg',
+                  height: 24,
+                  width: 24,
+                  color: Theme.of(context).textTheme.bodyText1!.color,
                 ),
+                title: Text(
+                    "Dark Theme",
+                    style: TextStyle( fontSize: 9*fontScale.value, fontWeight: FontWeight.normal)),
 
-                SwitchListTile(
-                  activeColor: Colors.red,
-                  secondary: SvgPicture.asset(
-                    'assets/icons/setting.svg',
-                    height: 24,
-                    width: 24,
-                    color: Theme.of(context).textTheme.bodyText1!.color,
+                value: Provider.of<AppProvider>(context).theme == Constants.lightTheme
+                    ? false
+                    : true,
+                onChanged: (v) {
+                  if (v) {
+                    Provider.of<AppProvider>(context, listen: false)
+                        .setTheme(Constants.darkTheme, "dark");
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context)=>
+                        HomePage(),
+                    ));
+
+                  } else {
+                    Provider.of<AppProvider>(context, listen: false)
+                        .setTheme(Constants.lightTheme, "light");
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context)=>
+                        HomePage(),
+                    ));
+
+                  }
+                },
+
+              ),
+
+              InkWell(
+                child: MoreItems(name: "Font Size", image: "font.svg"),
+                onTap: () {
+                  fontDialog();
+                },
+              ),
+
+              InkWell(
+                child: MoreItems( name: "About Us", image: "aboutus.svg",),
+                onTap: () {
+                  Navigator.push( context, MaterialPageRoute( builder: (context) =>   BlocProvider<AboutUsBloc>(
+                      create: (context) => AboutUsBloc(repository: Repository()),
+                      child: AboutScreen()
+                  )),
+                  );
+                },
+              ),
+
+              InkWell(
+                child: MoreItems( name: "Contact Us", image: "contactus.svg"),
+                onTap: () {
+                  // Navigator.push( context, MaterialPageRoute( builder: (context) => ContactUs()), );
+                },
+              ),
+
+              InkWell(
+                child: MoreItems( name: "Newsletter", image: "newsletter.svg"),
+                onTap: () {
+                  subscribeDialog(context,false);
+
+                },
+              ),
+
+              InkWell(
+                child: MoreItems(name: "Privacy Policy", image: "policy.svg"),
+                onTap: () {
+                  // Navigator.push( context, MaterialPageRoute(builder: (context) => BlocProvider<PrivacyPolicyBloc>(
+                  //     create: (context) => PrivacyPolicyBloc(privacyPolicyRepository: NewsRepository()),
+                  //     child: PrivacyScreen()
+                  // ),), );
+                },
+              ),
+
+              InkWell( child: MoreItems(name: "Rate Us", image: "rate.svg"),
+                onTap: () {
+                  // launchRate() async {
+                  //   const url = 'https://apps.apple.com/ng/app/punch-news/id1416286632';
+                  //   if (await canLaunch(url)) {
+                  //     await launch(url, forceSafariVC: false,);
+                  //   } else {
+                  //     throw 'Could not launch $url';
+                  //   }
+                  // }
+                  // launchRate();
+                },
+              ),
+
+              InkWell(
+                child:
+                MoreItems(name: "Share App", image: "share.svg"),
+                onTap: () {
+                  // Share.share (
+                  //   "Seen the Punch News App? \n\n Download App @ https://apps.apple.com/ng/app/punch-news/id1416286632",
+                  // );
+                },
+              ),
+
+              InkWell(
+                child: MoreItems( name: "Advertise with us", image: "advertise.svg"),
+                onTap: () {
+                  // launchAdvertise() async {
+                  //   const url = 'https://punchng.com/advertise-with-us';
+                  //   if (await canLaunch(url)) {
+                  //     await launch(url, forceWebView: true, forceSafariVC: true, );
+                  //   } else {
+                  //     throw 'Could not launch $url';
+                  //   }
+                  // }
+                  // launchAdvertise();
+                },
+              ),
+
+              SizedBox(height: 20),
+              Column(
+                children: [
+                  Center(
+                    child: Text("Follow us",
+                      textAlign: TextAlign.center,
+                      style: TextStyle( color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 9*fontScale.value,),
+                    ),
                   ),
-                  title: Text(
-                      "Dark Theme",
-                      style: TextStyle( fontSize: 9*fontScale.value, fontWeight: FontWeight.normal)),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                        child:   Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
 
-                  value: Provider.of<AppProvider>(context).theme == Constants.lightTheme
-                      ? false
-                      : true,
-                  onChanged: (v) {
-                    if (v) {
-                      Provider.of<AppProvider>(context, listen: false)
-                          .setTheme(Constants.darkTheme, "dark");
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context)=>
-                          HomePage(),
-                      ));
+                            InkWell(
+                              onTap: (){
+                                // launchLinkedIn() async {
+                                //   const url = 'httpsA star topology is a topology for a Local Area Network (LAN) in which all nodes are individually connected to a central connection point, like a hub or a switch. A star takes more cable than e.g. a bus, but the benefit is that if a cable fails, only one node will be brought down. Star topology.://www.linkedin.com/company/punchnewspapers/mycompany/';
+                                //   if (await canLaunch(url)) {
+                                //     await launch(url);
+                                //   } else {
+                                //     throw 'Could not launch $url';
+                                //   }
+                                // }
+                                // launchLinkedIn();
+                              },
 
-                    } else {
-                      Provider.of<AppProvider>(context, listen: false)
-                          .setTheme(Constants.lightTheme, "light");
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context)=>
-                          HomePage(),
-                      ));
+                              child: Container(
+                                child: SvgPicture.asset(
+                                  'assets/social_media/linkedin.svg',
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                            ),
 
-                    }
-                  },
+                            InkWell(
+                              onTap: (){
+                                // launchInstagram() async {
+                                //   const url = 'https://www.instagram.com/punchnewspapers/';
+                                //   if (await canLaunch(url)) {
+                                //     await launch(url);
+                                //   } else {
+                                //     throw 'Could not launch $url';
+                                //   }
+                                // }
+                                // launchInstagram();
+                              },
+                              child: Container(
+                                child: SvgPicture.asset(
+                                  'assets/social_media/instagram.svg',
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                            ),
 
-                ),
+                            InkWell(
+                              onTap: (){
+                                // launchTelegram() async {
+                                //   const url = 'https://t.me/PunchNewspaper';
+                                //   if (await canLaunch(url)) {
+                                //     await launch(url);
+                                //   } else {
+                                //     throw 'Could not launch $url';
+                                //   }
+                                // }
+                                // launchTelegram();
+                              },
+                              child: Container(
+                                child: SvgPicture.asset(
+                                  'assets/social_media/telegram.svg',
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                            ),
 
-                InkWell(
-                  child: MoreItems(name: "Font Size", image: "font.svg"),
-                  onTap: () {
-                    fontDialog();
-                  },
-                ),
+                            InkWell(
+                              onTap: (){
+                                // launchFacebook() async {
+                                //   const url = 'https://www.facebook.com/punchnewspaper/';
+                                //   if (await canLaunch(url)) {
+                                //     await launch(url);
+                                //   } else {
+                                //     throw 'Could not launch $url';
+                                //   }
+                                // }
+                                // launchFacebook();
+                              },
+                              child: Container(
+                                child: SvgPicture.asset(
+                                  'assets/social_media/facebook.svg',
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                            ),
 
-                InkWell(
-                  child: MoreItems( name: "About Us", image: "aboutus.svg",),
-                  onTap: () {
-                    // Navigator.push( context, MaterialPageRoute( builder: (context) =>   BlocProvider<AboutUsBloc>(
-                    //     create: (context) => AboutUsBloc(aboutUsRepository: NewsRepository()),
-                    //     child: AboutScreen()
-                    // )),
-                    // );
-                  },
-                ),
+                            InkWell(
+                              onTap: (){
+                                // launchYouTube() async {
+                                //   const url = 'https://www.youtube.com/channel/UCKBMh5v6VrB0t75ryyiVsBg';
+                                //   if (await canLaunch(url)) {
+                                //     await launch(url);
+                                //   } else {
+                                //     throw 'Could not launch $url';
+                                //   }
+                                // }
+                                // launchYouTube();
+                              },
 
-                InkWell(
-                  child: MoreItems( name: "Contact Us", image: "contactus.svg"),
-                  onTap: () {
-                    // Navigator.push( context, MaterialPageRoute( builder: (context) => ContactUs()), );
-                  },
-                ),
+                              child: Container(
+                                child: SvgPicture.asset(
+                                  'assets/social_media/youtube.svg',
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                            ),
 
-                InkWell(
-                  child: MoreItems( name: "Newsletter", image: "newsletter.svg"),
-                  onTap: () {
-                    subscribeDialog(context,false);
+                            InkWell(
+                              onTap: (){
+                                // launchTwitter() async {
+                                //   const url = 'https://twitter.com/MobilePunch';
+                                //   if (await canLaunch(url)) {
+                                //     await launch(url);
+                                //   } else {
+                                //     throw 'Could not launch $url';
+                                //   }
+                                // }
+                                // launchTwitter();
+                              },
 
-                  },
-                ),
+                              child: Container(
+                                child: SvgPicture.asset(
+                                  'assets/social_media/twitter.svg',
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                            ),
 
-                InkWell(
-                  child: MoreItems(name: "Privacy Policy", image: "policy.svg"),
-                  onTap: () {
-                    // Navigator.push( context, MaterialPageRoute(builder: (context) => BlocProvider<PrivacyPolicyBloc>(
-                    //     create: (context) => PrivacyPolicyBloc(privacyPolicyRepository: NewsRepository()),
-                    //     child: PrivacyScreen()
-                    // ),), );
-                  },
-                ),
-
-                InkWell( child: MoreItems(name: "Rate Us", image: "rate.svg"),
-                  onTap: () {
-                    // launchRate() async {
-                    //   const url = 'https://apps.apple.com/ng/app/punch-news/id1416286632';
-                    //   if (await canLaunch(url)) {
-                    //     await launch(url, forceSafariVC: false,);
-                    //   } else {
-                    //     throw 'Could not launch $url';
-                    //   }
-                    // }
-                    // launchRate();
-                  },
-                ),
-
-                InkWell(
-                  child:
-                  MoreItems(name: "Share App", image: "share.svg"),
-                  onTap: () {
-                    // Share.share (
-                    //   "Seen the Punch News App? \n\n Download App @ https://apps.apple.com/ng/app/punch-news/id1416286632",
-                    // );
-                  },
-                ),
-
-                InkWell(
-                  child: MoreItems( name: "Advertise with us", image: "advertise.svg"),
-                  onTap: () {
-                    // launchAdvertise() async {
-                    //   const url = 'https://punchng.com/advertise-with-us';
-                    //   if (await canLaunch(url)) {
-                    //     await launch(url, forceWebView: true, forceSafariVC: true, );
-                    //   } else {
-                    //     throw 'Could not launch $url';
-                    //   }
-                    // }
-                    // launchAdvertise();
-                  },
-                ),
-
-                SizedBox(height: 20),
-                Column(
-                  children: [
-                    Center(
-                      child: Text("Follow us",
-                        textAlign: TextAlign.center,
-                        style: TextStyle( color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 9*fontScale.value,),
-                      ),
+                          ],
+                        )
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                          child:   Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-
-                              InkWell(
-                                onTap: (){
-                                  // launchLinkedIn() async {
-                                  //   const url = 'httpsA star topology is a topology for a Local Area Network (LAN) in which all nodes are individually connected to a central connection point, like a hub or a switch. A star takes more cable than e.g. a bus, but the benefit is that if a cable fails, only one node will be brought down. Star topology.://www.linkedin.com/company/punchnewspapers/mycompany/';
-                                  //   if (await canLaunch(url)) {
-                                  //     await launch(url);
-                                  //   } else {
-                                  //     throw 'Could not launch $url';
-                                  //   }
-                                  // }
-                                  // launchLinkedIn();
-                                },
-
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/social_media/linkedin.svg',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ),
-
-                              InkWell(
-                                onTap: (){
-                                  // launchInstagram() async {
-                                  //   const url = 'https://www.instagram.com/punchnewspapers/';
-                                  //   if (await canLaunch(url)) {
-                                  //     await launch(url);
-                                  //   } else {
-                                  //     throw 'Could not launch $url';
-                                  //   }
-                                  // }
-                                  // launchInstagram();
-                                },
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/social_media/instagram.svg',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ),
-
-                              InkWell(
-                                onTap: (){
-                                  // launchTelegram() async {
-                                  //   const url = 'https://t.me/PunchNewspaper';
-                                  //   if (await canLaunch(url)) {
-                                  //     await launch(url);
-                                  //   } else {
-                                  //     throw 'Could not launch $url';
-                                  //   }
-                                  // }
-                                  // launchTelegram();
-                                },
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/social_media/telegram.svg',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ),
-
-                              InkWell(
-                                onTap: (){
-                                  // launchFacebook() async {
-                                  //   const url = 'https://www.facebook.com/punchnewspaper/';
-                                  //   if (await canLaunch(url)) {
-                                  //     await launch(url);
-                                  //   } else {
-                                  //     throw 'Could not launch $url';
-                                  //   }
-                                  // }
-                                  // launchFacebook();
-                                },
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/social_media/facebook.svg',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ),
-
-                              InkWell(
-                                onTap: (){
-                                  // launchYouTube() async {
-                                  //   const url = 'https://www.youtube.com/channel/UCKBMh5v6VrB0t75ryyiVsBg';
-                                  //   if (await canLaunch(url)) {
-                                  //     await launch(url);
-                                  //   } else {
-                                  //     throw 'Could not launch $url';
-                                  //   }
-                                  // }
-                                  // launchYouTube();
-                                },
-
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/social_media/youtube.svg',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ),
-
-                              InkWell(
-                                onTap: (){
-                                  // launchTwitter() async {
-                                  //   const url = 'https://twitter.com/MobilePunch';
-                                  //   if (await canLaunch(url)) {
-                                  //     await launch(url);
-                                  //   } else {
-                                  //     throw 'Could not launch $url';
-                                  //   }
-                                  // }
-                                  // launchTwitter();
-                                },
-
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/social_media/twitter.svg',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          )
-                      ),
-                    ),
-                  ],
-                ),
-              ]
-          ),
+                  ),
+                ],
+              ),
+            ]
         ) ,
       );}
     );

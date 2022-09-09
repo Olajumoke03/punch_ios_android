@@ -82,7 +82,7 @@ class _HomeState extends State<HomePage> {
             ]),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).backgroundColor,
-          selectedItemColor: Theme.of(context).accentColor,
+          selectedItemColor: redColor,
           unselectedItemColor: Colors.grey[500],
           elevation: 20,
           type: BottomNavigationBarType.fixed,

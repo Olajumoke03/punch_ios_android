@@ -18,7 +18,7 @@ const String SEARCH_RESULT =BASE_URL+"search?per_page=20&search=";
 const String MORE_SEARCH_RESULT ="search?per_page=20&search=&page=";
 
 const String PRIVACY_POLICY ="pages/778714";
-const String ABOUT_US ="pages/164902";
+const String ABOUT_US =BASE_URL+"pages/164902";
 
 // const String CATEGORY_LIST =BASE_URL+"categories?per_page=100";
 const String CATEGORY_LIST ="https://punchng.com/category-payload/?v2";

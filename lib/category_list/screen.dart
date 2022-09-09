@@ -13,6 +13,7 @@ import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/search_result/search_result.dart';
 import 'package:punch_ios_android/search_result/search_result_bloc.dart';
+import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -146,7 +147,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
               children: [
                 CachedNetworkImage(
                   imageUrl: "${categoryListModel[pos].imageUrl}",
-                  color: Theme.of(context).accentColor,
+                  color: redColor,
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Center(
                       child: SizedBox(
@@ -212,7 +213,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 width:45,
                 height:45,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
+                  color: redColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(38.0),
                   ),
@@ -223,14 +224,13 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         blurRadius: 8.0),
                   ],
                 ),
-                child: Material(
+                child: const Material(
                     color: Colors.transparent,
                     child: Center(
                       child: Icon(Icons.search,
                           size: 22,
                           color: Colors.white
                       ),)
-
                 ),
               ),
             ],
