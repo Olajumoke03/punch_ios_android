@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 // this is the deeplink that works for search
 
 class DeepLinkNewsDetailsBloc extends StatefulWidget {
+   HomeNewsModel? newsModel;
 
  final String? slug;
 
-  const DeepLinkNewsDetailsBloc ({Key? key , required this.slug,}) : super( key: key );
+   DeepLinkNewsDetailsBloc ({Key? key ,  this.slug, this.newsModel}) : super( key: key );
 
   @override
   _DeepLinkNewsDetailsBlocState createState() => _DeepLinkNewsDetailsBlocState();
@@ -42,7 +44,21 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   late HomeNewsModel homeNewsModel;
   late FontSizeController _fontSizeController;
 
+  InterstitialAd? _interstitialAd;
+  int _numInterstitialLoadAttempts = 0;
+  int maxFailedLoadAttempts = 3;
+
+
   final Completer<WebViewController> _controller = Completer<WebViewController>();
+
+  fontDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => CustomAlertDialog(
+          child: const  ChangeTextSizeWithSeekBar()
+      ),
+    );
+  }
 
   final BannerAd articleMedium = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
@@ -58,6 +74,63 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     listener: BannerAdListener(),
   );
 
+  final AdSize adSize = AdSize(width: 300, height: 250);
+
+  static const AdRequest request = AdRequest(
+    keywords: <String>['foo', 'bar'],
+    contentUrl: 'http://foo.com/bar.html',
+    nonPersonalizedAds: true,
+  );
+
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/1033173712'
+            : 'ca-app-pub-3940256099942544/4411468910',
+        request: request,
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (InterstitialAd ad) {
+            print('$ad loaded');
+            _interstitialAd = ad;
+            _numInterstitialLoadAttempts = 0;
+            _interstitialAd!.setImmersiveMode(true);
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('InterstitialAd failed to load: $error.');
+            _numInterstitialLoadAttempts += 1;
+            _interstitialAd = null;
+            if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
+              _createInterstitialAd();
+            }
+          },
+        ));
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd == null) {
+      print('Warning: attempt to show interstitial before loaded.');
+      return;
+    }
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _createInterstitialAd();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createInterstitialAd();
+      },
+    );
+    _interstitialAd!.show();
+    _interstitialAd = null;
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -71,17 +144,17 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
     articleMedium.load();
     inArticleAds.load();
+    _createInterstitialAd();
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd?.dispose();
   }
 
 
-  fontDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => CustomAlertDialog(
-          child: const  ChangeTextSizeWithSeekBar()
-      ),
-    );
-  }
   @override
   Widget build (BuildContext context) {
     final AdWidget mediumWidget = AdWidget(ad: articleMedium);
@@ -96,52 +169,79 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
               builder: ( context,  detailsProvider,  child) {
 
         return Scaffold (
-            appBar: AppBar (
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.headline1!.color,)
-              ),
-              title:  Text("Punch News", style: TextStyle(color: Theme.of(context).textTheme.headline1!.color, fontWeight: FontWeight.w500),),
-              centerTitle: true,
-              actions: <Widget>[
-                Visibility(
-                  visible: deepProvider.isLoadSuccessful==true,
-                  child: IconButton (
-                    onPressed: () {
-                      fontDialog ( );
-                    } ,
-                    icon: Icon (
-                      Icons.text_fields ,
-                      color: Theme.of(context).textTheme.headline1!.color,
-                    ) ,
-                  ),
-                ) ,
+          appBar: AppBar (
+            leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                  _showInterstitialAd();
+                },
+                icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
+            ),
 
-                Visibility(
-                  visible: deepProvider.isLoadSuccessful==true,
-                  child: IconButton (
-                    onPressed: () {
-                      FlutterShare.share(
-                        title: 'Punch News' ,
-                        text: 'Read: ' '${newsModel.title!.rendered}' ', on Punch News' .replaceAll (r"\n" , "\n" )
-                            .replaceAll ( r"\r" , "" ).replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" ).replaceAll ("&#8217;" , "'" )
-                            .replaceAll ("&#038;" , "&" ).replaceAll ("&#8216;" , "‘" ),
-                        linkUrl:'https:// punchng.com/' '${newsModel.slug} ',
-                        chooserTitle: 'Something for chooser title',
-                      );
-                    } ,
-                    icon: Icon (
-                      Icons.share ,color: Theme.of(context).textTheme.headline1!.color,
-                    ) ,
-                  ),
+            actions: <Widget>[
+              IconButton (
+                onPressed: () {
+                  fontDialog ( );
+                } ,
+                icon: Icon (
+                    Icons.text_fields ,
+                    color: Theme.of(context).textTheme.bodyText1!.color
                 ) ,
-              ] ,
-            ) ,
+              ) ,
+              IconButton (
+                onPressed: () async {
+                  if ( isSaved == true ) {
+                    detailsProvider.removeFav ( widget.newsModel!.id! );
+                    // detailsProvider.removeFav ( widget.newsModel.id);
 
-            body:  BlocListener<DeepLinkDetailsBloc, DeepLinkDetailsState>(
+                    setState ( () {
+                      isSaved = false;
+                    } );
+                  } else {
+                    detailsProvider.addFav ( widget.newsModel! );
+                    setState ( () {
+                      isSaved = true;
+                    } );
+                  }
+                } ,
+                icon: Icon (
+                  isSaved == true
+                      ? Icons.favorite : Icons.favorite_border ,
+                  color: isSaved == true
+                      ? Colors.red
+                      : Theme
+                      .of ( context )
+                      .iconTheme
+                      .color ,
+                ) ,
+              ) ,
+              IconButton (
+                onPressed: () {
+                  FlutterShare.share(
+                    title: 'Punch News' ,
+                    text: 'Read: ' '${widget.newsModel!.title!.rendered}' ', on Punch News'
+                        .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                        .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                        .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                        .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                    linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
+                    chooserTitle: 'Something for chooser title',
+
+                  );
+                  print("share text "  '${widget.newsModel!.title!.rendered}');
+                  print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
+
+                } ,
+                icon:  Icon (
+                    Icons.share ,
+                    color: Theme.of(context).textTheme.bodyText1!.color
+                ) ,
+              ) ,
+            ] ,
+          ) ,
+
+
+          body:  BlocListener<DeepLinkDetailsBloc, DeepLinkDetailsState>(
                 listener: (context, state) {
                 if ( state is DeepLinkDetailsLoadedState ) {
                   deepProvider.setLoadSuccess(true);
@@ -168,13 +268,15 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                           alignment: Alignment.center ,
                           children: <Widget>[
                             ClipRRect (
-                              borderRadius: const BorderRadius.all (Radius.circular ( 10.0 ) , ) ,
+                              borderRadius: const BorderRadius.all (
+                                Radius.circular ( 10.0 ) , ) ,
                               child: CachedNetworkImage (
-                                imageUrl: '${state.model.jetpackFeaturedMediaUrl}' ,
+                                imageUrl: '${state.model.xFeaturedMediaLarge}' ,
                                 placeholder: (context , url) =>
-                                    const Center (
-                                    child: CircularProgressIndicator ( ) , ) ,
+                                const Center (
+                                  child: CircularProgressIndicator ( ) , ) ,
                                 errorWidget: (context , url , error) =>
+                                // Image.asset ( 'assets/punchLogo.png' ) ,
                                 const Text(" Punch News  "),
                                 // Ico n ( Icons.close ) ,
                                 fit: BoxFit.contain ,

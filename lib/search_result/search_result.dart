@@ -46,14 +46,15 @@ class _SearchResultState extends State<SearchResult> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         centerTitle: true,
-        title: Text("Punch News", style: TextStyle(color: Theme.of(context).textTheme.headline1!.color, fontSize: 20, fontWeight: FontWeight.w700 )),
+        title: Image.asset ( 'assets/punchLogo.png' , width: 100 , height: 40 ) ,
         leading: IconButton(
             onPressed: (){
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.headline1!.color,)
+            icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
         ),
-      ),
+    ),
+
       body: Column(
         children: [
           Container(

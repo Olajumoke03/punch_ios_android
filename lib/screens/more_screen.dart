@@ -303,7 +303,8 @@ class _MoreScreenState extends State<MoreScreen> {
           centerTitle: true,
           leading: Container(
           ),
-          title:  Text("More", style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500),),
+          title:  Text("More", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
+              fontWeight: FontWeight.w500),),
         ),
         body: Container(
           child:  ListView(

@@ -11,6 +11,8 @@ import 'package:punch_ios_android/category_list/state.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
+import 'package:punch_ios_android/search_result/search_result.dart';
+import 'package:punch_ios_android/search_result/search_result_bloc.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -182,7 +184,12 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       padding: const EdgeInsets.all( 10.0),
       child: InkWell(
         onTap: () {
-
+          Navigator.push( context, MaterialPageRoute(builder: (context)=>
+              BlocProvider<SearchResultBloc>(
+                  create: (context) => SearchResultBloc(repository: Repository()),
+                  child: SearchResult(searchQuery: _searchQuery)
+              ) )
+          );
         },
         child: Container(
           padding: const EdgeInsets.only(top:3.0, bottom:3.0),
