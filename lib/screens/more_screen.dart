@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:punch_ios_android/about_us/about_screen.dart';
 import 'package:punch_ios_android/about_us/about_us_bloc.dart';
+import 'package:punch_ios_android/about_us/contact_us.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/screens/home_page.dart';
@@ -392,7 +393,7 @@ class _MoreScreenState extends State<MoreScreen> {
               InkWell(
                 child: MoreItems( name: "Contact Us", image: "contactus.svg"),
                 onTap: () {
-                  // Navigator.push( context, MaterialPageRoute( builder: (context) => ContactUs()), );
+                  Navigator.push( context, MaterialPageRoute( builder: (context) => ContactUs()), );
                 },
               ),
 
@@ -400,7 +401,6 @@ class _MoreScreenState extends State<MoreScreen> {
                 child: MoreItems( name: "Newsletter", image: "newsletter.svg"),
                 onTap: () {
                   subscribeDialog(context,false);
-
                 },
               ),
 

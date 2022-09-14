@@ -81,7 +81,7 @@ class Constants {
 
   static String appAbout =
   // "<h3>You can reach out to us .</h3>"
-      "<h2>Punch News</h2>"
+      "<h2>Reach out to us:</h2>"
       "<p>Phone: 08053533002</p>"
       "<p>Email: punchng@gmail.com</p>"
       "<p>Address: Punch Place,kilometer 14, Lagos-Ibadan express way </p>";

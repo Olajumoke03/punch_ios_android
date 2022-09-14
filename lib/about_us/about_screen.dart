@@ -14,7 +14,6 @@ import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 
 class AboutScreen extends StatefulWidget {
 
-
   @override
   _AboutScreenState createState() => _AboutScreenState();
 }
@@ -54,21 +53,21 @@ class _AboutScreenState extends State<AboutScreen> {
             children: [
               BlocListener<AboutUsBloc, AboutUsState>(
                 listener: (context, state){
-                  if ( state is AboutUsLoadedState  != null ) {
+                  if ( state is AboutUsLoadedState) {
                     // a message will only come when it is updating the feed.
                     // Scaffold.of ( context ).showSnackBar ( SnackBar ( content: Text ( "Category List Updated" ) , ) );
                   }
                   else if ( state is AboutUsLoadFailureState ) {
-                    Scaffold.of ( context ).showSnackBar ( SnackBar (
-                      content: Text ( "Could not load data at this time" ) , ) );
+                    // Scaffold.of ( context ).showSnackBar ( SnackBar (
+                    //   content: Text ( "Could not load data at this time" ) , ) );
                   }
                 },
                 child: BlocBuilder<AboutUsBloc, AboutUsState>(
                   builder: (context, state) {
                     if ( state is AboutUsInitialState ) {
-                      return BuildLoadingWidget ( );
+                      return const BuildLoadingWidget ( );
                     } else if ( state is AboutUsLoadingState ) {
-                      return BuildLoadingWidget ( );
+                      return const BuildLoadingWidget ( );
                     } else if ( state is AboutUsLoadedState ) {
                       return buildAboutUs ( state.aboutUs);
                     } else if ( state is AboutUsLoadFailureState ) {
@@ -88,7 +87,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
   Widget buildAboutUs (AboutUsModel? aboutUsModel){
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child:  Column(
         children: [
           Text(
@@ -122,7 +121,6 @@ class _AboutScreenState extends State<AboutScreen> {
     );
 
   }
-
 }
 
 
