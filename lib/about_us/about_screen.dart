@@ -95,15 +95,6 @@ class _AboutScreenState extends State<AboutScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 7*_fontSizeController!.value, color: Theme.of(context).textTheme.bodyText1!.color),
           ),
-          // Html (
-          //   data: "${aboutUsModel.content!.rendered}" ,
-          //   backgroundColor: Theme.of ( context ).backgroundColor ,
-          //   defaultTextStyle: TextStyle(fontSize: 6*_fontSizeController!.value, color: Theme.of(context).textTheme.bodyText1.color),
-          //
-          //   linkStyle: const TextStyle( color: Colors.redAccent ) ,
-          //   onLinkTap: (url) {} ,
-          //   onImageTap: (src) {} ,
-          // ) ,
 
           Html(
             data:  '${aboutUsModel.content!.rendered}',
