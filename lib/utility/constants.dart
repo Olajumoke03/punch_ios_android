@@ -29,6 +29,22 @@ const String FEATURED_NEWS =BASE_URL+"posts?categories=";
 // newly added
 const String netCoreUrl ="https://api.netcoresmartech.com/apiv2?type=contact&activity=add&apikey=28b46bfdfd06f61d3a5b1d266e0b30d8";
 
+
+ String readNewTimestamp(String timestamp) {
+final DateTime date = DateTime.parse(timestamp);
+
+var time = timeago.format(date);
+return time;
+
+// final loadedTime =  DateTime.now();
+//
+//   final now = DateTime.now();
+//   var difference = now.difference(loadedTime);
+//   // mainContainer?.text = timeago.format(now.subtract(difference), locale: locale);
+// return difference;
+}
+
+
 class Constants {
 
   static String readTimestamp(String timestamp) {

@@ -1,6 +1,4 @@
-
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,9 +7,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
 import 'package:punch_ios_android/category_list/event.dart';
 import 'package:punch_ios_android/category_list/model.dart';
-import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
-import 'package:punch_ios_android/featured_news/featured_news_event.dart';
-import 'package:punch_ios_android/featured_news/featured_news_state.dart';
+// import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
+// import 'package:punch_ios_android/featured_news/featured_news_event.dart';
+// import 'package:punch_ios_android/featured_news/featured_news_state.dart';
 import 'package:punch_ios_android/home_news/home_bloc.dart';
 import 'package:punch_ios_android/home_news/home_event.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
@@ -23,6 +21,7 @@ import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/colors.dart';
+import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -30,7 +29,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 
 
 class HomeNewsScreen extends StatefulWidget {
@@ -47,7 +45,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   late Repository repository;
   late HomeNewsModel homeModel;
   late CategoryListBloc categoryListBloc;
-  late FeaturedNewsBloc featuredNewsBloc;
+  // late FeaturedNewsBloc featuredNewsBloc;
   late CategoryListModel categoryListModel;
   late RefreshController refreshController;
   late FontSizeController _fontSizeController;
@@ -80,7 +78,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.largeBanner,
     request: AdRequest(),
-    listener: BannerAdListener(),
+    listener: const BannerAdListener(),
   );
 
   void loadMore() {
@@ -111,7 +109,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       currentPage = 1;
     });
     homeNewsBloc.add(RefreshHomeNewsEvent());
-    featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
+    // featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
 
   }
 
@@ -125,8 +123,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     categoryListBloc = BlocProvider.of<CategoryListBloc>(context);
     categoryListBloc.add(FetchCategoryListEvent());
 
-    featuredNewsBloc = BlocProvider.of<FeaturedNewsBloc> ( context );
-    featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
+    // featuredNewsBloc = BlocProvider.of<FeaturedNewsBloc> ( context );
+    // featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
 
     _appProvider = Provider.of<AppProvider>(context, listen: false);
 
@@ -145,17 +143,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
             appBar: AppBar (
               centerTitle: true ,
               title: Image.asset ( 'assets/punchLogo.png' , width: 100 , height: 40 ) ,
-              actions: [
-//          IconButton(
-//              icon: Icon(Icons.refresh,size: 30,color: Colors.grey[400],),
-//              padding: EdgeInsets.all(5),
-//              onPressed: () async{
-//                await FlutterFundingChoices.showConsentForm();
-//                await refreshConsentInfo();
-//                },
-//
-//            )
-              ],
             ) ,
             body: SmartRefresher(
               enablePullDown: true,
@@ -185,63 +172,63 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 250,
-                      child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
-                          listener: (context, state){
-                            if ( state is FeaturedNewsRefreshingState ) {
-
-                            } else if ( state is FeaturedNewsLoadedState ) {
-
-                            }else if ( state is FeaturedCachedNewsLoadedState  ) {
-                              // a message will only come when it is updating the feed.
-                            }
-                            else if ( state is FeaturedNewsLoadFailureState ) {
-                            }
-                          },
-
-                          child: BlocBuilder<FeaturedNewsBloc, FeaturedNewsState>(
-                            buildWhen:(previous,current){
-                              // returning false here when we have a load faliure state means that.
-                              // we do not want the widget to rebuild when there is error
-                              if(current is FeaturedNewsLoadFailureState) {
-                                return false;
-                              } else
-                                return true;
-                            },
-                            builder: (context, state) {
-                              if ( state is FeaturedNewsInitialState ) {
-                                return Container(
-                                  margin: const EdgeInsets.only(top: 10),
-                                  constraints: const BoxConstraints.expand( height: 180 ),
-                                );
-                              } else if ( state is FeaturedNewsLoadingState ) {
-                                return  Container(
-                                  margin: const EdgeInsets.only(top: 10),
-                                  constraints: const BoxConstraints.expand( height: 180 ),
-                                );
-
-                              } else if ( state is FeaturedNewsLoadedState ) {
-                                return Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    constraints:const BoxConstraints.expand( height: 180 ),
-                                    child: imageSlider( state.featuredNews));
-                              }else if ( state is FeaturedCachedNewsLoadedState ) {
-                                return Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    constraints: const BoxConstraints.expand( height: 180 ),
-                                    child: imageSliderCached( state.cachedNews));
-                              }  else if ( state is FeaturedNewsLoadFailureState ) {
-                                return BuildErrorUi (message: state.error );
-                              }
-                              else {
-                                return const BuildErrorUi (message: "Something went wrong!" );
-                              }
-                            },
-                          )
-
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: 250,
+                    //   child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
+                    //       listener: (context, state){
+                    //         if ( state is FeaturedNewsRefreshingState ) {
+                    //
+                    //         } else if ( state is FeaturedNewsLoadedState ) {
+                    //
+                    //         }else if ( state is FeaturedCachedNewsLoadedState  ) {
+                    //           // a message will only come when it is updating the feed.
+                    //         }
+                    //         else if ( state is FeaturedNewsLoadFailureState ) {
+                    //         }
+                    //       },
+                    //
+                    //       child: BlocBuilder<FeaturedNewsBloc, FeaturedNewsState>(
+                    //         buildWhen:(previous,current){
+                    //           // returning false here when we have a load failure state means that.
+                    //           // we do not want the widget to rebuild when there is error
+                    //           if(current is FeaturedNewsLoadFailureState) {
+                    //             return false;
+                    //           } else
+                    //             return true;
+                    //         },
+                    //         builder: (context, state) {
+                    //           if ( state is FeaturedNewsInitialState ) {
+                    //             return Container(
+                    //               margin: const EdgeInsets.only(top: 10),
+                    //               constraints: const BoxConstraints.expand( height: 180 ),
+                    //             );
+                    //           } else if ( state is FeaturedNewsLoadingState ) {
+                    //             return  Container(
+                    //               margin: const EdgeInsets.only(top: 10),
+                    //               constraints: const BoxConstraints.expand( height: 180 ),
+                    //             );
+                    //
+                    //           } else if ( state is FeaturedNewsLoadedState ) {
+                    //             return Container(
+                    //                 margin: const EdgeInsets.only(top: 10),
+                    //                 constraints:const BoxConstraints.expand( height: 180 ),
+                    //                 child: imageSlider( state.featuredNews));
+                    //           }else if ( state is FeaturedCachedNewsLoadedState ) {
+                    //             return Container(
+                    //                 margin: const EdgeInsets.only(top: 10),
+                    //                 constraints: const BoxConstraints.expand( height: 180 ),
+                    //                 child: imageSliderCached( state.cachedNews));
+                    //           }  else if ( state is FeaturedNewsLoadFailureState ) {
+                    //             return BuildErrorUi (message: state.error );
+                    //           }
+                    //           else {
+                    //             return const BuildErrorUi (message: "Something went wrong!" );
+                    //           }
+                    //         },
+                    //       )
+                    //
+                    //   ),
+                    // ),
 
                     Container(
                       color: Theme.of(context).backgroundColor,
@@ -420,7 +407,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                             placeholder: (context, url) => Container(
                                 height: 125,
                                 width: 248,
-                                child: const Center(child: CircularProgressIndicator())),
+                                child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor))),
                             errorWidget: (context, url, error) => Image.asset(
                               "assets/punchLogo.png",
                               fit: BoxFit.contain,
@@ -490,8 +477,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               Container(
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Text(
-                                    // Constants.readTimestamp(homeNewsModel![pos].date),
-                                    Jiffy('${homeNewsModel[pos].date}').fromNow(),
+                                 Constants.readTimestamp('${homeNewsModel[pos].date}'),
                                     style: TextStyle( fontSize: 4*_fontSizeController.value , color:Theme.of(context).textTheme.bodyText1!.color)),
                               ),
                             ],
@@ -512,14 +498,11 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               ? Container(
               margin: const EdgeInsets.symmetric( vertical: 10),
               child: index % 10 == 0 ?
-              SizedBox(
-                child: adWidget, height: 100,
-              )
-              // Container(color: Colors.black12, height: 120)
+              // SizedBox(child: adWidget, height: 100,)
+              Container(color: Colors.black12, height: 120)
 
-
-              :  SizedBox( child: secondWidget , height: 100, )
-                  // :Container(color: Colors.black12, height: 120)
+              // :  SizedBox( child: secondWidget , height: 100, )
+                  :Container(color: Colors.black12, height: 120)
 
           )
               : Container(height: 10);
@@ -573,9 +556,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                     MaterialPageRoute(builder: (context) =>  BlocProvider<NewsTagBloc> (
                         create: (context) => NewsTagBloc (repository: Repository ()) ,
                         child: NewsDetails ( newsModel: lNM , )
-                    ) , )
-
-
+                      ),)
                 );
               },
               child: Row(
@@ -586,15 +567,15 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                     ),
                     elevation: 4,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all( Radius.circular(10)),
+                      borderRadius: const BorderRadius.all( Radius.circular(10)),
                       child: Hero(
                         tag: pos,
                         child: CachedNetworkImage(
                           imageUrl: '${homeNewsModel[pos].xFeaturedMedia}',
-                          placeholder: (context, url) => Container(
+                          placeholder: (context, url) => SizedBox(
                               height: 125,
                               width: 248,
-                              child: const Center(child: CircularProgressIndicator())),
+                              child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor))),
                           errorWidget: (context, url, error) => Image.asset(
                             "assets/punchLogo.png",
                             fit: BoxFit.contain,
@@ -664,8 +645,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                             Container(
                               padding: const EdgeInsets.only(left: 5),
                               child: Text(
-                                // Constants.readTimestamp(homeNewsModel![pos].date),
-                                  Jiffy('${homeNewsModel[pos].date}').fromNow(),
+                                  Constants.readTimestamp('${homeNewsModel[pos].date}'),
+                                //   Jiffy('${homeNewsModel[pos].date}').fromNow(),
                                   style: TextStyle( fontSize: 4*_fontSizeController.value , color:Theme.of(context).textTheme.bodyText1!.color)),
                             ),
                           ],

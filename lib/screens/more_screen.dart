@@ -258,7 +258,7 @@ class _MoreScreenState extends State<MoreScreen> {
     },
 
     {
-      SvgPicture: SvgPicture.asset( 'assets/icons/about.svg', height: 35, width: 35),
+      SvgPicture: SvgPicture.asset( 'assets/icons/about.svg', height: 35.0, width: 35.0),
       "title": "AboutUs",
       // "page": BlocProvider<AboutUsBloc>(
       //     create: (context) => AboutUsBloc(aboutUsRepository: NewsRepository()),
@@ -267,7 +267,7 @@ class _MoreScreenState extends State<MoreScreen> {
     },
 
     {
-      SvgPicture: SvgPicture.asset( 'assets/icons/contact.svg', height: 35, width: 35, ),
+      SvgPicture: SvgPicture.asset( 'assets/icons/contact.svg', height: 35.0, width: 35.0, ),
       "title": "Contact Us",
       // "page": BlocProvider<AboutUsBloc>(
       //     create: (context) => AboutUsBloc(aboutUsRepository: NewsRepository()),
@@ -276,7 +276,7 @@ class _MoreScreenState extends State<MoreScreen> {
     },
 
     {
-      SvgPicture: SvgPicture.asset( 'assets/icons/privacy.svg', height: 35, width: 35, ),
+      SvgPicture: SvgPicture.asset( 'assets/icons/privacy.svg', height: 35.0, width: 35.0, ),
       "title": "Privacy Policy",
       // "page": BlocProvider<PrivacyPolicyBloc>(
       //     create: (context) => PrivacyPolicyBloc(privacyPolicyRepository: NewsRepository()),
@@ -285,13 +285,13 @@ class _MoreScreenState extends State<MoreScreen> {
     },
 
     {
-      SvgPicture: SvgPicture.asset( 'assets/icons/advertise.svg', height: 35, width: 35),
+      SvgPicture: SvgPicture.asset( 'assets/icons/advertise.svg', height: 35.0, width: 35.0),
       "title": "Advertise with us",
       // "page": "https://punchng.com/advertise-with-us/",
     },
 
     {
-      SvgPicture: SvgPicture.asset( 'assets/icons/rate.svg', height: 35, width: 35),
+      SvgPicture: SvgPicture.asset( 'assets/icons/rate.svg', height: 35.0, width: 35.0),
       "title": "Video",
       // "page": VideoScreen(),
     },
@@ -485,8 +485,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               child: Container(
                                 child: SvgPicture.asset(
                                   'assets/social_media/linkedin.svg',
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.0,
+                                  width: 35.0,
                                 ),
                               ),
                             ),
@@ -506,8 +506,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               child: Container(
                                 child: SvgPicture.asset(
                                   'assets/social_media/instagram.svg',
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.0,
+                                  width: 35.0,
                                 ),
                               ),
                             ),
@@ -527,8 +527,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               child: Container(
                                 child: SvgPicture.asset(
                                   'assets/social_media/telegram.svg',
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.0,
+                                  width: 35.0,
                                 ),
                               ),
                             ),
@@ -548,8 +548,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               child: Container(
                                 child: SvgPicture.asset(
                                   'assets/social_media/facebook.svg',
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.0,
+                                  width: 35.0,
                                 ),
                               ),
                             ),
@@ -570,8 +570,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               child: Container(
                                 child: SvgPicture.asset(
                                   'assets/social_media/youtube.svg',
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.0,
+                                  width: 35.0,
                                 ),
                               ),
                             ),
@@ -592,8 +592,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               child: Container(
                                 child: SvgPicture.asset(
                                   'assets/social_media/twitter.svg',
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.0,
+                                  width: 35.0,
                                 ),
                               ),
                             ),

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:punch_ios_android/about_us/about_model.dart';
 import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/category_list/responses.dart';
-import 'package:punch_ios_android/featured_news/featured_news_response.dart';
+// import 'package:punch_ios_android/featured_news/featured_news_response.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/home_news/home_response.dart';
 import 'package:punch_ios_android/model/responses/net_core_response.dart';
@@ -51,16 +51,14 @@ class Repository   {
     return  HomeNewsResponse.fromJson(data);
   }
 
-  Future<List<HomeNewsModel>>fetchFeaturedNews() async {
-    final response = await _apiClient.get(Constants.FEATURED_NEWS+"34");
-    var data = json.decode(response);
-    print("featured news  response " + response);
-
-    FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
-    saveAnyStringToCache(response, Constants.Constants.featuredNewsCacheKey);
-
-    return featuredNews.featuredNewss;
-  }
+  // Future<List<HomeNewsModel>>fetchFeaturedNews() async {
+  //   final response = await _apiClient.get(Constants.FEATURED_NEWS+"34");
+  //   var data = json.decode(response);
+  //   print("featured news  response " + response);
+  //   FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
+  //   saveAnyStringToCache(response, Constants.Constants.featuredNewsCacheKey);
+  //   return featuredNews.featuredNewss;
+  // }
 
 
   Future<List<HomeNewsModel>>fetchHomeNews() async {
@@ -88,7 +86,7 @@ class Repository   {
   Future <List<CategoryListModel>>fetchCategoryList() async {
     final response = await _apiClient.get(Constants.CATEGORY_LIST);
     final data = json.decode(response);
-    print("this is category list  response  " + response.toString());
+    // print("this is category list  response  " + response.toString());
     CategoryListResponse  categoryListResponse = CategoryListResponse.fromJson(data);
     return categoryListResponse.categoryLists;
   }

@@ -13,7 +13,6 @@ import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
-import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -165,7 +164,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
         return Consumer<DeepLinkNewsDetailsProvider>(
             builder: ( context,  deepProvider,  child) {
           HomeNewsModel newsModel = deepProvider.getNewsDetails();
-          return Consumer<DetailsProvider>(
+          // return Consumer<DetailsProvider>(
+          return Consumer(
               builder: ( context,  detailsProvider,  child) {
 
         return Scaffold (
@@ -189,20 +189,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 ) ,
               ) ,
               IconButton (
-                onPressed: () async {
-                  if ( isSaved == true ) {
-                    detailsProvider.removeFav ( widget.newsModel!.id! );
-                    // detailsProvider.removeFav ( widget.newsModel.id);
-
-                    setState ( () {
-                      isSaved = false;
-                    } );
-                  } else {
-                    detailsProvider.addFav ( widget.newsModel! );
-                    setState ( () {
-                      isSaved = true;
-                    } );
-                  }
+                onPressed: ()  {
                 } ,
                 icon: Icon (
                   isSaved == true
@@ -246,11 +233,11 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 if ( state is DeepLinkDetailsLoadedState ) {
                   deepProvider.setLoadSuccess(true);
                   deepProvider.setNewsDetails(state.model);
-                  detailsProvider.checkFav(state.model.id!).then((value) {
-                    setState(() {
-                      isSaved = value;
-                    });
-                  });
+                  // detailsProvider.checkFav(state.model.id!).then((value) {
+                  //   setState(() {
+                  //     isSaved = value;
+                  //   });
+                  // });
                  }
                 },
 

@@ -22,7 +22,7 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
     if (event is FetchHomeNewsEvent) {
       try{
         // load news initially from cache
-        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
+        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.featuredNewsCacheKey);
         print("home cachedJson  : "+ cachedJson);
 
         if(cachedJson.isNotEmpty){

@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
-import 'package:punch_ios_android/utility/details_provider.dart';
-import 'package:punch_ios_android/utility/favorites_provider.dart';
+// import 'package:punch_ios_android/utility/details_provider.dart';
+// import 'package:punch_ios_android/utility/favorites_provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:punch_ios_android/utility/subcribe_to_newsletter_provider.dart';
 
@@ -39,8 +39,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => DeepLinkNewsDetailsProvider()),
-        ChangeNotifierProvider(create: (_) => DetailsProvider()),
-        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+        // ChangeNotifierProvider(create: (_) => DetailsProvider()),
+        // ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => SubscribeToNewsLetterProvider()),
         ChangeNotifierProvider(create: (_) => FontSizeController()),
 

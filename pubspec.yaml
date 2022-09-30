@@ -60,7 +60,7 @@ dependencies:
   #  google_mobile_ads: ^1.2.0
   firebase_dynamic_links: ^4.0.6
   onesignal_flutter: ^3.3.0
-#  cloud_firestore: ^3.1.9
+  cloud_firestore: ^3.1.9
   flutter_funding_choices: ^0.3.0+2
   webview_flutter: ^2.0.13
 
@@ -68,7 +68,7 @@ dependencies:
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6
   firebase_crashlytics_platform_interface: 3.1.13
-#  cloud_firestore_platform_interface: 5.4.13
+  cloud_firestore_platform_interface: 5.4.13
   firebase_auth_platform_interface: 6.1.11
   firebase_storage_platform_interface: 4.0.14
   cloud_functions_platform_interface: 5.0.21

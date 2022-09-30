@@ -9,7 +9,6 @@ import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
-import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +57,8 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
     return Consumer<DeepLinkNewsDetailsProvider>(
         builder: ( context,  deepProvider, child) {
           HomeNewsModel newsModel = deepProvider.getNewsDetails();
-          return Consumer<DetailsProvider>(
+          // return Consumer<DetailsProvider>(
+          return Consumer(
               builder: ( context,  detailsProvider, child) {
                 return Scaffold (
                     appBar: AppBar (

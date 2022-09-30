@@ -92,7 +92,7 @@ class _DisqusScreenState extends State<DisqusScreen> {
                   .always_allow ,
 
             ),
-            isLoading ? Center( child: CircularProgressIndicator(),)
+            isLoading ? Center( child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),)
                 : Stack(),
           ],
         )
