@@ -9,7 +9,7 @@ import 'package:punch_ios_android/home_news/home_bloc.dart';
 import 'package:punch_ios_android/home_news/home_screen.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/more_screen.dart';
-import 'package:punch_ios_android/screens/saved_news.dart';
+import 'package:punch_ios_android/screens/saved_news_screen.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';

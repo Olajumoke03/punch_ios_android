@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:punch_ios_android/about_us/about_model.dart';
 import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/category_list/responses.dart';
+import 'package:punch_ios_android/featured_news/featured_news_response.dart';
 // import 'package:punch_ios_android/featured_news/featured_news_response.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/home_news/home_response.dart';
@@ -60,6 +61,16 @@ class Repository   {
   //   return featuredNews.featuredNewss;
   // }
 
+
+  Future<List<HomeNewsModel>>fetchFeaturedNews() async {
+    final response = await _apiClient.get(Constants.FEATURED_NEWS+"34");
+    var data = json.decode(response);
+      print("featured news  response " + response);
+
+    FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
+    saveAnyStringToCache(response, Constants.Constants.featuredNewsCacheKey);
+    return featuredNews.featuredNewss;
+  }
 
   Future<List<HomeNewsModel>>fetchHomeNews() async {
     final response = await _apiClient.get(Constants.LATEST_NEWS);

@@ -7,9 +7,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
 import 'package:punch_ios_android/category_list/event.dart';
 import 'package:punch_ios_android/category_list/model.dart';
-// import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
-// import 'package:punch_ios_android/featured_news/featured_news_event.dart';
-// import 'package:punch_ios_android/featured_news/featured_news_state.dart';
+import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
+import 'package:punch_ios_android/featured_news/featured_news_event.dart';
+import 'package:punch_ios_android/featured_news/featured_news_state.dart';
 import 'package:punch_ios_android/home_news/home_bloc.dart';
 import 'package:punch_ios_android/home_news/home_event.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
@@ -45,7 +45,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   late Repository repository;
   late HomeNewsModel homeModel;
   late CategoryListBloc categoryListBloc;
-  // late FeaturedNewsBloc featuredNewsBloc;
+  late FeaturedNewsBloc featuredNewsBloc;
   late CategoryListModel categoryListModel;
   late RefreshController refreshController;
   late FontSizeController _fontSizeController;
@@ -109,7 +109,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       currentPage = 1;
     });
     homeNewsBloc.add(RefreshHomeNewsEvent());
-    // featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
+    featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
 
   }
 
@@ -123,8 +123,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     categoryListBloc = BlocProvider.of<CategoryListBloc>(context);
     categoryListBloc.add(FetchCategoryListEvent());
 
-    // featuredNewsBloc = BlocProvider.of<FeaturedNewsBloc> ( context );
-    // featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
+    featuredNewsBloc = BlocProvider.of<FeaturedNewsBloc> ( context );
+    featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
 
     _appProvider = Provider.of<AppProvider>(context, listen: false);
 
@@ -172,63 +172,69 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    // SizedBox(
-                    //   height: 250,
-                    //   child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
-                    //       listener: (context, state){
-                    //         if ( state is FeaturedNewsRefreshingState ) {
-                    //
-                    //         } else if ( state is FeaturedNewsLoadedState ) {
-                    //
-                    //         }else if ( state is FeaturedCachedNewsLoadedState  ) {
-                    //           // a message will only come when it is updating the feed.
-                    //         }
-                    //         else if ( state is FeaturedNewsLoadFailureState ) {
-                    //         }
-                    //       },
-                    //
-                    //       child: BlocBuilder<FeaturedNewsBloc, FeaturedNewsState>(
-                    //         buildWhen:(previous,current){
-                    //           // returning false here when we have a load failure state means that.
-                    //           // we do not want the widget to rebuild when there is error
-                    //           if(current is FeaturedNewsLoadFailureState) {
-                    //             return false;
-                    //           } else
-                    //             return true;
-                    //         },
-                    //         builder: (context, state) {
-                    //           if ( state is FeaturedNewsInitialState ) {
-                    //             return Container(
-                    //               margin: const EdgeInsets.only(top: 10),
-                    //               constraints: const BoxConstraints.expand( height: 180 ),
-                    //             );
-                    //           } else if ( state is FeaturedNewsLoadingState ) {
-                    //             return  Container(
-                    //               margin: const EdgeInsets.only(top: 10),
-                    //               constraints: const BoxConstraints.expand( height: 180 ),
-                    //             );
-                    //
-                    //           } else if ( state is FeaturedNewsLoadedState ) {
-                    //             return Container(
-                    //                 margin: const EdgeInsets.only(top: 10),
-                    //                 constraints:const BoxConstraints.expand( height: 180 ),
-                    //                 child: imageSlider( state.featuredNews));
-                    //           }else if ( state is FeaturedCachedNewsLoadedState ) {
-                    //             return Container(
-                    //                 margin: const EdgeInsets.only(top: 10),
-                    //                 constraints: const BoxConstraints.expand( height: 180 ),
-                    //                 child: imageSliderCached( state.cachedNews));
-                    //           }  else if ( state is FeaturedNewsLoadFailureState ) {
-                    //             return BuildErrorUi (message: state.error );
-                    //           }
-                    //           else {
-                    //             return const BuildErrorUi (message: "Something went wrong!" );
-                    //           }
-                    //         },
-                    //       )
-                    //
-                    //   ),
-                    // ),
+                    SizedBox(
+                      height: 250,
+                      child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
+                          listener: (context, state){
+                            if ( state is FeaturedNewsRefreshingState ) {
+                              Scaffold.of ( context ).showSnackBar ( SnackBar (
+                                content: Text ( 'Refreshing' ) , ) );
+                            } else if ( state is FeaturedNewsLoadedState && state.message != null ) {
+
+                            }else if ( state is FeaturedCachedNewsLoadedState  ) {
+                              // a message will only come when it is updating the feed.
+                            }
+                            else if ( state is FeaturedNewsLoadFailureState ) {
+                              Scaffold.of ( context ).showSnackBar ( SnackBar (
+                                content: Text ( "Could not load news at this time" ) , ) );
+                            }
+                          },
+
+                          child: BlocBuilder<FeaturedNewsBloc, FeaturedNewsState>(
+                            buildWhen:(previous,current){
+                              // returning false here when we have a load faliure state means that.
+                              // we do not want the widget to rebuild when there is error
+                              if(current is FeaturedNewsLoadFailureState)
+                                return false;
+                              else
+                                return true;
+                            },
+                            builder: (context, state) {
+                              if ( state is FeaturedNewsInitialState ) {
+                                return Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  constraints: BoxConstraints.expand( height: 180 ),
+                                );
+                              } else if ( state is FeaturedNewsLoadingState ) {
+                                return  Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  constraints: BoxConstraints.expand( height: 180 ),
+                                );
+
+                              } else if ( state is FeaturedNewsLoadedState ) {
+                                return Container(
+                                    margin: EdgeInsets.only(top: 10),
+                                    constraints: BoxConstraints.expand( height: 180 ),
+                                    child: imageSlider( state.featuredNews));
+                                // return buildFeaturedNewsList ( state.featuredNews);
+                              }else if ( state is FeaturedCachedNewsLoadedState ) {
+                                return Container(
+                                    margin: EdgeInsets.only(top: 10),
+                                    constraints: BoxConstraints.expand( height: 180 ),
+                                    child: imageSliderCached( state.featuredNews));
+                                // return buildFeaturedNewsList ( state.featuredNews);
+                              }  else if ( state is FeaturedNewsLoadFailureState ) {
+                                return BuildErrorUi (message: state.error );
+                              }
+                              else {
+                                return BuildErrorUi (message: "Something went wrong!" );
+                              }
+                            },
+                          )
+
+                      ),
+                    ),
+
 
                     Container(
                       color: Theme.of(context).backgroundColor,
@@ -467,7 +473,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                     );
                                   } ,
                                   child: Text (homeNewsModel[pos].categoriesString![0].replaceAll("&amp;", "&") ,
-                                    style: TextStyle ( fontSize: 5*_fontSizeController.value , color: Colors.white ,
+                                    style: TextStyle ( fontSize: 4.5*_fontSizeController.value , color: Colors.white ,
                                     ) ,
                                   ) ,
                                 ) ,
@@ -664,6 +670,220 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     );
 
   }
+
+
+  // //FOR FEATURED NEWS
+  // Widget imageSlider(List<HomeNewsModel> featuredNewsModel){
+  //   return  ClipRRect(
+  //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  //       child: InkWell(
+  //         onTap: (){
+  //           HomeNewsModel fNM = featuredNewsModel[0];
+  //           Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+  //               BlocProvider<NewsTagBloc> (
+  //                   create: (context) => NewsTagBloc (repository: Repository ()) ,
+  //                   child: NewsDetails ( newsModel: fNM , )
+  //               ) ,
+  //           ));
+  //         },
+  //         child: Stack(
+  //           alignment: Alignment.topRight,
+  //           children: [
+  //             Stack(
+  //               fit: StackFit.expand,
+  //               alignment: Alignment.topRight,
+  //               children: <Widget>[
+  //
+  //                 CachedNetworkImage(
+  //                   //imageUrl: "$img",
+  //                   imageUrl: '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+  //                   placeholder: (context, url) => Container(
+  //                       height: 125,
+  //                       width: 248,
+  //                       child: Center(child: CircularProgressIndicator())),
+  //                   errorWidget: (context, url, error) => Image.asset(
+  //                     "assets/punchLogo.png",
+  //                     fit: BoxFit.contain,
+  //                     // height: 100,
+  //                     // width: 100,
+  //                   ),
+  //                   fit: BoxFit.cover,
+  //                   height: 100,
+  //                   width: 100,
+  //                 ),
+  //
+  //                 Positioned(
+  //                   bottom: 0.0, left: 0.0, right: 0.0,
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       gradient: LinearGradient(
+  //                         colors: [Colors.black.withOpacity(0.8),Colors.black.withOpacity(0.7), Colors.black.withOpacity(0.5),Colors.black.withOpacity(0.0)],
+  //                         begin: Alignment.bottomCenter,
+  //                         end: Alignment.topCenter,
+  //                       ),
+  //                     ),
+  //                     padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+  //                     child:
+  //                     Html(
+  //                       data:  '${featuredNewsModel[0].title!.rendered}',
+  //                       style: {
+  //                         "body": Style(
+  //                             fontSize: const FontSize(18.0),
+  //                             fontWeight: FontWeight.w400,
+  //                             color:Theme.of(context).textTheme.bodyText1!.color
+  //                         ),
+  //                       },
+  //                     )
+  //
+  //                   ),
+  //                 ),
+  //
+  //               ],
+  //             ),
+  //
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: InkWell(
+  //                 onTap: () {
+  //                   CategoryListModel cLM = CategoryListModel(categoryId:"34",categoryName:"Top Stories");
+  //                   Navigator.push( context, MaterialPageRoute(builder: (context)=>
+  //                       BlocProvider<NewsByCategoryBloc>(
+  //                           create: (context) => NewsByCategoryBloc(repository: Repository()),
+  //                           child: NewsByCategory(model: cLM,)
+  //                       ),
+  //                   ));
+  //                 },
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.all(8.0),
+  //                   child: Container(
+  //                       width: 35,
+  //                       height: 35,
+  //                       alignment: Alignment.topRight,
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.red,
+  //                         borderRadius: BorderRadius.circular(30),
+  //                       ),
+  //                       child: Center(child: Icon(Icons.arrow_forward_rounded, color: Colors.white))),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //   );
+  //
+  // }
+  //
+  // //FOR FEATURED CACHED NEWS
+  // Widget imageSliderCached(List<HomeNewsModel> featuredNewsModel){
+  //   return  ClipRRect(
+  //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  //       child: InkWell(
+  //         onTap: (){
+  //           HomeNewsModel fNM = featuredNewsModel[0];
+  //           Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+  //               BlocProvider<NewsTagBloc> (
+  //                   create: (context) => NewsTagBloc (repository: Repository ()) ,
+  //                   child: NewsDetails ( newsModel: fNM , )
+  //               ) ,
+  //           ));
+  //         },
+  //         child: Stack(
+  //           alignment: Alignment.topRight,
+  //           children: [
+  //             Stack(
+  //               fit: StackFit.expand,
+  //               alignment: Alignment.topRight,
+  //               children: <Widget>[
+  //                 // Image.network(
+  //                 //   '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+  //                 //   fit: BoxFit.cover,
+  //                 // ),
+  //
+  //                 CachedNetworkImage(
+  //                   //imageUrl: "$img",
+  //                   imageUrl: '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+  //                   placeholder: (context, url) => Container(
+  //                       height: 125,
+  //                       width: 248,
+  //                       child: Center(child: CircularProgressIndicator())),
+  //                   errorWidget: (context, url, error) => Image.asset(
+  //                     "assets/punchLogo.png",
+  //                     fit: BoxFit.contain,
+  //                     // height: 100,
+  //                     // width: 100,
+  //                   ),
+  //                   fit: BoxFit.cover,
+  //                   height: 100,
+  //                   width: 100,
+  //                 ),
+  //
+  //                 Positioned(
+  //                   bottom: 0.0, left: 0.0, right: 0.0,
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       gradient: LinearGradient(
+  //                         colors: [Colors.black.withOpacity(0.8),Colors.black.withOpacity(0.7), Colors.black.withOpacity(0.5),Colors.black.withOpacity(0.0)],
+  //                         begin: Alignment.bottomCenter,
+  //                         end: Alignment.topCenter,
+  //                       ),
+  //                     ),
+  //                     padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+  //                     child:
+  //                     // Html(
+  //                     //   data: '${featuredNewsModel[0].title.rendered} ',
+  //                     //   useRichText: true,
+  //                     //   renderNewlines: true,
+  //                     //   defaultTextStyle: TextStyle(color: Colors.white, fontSize: 23,fontWeight:FontWeight.bold),
+  //                     // ),
+  //
+  //                     Html(
+  //                       data:  '${featuredNewsModel[0].title!.rendered}',
+  //                       style: {
+  //                         "body": Style(
+  //                             fontSize: const FontSize(18.0),
+  //                             fontWeight: FontWeight.w400,
+  //                             color:Theme.of(context).textTheme.bodyText1!.color
+  //                         ),
+  //                       },
+  //                     )
+  //                   ),
+  //                 ),
+  //
+  //               ],
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: InkWell(
+  //                 onTap: () {
+  //                   CategoryListModel cLM = CategoryListModel(categoryId:"13",categoryName:"Featured News");
+  //                   Navigator.push( context, MaterialPageRoute(builder: (context)=>
+  //                       BlocProvider<NewsByCategoryBloc>(
+  //                           create: (context) => NewsByCategoryBloc(repository: Repository()),
+  //                           child: NewsByCategory(model: cLM,)
+  //                       ),
+  //                   ));
+  //                 },
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.all(8.0),
+  //                   child: Container(
+  //                       width: 35,
+  //                       height: 35,
+  //                       alignment: Alignment.topRight,
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.red,
+  //                         borderRadius: BorderRadius.circular(30),
+  //                       ),
+  //                       child: Center(child: Icon(Icons.arrow_forward_rounded, color: Colors.white))),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //   );
+  //
+  // }
 
 
   //FOR FEATURED NEWS
