@@ -1,6 +1,4 @@
-import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
@@ -18,9 +16,9 @@ import 'package:provider/provider.dart';
 
 
 class CategoryListScreen extends StatefulWidget {
-  late CategoryListModel categoryListModel;
+   final  CategoryListModel? categoryListModel;
 
-   CategoryListScreen({Key? key}) : super(key: key);
+    const CategoryListScreen({Key? key, this.categoryListModel}) : super(key: key);
 
   @override
   _CategoryListScreenState createState() => _CategoryListScreenState();
@@ -29,14 +27,14 @@ class CategoryListScreen extends StatefulWidget {
 class _CategoryListScreenState extends State<CategoryListScreen> {
   late CategoryListBloc categoryListBloc;
   late CategoryListModel categoryListModel;
-  late FontSizeController _fontSizeController;
+  late FontSizeController fontSizeController;
 
-  String _searchQuery= 'a';
+ final String _searchQuery= 'a';
 
   @override
   void initState() {
     super.initState();
-    _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
+    fontSizeController = Provider.of<FontSizeController>(context, listen: false);
     categoryListBloc = BlocProvider.of<CategoryListBloc>(context);
     categoryListBloc.add(FetchCategoryListEvent());
   }
@@ -60,15 +58,14 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                   children: [
                     getSearchBarUI(context),
 
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
                     BlocListener<CategoryListBloc, CategoryListState>(
                       listener: (context, state) {
                         if (state is CategoryListRefreshingState) {
                           // Scaffold.of(context).showSnackBar(SnackBar(content: Text('Refreshing')));
                         }
-                        else if (state is CategoryListLoadedState &&
-                            state.message != null) {
+                        else if (state is CategoryListLoadedState) {
                           // a message will only come when it is updating the feed.
                         }
                         else if (state is CategoryListLoadFailureState) {
@@ -148,13 +145,13 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                   imageUrl: "${categoryListModel[pos].imageUrl}",
                   color: redColor,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                       child: SizedBox(
                           height: 10,
                           width: 10,
                           child: CircularProgressIndicator())),
                   errorWidget: (context, url, error) => Container(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     height: 20,
                     width: 20,
                   ),
@@ -238,8 +235,6 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       ),
     );
   }
-
-
 }
 
 

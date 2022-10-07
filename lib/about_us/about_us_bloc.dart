@@ -10,7 +10,6 @@ class AboutUsBloc extends Bloc<AboutUsEvent,AboutUsState>{
 
   AboutUsBloc({ this.repository}): super(AboutUsInitialState());
 
-@override
 AboutUsState get initialState => AboutUsInitialState();
 
 @override

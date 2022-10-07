@@ -45,7 +45,7 @@ dependencies:
   cached_network_image: ^3.2.0
   flutter_html: ^2.2.1
   pull_to_refresh: ^2.0.0
-  objectdb: ^1.2.1+1
+#  objectdb: ^1.2.1+1
   bloc: ^7.2.0
   jiffy: ^5.0.0
   url_launcher: ^6.0.20
@@ -65,18 +65,18 @@ dependencies:
   webview_flutter: ^2.0.13
 
 
-dependency_overrides:
-  firebase_messaging_platform_interface: 3.1.6
-  firebase_crashlytics_platform_interface: 3.1.13
-  cloud_firestore_platform_interface: 5.4.13
-  firebase_auth_platform_interface: 6.1.11
-  firebase_storage_platform_interface: 4.0.14
-  cloud_functions_platform_interface: 5.0.21
-  firebase_analytics_platform_interface: 3.0.5
-  firebase_remote_config_platform_interface: 1.0.5
-  firebase_dynamic_links_platform_interface: 0.2.0+5
-  firebase_performance_platform_interface: 0.1.0+5
-  firebase_app_installations_platform_interface: 0.1.0+6
+#dependency_overrides:
+#  firebase_messaging_platform_interface: 4.2.0
+#  firebase_crashlytics_platform_interface: 3.2.19
+#  cloud_firestore_platform_interface: 5.7.7
+#  firebase_auth_platform_interface: 6.2.2
+#  firebase_storage_platform_interface: 4.1.18
+#  cloud_functions_platform_interface: 5.1.18
+#  firebase_analytics_platform_interface: 3.3.7
+#  firebase_remote_config_platform_interface: 1.1.19
+#  firebase_dynamic_links_platform_interface: 0.2.3+15
+#  firebase_performance_platform_interface: 0.1.1+19
+#  firebase_app_installations_platform_interface: 0.1.1+19
 
 
 dev_dependencies:

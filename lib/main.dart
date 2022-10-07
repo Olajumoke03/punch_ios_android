@@ -1,12 +1,7 @@
-
-
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:punch_ios_android/utility/details_provider.dart';
-import 'package:punch_ios_android/utility/favorites_provider.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
@@ -19,7 +14,6 @@ import 'deep_link/bloc.dart';
 import 'deep_link/deeplink_news_details.dart';
 import 'deep_link/deeplink_wrapper.dart';
 import 'home_news/home_model.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,20 +30,20 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => DeepLinkNewsDetailsProvider()),
-        ChangeNotifierProvider(create: (_) => DetailsProvider()),
-        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+        // ChangeNotifierProvider(create: (_) => DetailsProvider()),
+        // ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => SubscribeToNewsLetterProvider()),
         ChangeNotifierProvider(create: (_) => FontSizeController()),
 
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
    final Uri? uri;
-  MyApp({this.uri});
+   const MyApp({Key? key, this.uri}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();

@@ -1,14 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:punch_ios_android/category_list/model.dart';
-import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
-import 'package:punch_ios_android/utility/constants.dart';
 import 'event.dart';
-import 'responses.dart';
 import 'state.dart';
-
 
 class CategoryListBloc extends Bloc<CategoryListEvent, CategoryListState>{
  final Repository repository;

@@ -7,9 +7,8 @@ abstract class NewsTagEvent extends Equatable {
 }
 
 class FetchNewsTagEvent extends NewsTagEvent {
-
-  String id;
-  FetchNewsTagEvent({required this.id});
+  final String id;
+ FetchNewsTagEvent({required this.id});
 
    @override
   List<Object> get props => [];

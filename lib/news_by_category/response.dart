@@ -10,9 +10,9 @@ class NewsByCategoryResponse {
 
   NewsByCategoryResponse.fromJson(List<dynamic> json) {
     newsByCategorys =  <HomeNewsModel>[];
-    json.forEach((v) {
+    for (var v in json) {
       newsByCategorys.add( HomeNewsModel.fromJson(v));
-    });
+    }
   }
 
   String toJson() {

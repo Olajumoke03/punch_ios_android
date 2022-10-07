@@ -10,7 +10,6 @@ class NewsTagBloc extends Bloc<NewsTagEvent,NewsTagState>{
 
   NewsTagBloc({required this.repository}) : super(NewsTagInitialState());
 
-@override
 NewsTagState get initialState => NewsTagInitialState();
 
 @override
@@ -19,7 +18,7 @@ Stream<NewsTagState> mapEventToState(NewsTagEvent event) async* {
     yield NewsTagLoadingState();
     try{
         List<HomeNewsModel> newsTag = await repository.fetchNewsTag(event.id);
-        if(newsTag.length>0){
+        if(newsTag.isNotEmpty){
           yield NewsTagLoadedState(newsTag:newsTag,message: "News Tag Updated");
           print("NewsTagLoadedState");
         }

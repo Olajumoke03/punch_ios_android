@@ -1,41 +1,36 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/utility/colors.dart';
-import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 
 
 // this is the deeplink that works for notification from OneSignal
 
 class DeepLinkNewsDetails extends StatefulWidget {
-  String slug;
+ final String slug;
 
-  DeepLinkNewsDetails ({Key? key , required this.slug,}) : super( key: key );
+  const DeepLinkNewsDetails ({Key? key , required this.slug,}) : super( key: key );
 
   @override
   _DeepLinkNewsDetailsState createState() => _DeepLinkNewsDetailsState();
 }
 
 class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
-  StreamSubscription? _subscription;
+  StreamSubscription? subscription;
   bool isSaved=false;
 
   final BannerAd articleMedium = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.mediumRectangle,
-    request: AdRequest(),
-    listener: BannerAdListener(),
+    request: const AdRequest(),
+    listener: const BannerAdListener(),
   );
 
   @override
@@ -138,7 +133,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                         Container (
                                           padding: const EdgeInsets.only ( left: 0 ) ,
                                           child: Icon ( Icons.person ,
-                                            color: Theme.of ( context ).accentColor ,
+                                            color: Theme.of ( context ).colorScheme.secondary ,
                                             size: 12.0 ,
                                           ) ,
                                         ) ,
@@ -173,8 +168,8 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                     itemBuilder: (BuildContext context , int index) {
                                       return
                                         Container (
-                                          padding: EdgeInsets.symmetric ( horizontal: 5 , vertical: 3 ) ,
-                                          margin: EdgeInsets.only ( right: 5.0 ) ,
+                                          padding: const EdgeInsets.symmetric ( horizontal: 5 , vertical: 3 ) ,
+                                          margin: const EdgeInsets.only ( right: 5.0 ) ,
                                           decoration: BoxDecoration ( borderRadius: BorderRadius.circular ( 5 ) ,
                                             color: mainColor ,
                                           ) ,
@@ -268,7 +263,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                         ),
 
 
-                        SizedBox(height: 15),
+                       const SizedBox(height: 15),
 
                         SizedBox (
                           child: mediumWidget ,
@@ -276,7 +271,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                           height: 250,
                         ) ,
 
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
 
                       ] ,
                     )

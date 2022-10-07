@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_event.dart';
@@ -11,7 +10,6 @@ class NewsByCategoryBloc extends Bloc<NewsByCategoryEvent,NewsByCategoryState>{
 
   NewsByCategoryBloc({required this.repository}) : super(NewsByCategoryInitialState());
 
-@override
 NewsByCategoryState get initialState => NewsByCategoryInitialState();
 
 @override

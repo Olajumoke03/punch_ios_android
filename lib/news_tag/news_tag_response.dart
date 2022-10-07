@@ -29,9 +29,9 @@ class NewsTagResponse {
 
   NewsTagResponse.fromJson(List<dynamic> json) {
     newsTags =  <HomeNewsModel>[];
-    json.forEach((v) {
+    for (var v in json) {
       newsTags.add(HomeNewsModel.fromJson(v));
-    });
+    }
   }
 
   String toJson() {

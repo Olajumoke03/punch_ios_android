@@ -12,24 +12,24 @@ class AboutUsModel {
     id = json['id'];
     slug = json['slug'];
     link = json['link'];
-    title = json['title'] != null ? new Title.fromJson(json['title']) : null;
-    content = json['content'] != null ? new Title.fromJson(json['content']) : null;
-    excerpt = json['excerpt'] != null ? new Excerpt.fromJson(json['excerpt']) : null;
+    title = json['title'] != null ?  Title.fromJson(json['title']) : null;
+    content = json['content'] != null ?  Title.fromJson(json['content']) : null;
+    excerpt = json['excerpt'] != null ?  Excerpt.fromJson(json['excerpt']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['slug'] = this.slug;
-    data['link'] = this.link;
-    if (this.title != null) {
-      data['title'] = this.title!.toJson();
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['id'] = id;
+    data['slug'] = slug;
+    data['link'] = link;
+    if (title != null) {
+      data['title'] = title!.toJson();
     }
-    if (this.content != null) {
-      data['content'] = this.content!.toJson();
+    if (content != null) {
+      data['content'] = content!.toJson();
     }
-    if (this.excerpt != null) {
-      data['excerpt'] = this.excerpt!.toJson();
+    if (excerpt != null) {
+      data['excerpt'] = excerpt!.toJson();
     }
     return data;
   }
@@ -45,8 +45,8 @@ class Title {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rendered'] = this.rendered;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['rendered'] = rendered;
     return data;
   }
 }
@@ -63,9 +63,9 @@ class Excerpt {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rendered'] = this.rendered;
-    data['protected'] = this.protected;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['rendered'] = rendered;
+    data['protected'] = protected;
     return data;
   }
 }

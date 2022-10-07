@@ -7,7 +7,7 @@ class SearchResultModel {
   Links? lLinks;
 
   SearchResultModel(
-      {this.id, this.title, this.url, this.type, this.subtype, this.lLinks});
+      {id, title, url, type, subtype, lLinks});
 
   SearchResultModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -15,18 +15,18 @@ class SearchResultModel {
     url = json['url'];
     type = json['type'];
     subtype = json['subtype'];
-    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+    lLinks = json['_links'] != null ? Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['url'] = this.url;
-    data['type'] = this.type;
-    data['subtype'] = this.subtype;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['url'] = url;
+    data['type'] = type;
+    data['subtype'] = subtype;
+    if (lLinks != null) {
+      data['_links'] = lLinks!.toJson();
     }
     return data;
   }
@@ -36,30 +36,30 @@ class Links {
   List<Self>? self;
   List<About>? about;
 
-  Links({this.self, this.about, });
+  Links({self, about, });
 
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {
       self = <Self>[];
       json['self'].forEach((v) {
-        self!.add(new Self.fromJson(v));
+        self!.add(Self.fromJson(v));
       });
     }
     if (json['about'] != null) {
       about = <About>[];
       json['about'].forEach((v) {
-        about!.add(new About.fromJson(v));
+        about!.add(About.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.self != null) {
-      data['self'] = this.self!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (self != null) {
+      data['self'] = self!.map((v) => v.toJson()).toList();
     }
-    if (this.about != null) {
-      data['about'] = this.about!.map((v) => v.toJson()).toList();
+    if (about != null) {
+      data['about'] = about!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -69,7 +69,7 @@ class Self {
   bool? embeddable;
   String? href;
 
-  Self({this.embeddable, this.href});
+  Self({embeddable, href});
 
   Self.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -77,9 +77,9 @@ class Self {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['embeddable'] = embeddable;
+    data['href'] = href;
     return data;
   }
 }
@@ -87,15 +87,15 @@ class Self {
 class About {
   String? href;
 
-  About({this.href});
+  About({href});
 
   About.fromJson(Map<String, dynamic> json) {
     href = json['href'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['href'] = href;
     return data;
   }
 }

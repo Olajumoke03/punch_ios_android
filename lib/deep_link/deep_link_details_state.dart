@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 
 abstract class DeepLinkDetailsState extends Equatable {
@@ -30,8 +29,8 @@ class DeepLinkDetailsRefreshingState extends DeepLinkDetailsState {
 }
 
 class DeepLinkDetailsLoadedState extends DeepLinkDetailsState {
-  HomeNewsModel model;
-  String message;
+ final  HomeNewsModel model;
+  final String message;
   DeepLinkDetailsLoadedState({required this.model, required this.message});
 
   @override
@@ -39,8 +38,8 @@ class DeepLinkDetailsLoadedState extends DeepLinkDetailsState {
 }
 
 class DeepLinkDetailsCachedNewsLoadedState extends DeepLinkDetailsState {
-  List<HomeNewsModel> cachedNews;
-  String message;
+  final List<HomeNewsModel> cachedNews;
+ final String message;
   DeepLinkDetailsCachedNewsLoadedState({required this.cachedNews, required this.message});
 
   @override

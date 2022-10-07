@@ -13,8 +13,6 @@ import 'package:punch_ios_android/screens/saved_news_screen.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
-import 'package:provider/provider.dart';
-
 
 class HomePage extends StatefulWidget{
   final Repository repository = Repository();
@@ -32,7 +30,7 @@ class _HomeState extends State<HomePage> {
   final List<Widget> _children = [
 
     MultiBlocProvider(
-      child: HomeNewsScreen(),
+      child: const HomeNewsScreen(),
       providers: [
         BlocProvider(create: (context) => HomeNewsBloc(repository: Repository()),),
         BlocProvider(create: (context) => CategoryListBloc(repository: Repository()), ),
@@ -42,10 +40,10 @@ class _HomeState extends State<HomePage> {
 
     BlocProvider<CategoryListBloc>(
         create: (context) => CategoryListBloc(repository: Repository()),
-        child: CategoryListScreen()
+        child: const CategoryListScreen()
     ),
 
-    SavedNewsScreen(),
+    const SavedNewsScreen(),
     MoreScreen()
 
 
@@ -86,24 +84,24 @@ class _HomeState extends State<HomePage> {
           unselectedItemColor: Colors.grey[500],
           elevation: 20,
           type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
               ),
-              title: Text("Home"),
+              label: ("Home"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.explore),
-              title: Text("Categories"),
+              label: ("Categories"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.push_pin),
-              title: Text("Saved"),
+              label: ("Saved"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_vert_rounded),
-              title: Text("More"),
+              label:("More"),
             ),
           ],
           onTap: onTabTapped,
@@ -118,30 +116,30 @@ class _HomeState extends State<HomePage> {
       context: context,
       builder: (context) => CustomAlertDialog(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: 15),
-              Text( Constants.appName, style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18,
-              ),
+              const SizedBox(height: 15),
+              Text( Constants.appName, style: const TextStyle( fontWeight: FontWeight.bold, fontSize: 18,
+                ),
               ),
 
-              SizedBox(height: 25),
+              const  SizedBox(height: 25),
 
-              Text( "Do you really want to exit?",
+              const Text( "Do you really want to exit?",
                 style: TextStyle( fontWeight: FontWeight.w500, fontSize: 16,
                 ),
               ),
 
-              SizedBox(height: 40),
+              const   SizedBox(height: 40),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                     height: 40,
                     width: 80,
                     child: RaisedButton(
@@ -153,19 +151,19 @@ class _HomeState extends State<HomePage> {
                         ),
                       ),
                       onPressed: ()=> exit(0),
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  SizedBox(width: 20),
-                  Container(
+                  const SizedBox(width: 20),
+                  SizedBox(
                     height: 40,
                     width: 80,
                     child: OutlineButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      borderSide: BorderSide(color: Theme.of(context).accentColor),
-                      child: Text( "No", style: TextStyle( color: Theme.of(context).accentColor, fontSize: 16,
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                      child: Text( "No", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
                       ),
                       ),
                       onPressed: ()=>Navigator.pop(context),
@@ -174,7 +172,7 @@ class _HomeState extends State<HomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+             const SizedBox(height: 20),
             ],
           ),
         ),

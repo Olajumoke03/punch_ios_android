@@ -41,7 +41,6 @@
 
 
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
@@ -53,7 +52,6 @@ class DeepLinkDetailsBloc extends Bloc<DeepLinkDetailsEvent,DeepLinkDetailsState
 
   DeepLinkDetailsBloc({required this.repository}) : super(DeepLinkDetailsInitialState());
 
-  @override
   DeepLinkDetailsState get initialState => DeepLinkDetailsInitialState();
 
   @override
@@ -63,11 +61,10 @@ class DeepLinkDetailsBloc extends Bloc<DeepLinkDetailsEvent,DeepLinkDetailsState
       try{
         var response = await repository.fetchSingleNews(event.slug);
         List<HomeNewsModel> model = response.homeNewss;
-        if(model.length>0){
+        if(model.isNotEmpty){
           yield DeepLinkDetailsLoadedState(model:model[0],message: "News Updated");
         }else{
           yield DeepLinkDetailsLoadFailureState(error:'This news is no longer available');
-
         }
 
         // yield DeepLinkDetailsLoadedState(DeepLinkDetails:DeepLinkDetails);

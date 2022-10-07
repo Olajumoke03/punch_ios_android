@@ -59,7 +59,7 @@ class AdHelper {
       // return '/6499/example/banner';
       return '/31989200/mk_punch_mobileapp';
     }
-    throw new UnsupportedError("Unsupported platform");
+    throw  UnsupportedError("Unsupported platform");
   }
 
 }

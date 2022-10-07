@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 
 abstract class NewsByCategoryState extends Equatable {
@@ -30,8 +29,8 @@ class NewsByCategoryRefreshingState extends NewsByCategoryState {
 }
 
 class NewsByCategoryLoadedState extends NewsByCategoryState {
-  List<HomeNewsModel> newsByCategory;
-  String message;
+  final List<HomeNewsModel> newsByCategory;
+  final String message;
   NewsByCategoryLoadedState({required this.newsByCategory, required this.message});
 
   @override
@@ -39,8 +38,8 @@ class NewsByCategoryLoadedState extends NewsByCategoryState {
 }
 
 class NewsByCategoryCachedNewsLoadedState extends NewsByCategoryState {
-  List<HomeNewsModel> cachedNews;
-  String message;
+ final List<HomeNewsModel> cachedNews;
+ final  String message;
   NewsByCategoryCachedNewsLoadedState({required this.cachedNews, required this.message});
 
   @override
@@ -48,8 +47,8 @@ class NewsByCategoryCachedNewsLoadedState extends NewsByCategoryState {
 }
 
 class NewsByCategoryRefreshedState extends NewsByCategoryState {
-  List<HomeNewsModel> newsByCategory;
-  String message;
+  final List<HomeNewsModel> newsByCategory;
+ final  String message;
   NewsByCategoryRefreshedState({required this.newsByCategory, required this.message});
 
   @override
@@ -57,8 +56,8 @@ class NewsByCategoryRefreshedState extends NewsByCategoryState {
 }
 
 class NewsByCategoryMoreLoadedState extends NewsByCategoryState {
-  List<HomeNewsModel> newsByCategory;
-  NewsByCategoryMoreLoadedState({required this.newsByCategory});
+  final List<HomeNewsModel> newsByCategory;
+   NewsByCategoryMoreLoadedState({required this.newsByCategory});
 
   @override
   List<Object> get props => [];
@@ -83,9 +82,9 @@ class NewsByCategoryLoadFailureState extends NewsByCategoryState {
 }
 
 class NewsByCategoryEmptyState extends NewsByCategoryState {
-  String message;
+  final String message;
 
   NewsByCategoryEmptyState({required this.message});
   @override
-  List<Object> get props => [this.message];
+  List<Object> get props => [message];
 }

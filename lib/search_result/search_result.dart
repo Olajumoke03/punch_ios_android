@@ -16,10 +16,10 @@ import 'package:provider/provider.dart';
 
 
 class SearchResult extends StatefulWidget{
-  String searchQuery;
-  String? slug;
+ final String searchQuery;
+  final String? slug;
 
-  SearchResult({Key? key, required this.searchQuery,  this.slug}): super(key:key);
+  const SearchResult({Key? key, required this.searchQuery,  this.slug}): super(key:key);
 
   @override
   _SearchResultState createState() => _SearchResultState();
@@ -27,14 +27,14 @@ class SearchResult extends StatefulWidget{
 
 class _SearchResultState extends State<SearchResult> {
  late SearchResultBloc searchResultBloc;
-  FontSizeController? _fontSizeController;
+  FontSizeController? fontSizeController;
 
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
+    fontSizeController = Provider.of<FontSizeController>(context, listen: false);
 
   }
 
@@ -66,19 +66,16 @@ class _SearchResultState extends State<SearchResult> {
           BlocListener<SearchResultBloc, SearchResultState>(
             listener: (context, state){
               if ( state is SearchResultRefreshingState ) {
-                Scaffold.of ( context ).showSnackBar ( const SnackBar (
-                  content: Text ( 'Refreshing' ) , ) );
+
               } else if ( state is SearchResultLoadedState && state.message != null ) {
                 // a message will only come when it is updating the feed.
-              //   Scaffold.of ( context ).showSnackBar ( SnackBar (
-              //     content: Text ( "SearchResult Updated" ) , ) );
+
               }
               else if (state is SearchResultEmptyState){
 
               }
               else if ( state is SearchResultLoadFailureState ) {
-                Scaffold.of ( context ).showSnackBar ( const SnackBar (
-                  content: Text ( "Could not load news at this time" ) , ) );
+
               }
             },
             child: BlocBuilder<SearchResultBloc, SearchResultState>(
@@ -88,7 +85,7 @@ class _SearchResultState extends State<SearchResult> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        SizedBox(height: 200,),
+                        const SizedBox(height: 200,),
                         Text(
                         "Your search result will appear here",
                           style: TextStyle( fontSize: 20, fontWeight: FontWeight.w500,color: Theme.of(context).textTheme.bodyText1!.color

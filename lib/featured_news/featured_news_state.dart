@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/featured_news/featured_news_model.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 
@@ -31,8 +30,8 @@ class FeaturedNewsRefreshingState extends FeaturedNewsState {
 }
 
 class FeaturedNewsLoadedState extends FeaturedNewsState {
-  List<HomeNewsModel> featuredNews;
-  String message;
+  final List<HomeNewsModel> featuredNews;
+  final String message;
   FeaturedNewsLoadedState({required this.featuredNews, required this.message});
 
   @override
@@ -40,8 +39,8 @@ class FeaturedNewsLoadedState extends FeaturedNewsState {
 }
 
 class FeaturedCachedNewsLoadedState extends FeaturedNewsState {
-  List<HomeNewsModel> featuredNews;
-  String message;
+ final List<HomeNewsModel> featuredNews;
+  final String message;
   FeaturedCachedNewsLoadedState({required this.featuredNews, required this.message});
 
   @override
@@ -49,7 +48,7 @@ class FeaturedCachedNewsLoadedState extends FeaturedNewsState {
 }
 
 class FeaturedNewsMoreLoadedState extends FeaturedNewsState {
-  List<FeaturedNewsModel> featuredNews;
+  final List<FeaturedNewsModel> featuredNews;
   FeaturedNewsMoreLoadedState({required this.featuredNews});
 
   @override

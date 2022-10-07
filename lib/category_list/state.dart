@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/category_list/model.dart';
-import 'package:punch_ios_android/home_news/home_model.dart';
 
 abstract class CategoryListState extends Equatable {
   @override
@@ -31,8 +29,8 @@ class CategoryListRefreshingState extends CategoryListState {
 }
 
 class CategoryListLoadedState extends CategoryListState {
-  List<CategoryListModel> categoryList;
-  String message;
+  final List<CategoryListModel> categoryList;
+  final String message;
   CategoryListLoadedState({required this.categoryList, required this.message});
 
   @override
@@ -42,8 +40,8 @@ class CategoryListLoadedState extends CategoryListState {
 
 
 class CategoryListRefreshedState extends CategoryListState {
-  List<CategoryListModel> categoryList;
-  String message;
+  final List<CategoryListModel> categoryList;
+  final String message;
   CategoryListRefreshedState({required this.categoryList, required this.message});
 
   @override
@@ -51,8 +49,8 @@ class CategoryListRefreshedState extends CategoryListState {
 }
 
 class CategoryListMoreLoadedState extends CategoryListState {
-  List<CategoryListModel> CategoryList;
-  CategoryListMoreLoadedState({required this.CategoryList});
+  final List<CategoryListModel> categoryList;
+   CategoryListMoreLoadedState({required this.categoryList});
 
   @override
   List<Object> get props => [];

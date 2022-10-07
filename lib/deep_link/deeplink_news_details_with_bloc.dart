@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -22,15 +21,14 @@ import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 // this is the deeplink that works for search
 
 class DeepLinkNewsDetailsBloc extends StatefulWidget {
-   HomeNewsModel? newsModel;
+   final HomeNewsModel? newsModel;
 
  final String? slug;
 
-   DeepLinkNewsDetailsBloc ({Key? key ,  this.slug, this.newsModel}) : super( key: key );
+   const DeepLinkNewsDetailsBloc ({Key? key ,  this.slug, this.newsModel}) : super( key: key );
 
   @override
   _DeepLinkNewsDetailsBlocState createState() => _DeepLinkNewsDetailsBlocState();
@@ -48,7 +46,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   int maxFailedLoadAttempts = 3;
 
 
-  final Completer<WebViewController> _controller = Completer<WebViewController>();
+  final Completer<WebViewController> controller = Completer<WebViewController>();
 
   fontDialog() {
     showDialog(
@@ -62,8 +60,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   final BannerAd articleMedium = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.mediumRectangle,
-    request: AdRequest(),
-    listener: BannerAdListener(),
+    request: const AdRequest(),
+    listener:  const BannerAdListener(),
   );
 
   final BannerAd inArticleAds = BannerAd(
@@ -73,7 +71,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     listener: const BannerAdListener(),
   );
 
-  final AdSize adSize = AdSize(width: 300, height: 250);
+  final AdSize adSize =  const AdSize(width: 300, height: 250);
 
   static const AdRequest request = AdRequest(
     keywords: <String>['foo', 'bar'],
@@ -90,13 +88,13 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
-            print('$ad loaded');
+            // print('$ad loaded');
             _interstitialAd = ad;
             _numInterstitialLoadAttempts = 0;
             _interstitialAd!.setImmersiveMode(true);
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('InterstitialAd failed to load: $error.');
+            // print('InterstitialAd failed to load: $error.');
             _numInterstitialLoadAttempts += 1;
             _interstitialAd = null;
             if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
@@ -108,19 +106,19 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
   void _showInterstitialAd() {
     if (_interstitialAd == null) {
-      print('Warning: attempt to show interstitial before loaded.');
+      // print('Warning: attempt to show interstitial before loaded.');
       return;
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
           print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+        // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         _createInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _createInterstitialAd();
       },
@@ -249,7 +247,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                     return const BuildLoadingWidget ( );
                   } else if ( state is DeepLinkDetailsLoadedState ) {
                     return   ListView (
-                      padding: EdgeInsets.symmetric ( horizontal: 10 ) ,
+                      padding:  const EdgeInsets.symmetric ( horizontal: 10 ) ,
                       children: <Widget>[
                         Stack (
                           alignment: Alignment.center ,
@@ -290,7 +288,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                         Container (
                                           padding: const EdgeInsets.only ( left: 0 ) ,
                                           child: Icon ( Icons.person ,
-                                            color: Theme.of ( context ).accentColor ,
+                                            color: Theme.of ( context ).colorScheme.secondary ,
                                             size: 12.0 ,
                                           ) ,
                                         ) ,
@@ -348,7 +346,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                 const Spacer ( ) ,
 
                                 Container (
-                                  padding: EdgeInsets.only ( left: 5 ) ,
+                                  padding:  const EdgeInsets.only ( left: 5 ) ,
                                   child: Text (
                                       Jiffy('${state.model.date}').fromNow(),
                                       maxLines: 2 ,
@@ -380,7 +378,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
                         const SizedBox ( height: 15 ) ,
 
-                        Container (
+                        SizedBox (
                           child: mediumWidget ,
                           width: MediaQuery.of ( context ).size.width ,
                           height: 250,
@@ -406,7 +404,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                             },
                             separatorBuilder: ( context, index) {
                               return index != 0 && index % 5 == 0
-                                  ? Container(
+                                  ? SizedBox(
                                 child: inArticleWidget,
                                 height: 100,
                               )

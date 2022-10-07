@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DeepLinkDetailsEvent extends Equatable {
@@ -8,8 +7,7 @@ abstract class DeepLinkDetailsEvent extends Equatable {
 }
 
 class FetchDeepLinkDetailsEvent extends DeepLinkDetailsEvent {
-
-  String slug;
+  final String slug;
   FetchDeepLinkDetailsEvent({required this.slug});
 
    @override

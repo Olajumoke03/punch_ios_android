@@ -3,27 +3,27 @@ import 'package:punch_ios_android/utility/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 
-const String BASE_URL="https://punchng.com/wp-json/wp/v2/";
-const String SINGLE_NEWS =BASE_URL+"posts?slug=";
+const String baseUrl="https://punchng.com/wp-json/wp/v2/";
+const String singleNews =baseUrl+"posts?slug=";
 
-const String LATEST_NEWS =BASE_URL+"posts?per_page=20&page=1";
-const String MORE_LATEST_NEWS =BASE_URL+"posts?per_page=20&page=";
+const String latestNews =baseUrl+"posts?per_page=20&page=1";
+const String moreLatestNews =baseUrl+"posts?per_page=20&page=";
 
-const String NEWS_BY_CATEGORY =BASE_URL+"posts?per_page=20&page=1&categories=";
-const String MORE_NEWS_BY_CATEGORY =BASE_URL+"posts?per_page=20&categories=";
+const String newsByCategory =baseUrl+"posts?per_page=20&page=1&categories=";
+const String moreNewsByCategory =baseUrl+"posts?per_page=20&categories=";
 
-const String NEWS_TAG =BASE_URL+"posts?per_page=5&tags=";
+const String newsTag =baseUrl+"posts?per_page=5&tags=";
 
-const String SEARCH_RESULT =BASE_URL+"search?per_page=20&search=";
-const String MORE_SEARCH_RESULT ="search?per_page=20&search=&page=";
+const String searchResult =baseUrl+"search?per_page=20&search=";
+const String moreSearchResult ="search?per_page=20&search=&page=";
 
-const String PRIVACY_POLICY ="pages/778714";
-const String ABOUT_US =BASE_URL+"pages/164902";
+const String privacyPolicy ="pages/778714";
+const String aboutUs =baseUrl+"pages/164902";
 
 // const String CATEGORY_LIST =BASE_URL+"categories?per_page=100";
-const String CATEGORY_LIST ="https://punchng.com/category-payload/?v2";
+const String categoryList ="https://punchng.com/category-payload/?v2";
 
-const String FEATURED_NEWS =BASE_URL+"posts?categories=";
+const String featuredNews =baseUrl+"posts?categories=";
 
 
 // newly added
@@ -108,7 +108,7 @@ class Constants {
   static Color darkPrimary = Colors.black;
   static Color lightAccent = mainColor;
   static Color darkAccent = mainColor;
-  static Color lightBG = Color(0xFFFAFAFA);
+  static Color lightBG = const Color(0xFFFAFAFA);
   static Color darkBG = Colors.grey.shade900;
 
   static ThemeData lightTheme = ThemeData(
@@ -116,8 +116,8 @@ class Constants {
     backgroundColor: lightBG,
     primaryColor: mainColor,
     primaryColorLight: greenColor,
-    accentColor: lightAccent,
-    cursorColor: lightAccent,
+    colorScheme: lightTheme.colorScheme.copyWith(secondary: lightAccent),
+    // cursorColor: lightAccent,
     cardColor: Colors.grey[50],
     scaffoldBackgroundColor: lightBG,
     primaryColorDark: whiteColor,
@@ -148,9 +148,10 @@ class Constants {
     brightness: Brightness.dark,
     backgroundColor: darkBG,
     primaryColor: whiteColor,
-    accentColor: whiteColor,
+    colorScheme: darkTheme.colorScheme.copyWith(secondary: whiteColor),
+    // cursorColor: lightAccent,
     scaffoldBackgroundColor: darkBG,
-    cursorColor: darkAccent,
+    // cursorColor: darkAccent,
     cardColor: Colors.black12,
     primaryColorDark: blackColor,
 
@@ -167,9 +168,9 @@ class Constants {
       ),
     ),
     textTheme: TextTheme(
-      headline1: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.w400), // news title
-      bodyText1: TextStyle(color: whiteColor, fontSize: 17),
-      bodyText2: TextStyle(color: Colors.black87,),
+      headline1: const TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.w400), // news title
+      bodyText1: const TextStyle(color: whiteColor, fontSize: 17),
+      bodyText2: const TextStyle(color: Colors.black87,),
       button: TextStyle(color: Colors.grey[800])
 
     ),

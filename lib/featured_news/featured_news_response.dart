@@ -9,9 +9,9 @@ class FeaturedNewsResponse {
 
   FeaturedNewsResponse.fromJson(List<dynamic> json) {
    featuredNewss =[];
-    json.forEach((v) {
+    for (var v in json) {
       featuredNewss.add(HomeNewsModel.fromJson(v));
-    });
+    }
   }
 
 }

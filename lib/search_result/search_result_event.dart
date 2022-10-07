@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchResultEvent extends Equatable {
@@ -7,7 +6,7 @@ abstract class SearchResultEvent extends Equatable {
 }
 
 class FetchSearchResultEvent extends SearchResultEvent {
-  String searchQuery;
+  final String searchQuery;
 
   FetchSearchResultEvent ({required this.searchQuery});
    @override

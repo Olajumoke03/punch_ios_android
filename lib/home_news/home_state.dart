@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 
 abstract class HomeNewsState extends Equatable {
@@ -30,8 +29,8 @@ class HomeNewsRefreshingState extends HomeNewsState {
 }
 
 class HomeNewsLoadedState extends HomeNewsState {
-  List<HomeNewsModel> homeNews;
-  String message;
+  final List<HomeNewsModel> homeNews;
+  final String message;
   HomeNewsLoadedState({required this.homeNews, required this.message});
 
   @override
@@ -39,8 +38,8 @@ class HomeNewsLoadedState extends HomeNewsState {
 }
 
 class HomeCachedNewsLoadedState extends HomeNewsState {
-  List<HomeNewsModel> cachedNews;
-  String message;
+  final List<HomeNewsModel> cachedNews;
+  final String message;
   HomeCachedNewsLoadedState({required this.cachedNews, required this.message});
 
   @override
@@ -48,8 +47,8 @@ class HomeCachedNewsLoadedState extends HomeNewsState {
 }
 
 class HomeNewsRefreshedState extends HomeNewsState {
-  List<HomeNewsModel> homeNews;
-  String message;
+  final List<HomeNewsModel> homeNews;
+  final String message;
   HomeNewsRefreshedState({required this.homeNews, required this.message});
 
   @override
@@ -57,7 +56,7 @@ class HomeNewsRefreshedState extends HomeNewsState {
 }
 
 class HomeNewsMoreLoadedState extends HomeNewsState {
-  List<HomeNewsModel> homeNews;
+  final List<HomeNewsModel> homeNews;
   HomeNewsMoreLoadedState({required this.homeNews});
 
   @override

@@ -27,7 +27,7 @@ class CustomAlertDialog extends StatelessWidget{
     dialogBoxHeight = deviceScreenHeight! * (0.50);
 
     return MediaQuery(
-      data: MediaQueryData(),
+      data: const MediaQueryData(),
       child: GestureDetector(
         child: BackdropFilter(
           filter: ImageFilter.blur(
@@ -44,7 +44,7 @@ class CustomAlertDialog extends StatelessWidget{
                   child: Stack(
                     children: <Widget>[
                       Center(
-                        child: Container(
+                        child: SizedBox(
                           width: deviceScreenWidth! * 0.9,
                           child: GestureDetector(
                             onTap: (){},

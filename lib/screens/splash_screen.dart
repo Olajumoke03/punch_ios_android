@@ -76,6 +76,8 @@ import 'package:punch_ios_android/screens/home_page.dart';
 
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState ();
 }
@@ -88,8 +90,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     startTime();
   }
   startTime() async {
-    var duration = new Duration(seconds: 3);
-    return new Timer(duration, nextPage);
+    var duration =  const Duration(seconds: 3);
+    return  Timer(duration, nextPage);
   }
 
 
@@ -115,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox (
           width: 300.0,
           height: 100.0,
           child: Image.asset('assets/splash_logo.png'),

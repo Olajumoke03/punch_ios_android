@@ -1,5 +1,3 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -13,6 +11,7 @@ import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 
 class AboutScreen extends StatefulWidget {
+  const AboutScreen({Key? key}) : super(key: key);
 
   @override
   _AboutScreenState createState() => _AboutScreenState();

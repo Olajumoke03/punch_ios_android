@@ -13,7 +13,6 @@ import 'package:punch_ios_android/news_by_category/news_by_category_event.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_state.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/utility/colors.dart';
-import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -22,8 +21,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 
 class NewsByCategory extends StatefulWidget {
-  late CategoryListModel model;
-   String? id;
+  final  CategoryListModel model;
+  // String? id;
 
   NewsByCategory({Key? key, required this.model}) : super(key: key);
 
@@ -45,15 +44,15 @@ class _NewsByCategoryState extends State<NewsByCategory> {
   final BannerAd myBanner = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.largeBanner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
+    request: const AdRequest(),
+    listener:const  BannerAdListener(),
   );
 
   final BannerAd secondBanner = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.largeBanner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
+    request:const  AdRequest(),
+    listener: const BannerAdListener(),
   );
 
   void loadMore() {
@@ -66,7 +65,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       newsByCategoryBloc.add ( FetchMoreNewsByCategoryEvent ( page: currentPage + 1, id: widget.model.id ) );
     }
   }
-  double _height =0;
+  final double height =0;
 
   setRefreshing(bool state){
     setState(() {
@@ -268,18 +267,18 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                     child: Row(
                       children: <Widget>[
                         Card(
-                          shape: RoundedRectangleBorder(
+                          shape:const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all( Radius.circular(10), ),
                           ),
                           elevation: 4,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.all( Radius.circular(10)),
+                            borderRadius: const BorderRadius.all( Radius.circular(10)),
                             child: CachedNetworkImage(
                               imageUrl:'${newsByCategoryModel[pos].xFeaturedMedia}',
-                              placeholder: (context, url) => Container(
+                              placeholder: (context, url) =>const SizedBox(
                                   height: 125,
                                   width: 248,
-                                  child: Center(child: CircularProgressIndicator())),
+                                  child:Center(child: CircularProgressIndicator())),
                               errorWidget: (context, url, error) => Image.asset(
                                 "assets/punchLogo.png",
                                 fit: BoxFit.contain,
@@ -292,7 +291,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                             ),
                           ),
                         ),
-                        SizedBox( width: 10),
+                       const SizedBox( width: 10),
 
                         Flexible(
                           child: Column(

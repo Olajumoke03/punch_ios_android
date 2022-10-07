@@ -5,6 +5,8 @@ import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 
 class ContactUs extends StatefulWidget {
+  const ContactUs({Key? key}) : super(key: key);
+
   @override
   _ContactUsState createState() => _ContactUsState();
 }

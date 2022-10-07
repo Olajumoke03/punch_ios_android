@@ -109,7 +109,7 @@ class _MoreScreenState extends State<MoreScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     Visibility(
                       visible:_subscribeProvider.isDialogOpen,
@@ -124,8 +124,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
-                                borderSide: BorderSide(color: Theme.of(context).accentColor),
-                                child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).accentColor, fontSize: 16,
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                                child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
                                 ),
                                 ),
                                 onPressed: ()=>Navigator.pop(context),
@@ -157,7 +157,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                   // _subscribeProvider.setEmail(emailController.text);
                                   _subscribeProvider.subscribe();
                                 },
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           ),
@@ -178,8 +178,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
-                                borderSide: BorderSide(color: Theme.of(context).accentColor),
-                                child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).accentColor, fontSize: 16,
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                                child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
                                 ),
                                 ),
                                 onPressed: ()=>Navigator.pop(context),

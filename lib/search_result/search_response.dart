@@ -32,9 +32,9 @@ class SearchResultResponse {
 
   SearchResultResponse.fromJson(List<dynamic> json) {
     searchResults =  <SearchResultModel>[];
-    json.forEach((v) {
+    for (var v in json) {
       searchResults.add(SearchResultModel.fromJson(v));
-    });
+    }
   }
 
   String toJson() {

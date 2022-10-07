@@ -7,9 +7,9 @@ class CategoryListResponse {
 
   CategoryListResponse.fromJson(List<dynamic> json) {
     categoryLists =  <CategoryListModel>[];
-    json.forEach((v) {
+    for (var v in json) {
       categoryLists.add(CategoryListModel.fromJson(v));
-    });
+    }
     // print("category json something " + json.toString());
 
   }

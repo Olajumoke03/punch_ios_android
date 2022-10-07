@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:punch_ios_android/model/responses/net_core_response.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
-import 'package:punch_ios_android/utility/colors.dart';
-
 
 
 class SubscribeToNewsLetterProvider extends ChangeNotifier {
@@ -71,6 +69,7 @@ class SubscribeToNewsLetterProvider extends ChangeNotifier {
   }
    String? setEmail(String slug) {
   email = slug;
+  return null;
   }
 
 

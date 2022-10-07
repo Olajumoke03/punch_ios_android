@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
 
 abstract class SearchResultState extends Equatable {
@@ -30,8 +29,8 @@ class SearchResultRefreshingState extends SearchResultState {
 }
 
 class SearchResultLoadedState extends SearchResultState {
-  List<SearchResultModel> searchResult;
-  String? message;
+ final List<SearchResultModel> searchResult;
+ final String? message;
   SearchResultLoadedState({required this.searchResult, this.message});
 
   @override
@@ -39,7 +38,7 @@ class SearchResultLoadedState extends SearchResultState {
 }
 
 class SearchResultMoreLoadedState extends SearchResultState {
-  List<SearchResultModel> searchResult;
+  final List<SearchResultModel> searchResult;
   SearchResultMoreLoadedState({required this.searchResult});
 
   @override

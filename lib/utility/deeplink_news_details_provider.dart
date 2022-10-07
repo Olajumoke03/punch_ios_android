@@ -1,10 +1,6 @@
-// import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
-
-import 'colors.dart';
-
 
 
 class DeepLinkNewsDetailsProvider extends ChangeNotifier {
@@ -72,6 +68,7 @@ class DeepLinkNewsDetailsProvider extends ChangeNotifier {
     // print("deeplink slug"+tamedslug);
 
     this.slug = tamedslug;
+    return null;
   }
 
 

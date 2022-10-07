@@ -28,50 +28,50 @@ class NewsByCategoryModel {
   Links? lLinks;
 
   NewsByCategoryModel(
-      {this.id,
-        this.date,
-        this.dateGmt,
-        this.guid,
-        this.modified,
-        this.modifiedGmt,
-        this.slug,
-        this.status,
-        this.type,
-        this.link,
-        this.title,
-        this.content,
-        this.excerpt,
-        this.author,
-        this.featuredMedia,
-        this.commentStatus,
-        this.pingStatus,
-        this.sticky,
-        this.template,
-        this.format,
-        this.meta,
-        this.categories,
-        this.tags,
-        this.yoastHead,
-        this.yoastHeadJson,
-        this.jetpackFeaturedMediaUrl,
-        this.lLinks});
+      {id,
+        date,
+        dateGmt,
+        guid,
+        modified,
+        modifiedGmt,
+        slug,
+        status,
+        type,
+        link,
+        title,
+        content,
+        excerpt,
+        author,
+        featuredMedia,
+        commentStatus,
+        pingStatus,
+        sticky,
+        template,
+        format,
+        meta,
+        categories,
+        tags,
+        yoastHead,
+        yoastHeadJson,
+        jetpackFeaturedMediaUrl,
+        lLinks});
 
   NewsByCategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     date = json['date'];
     dateGmt = json['date_gmt'];
-    guid = json['guid'] != null ? new Guid.fromJson(json['guid']) : null;
+    guid = json['guid'] != null ? Guid.fromJson(json['guid']) : null;
     modified = json['modified'];
     modifiedGmt = json['modified_gmt'];
     slug = json['slug'];
     status = json['status'];
     type = json['type'];
     link = json['link'];
-    title = json['title'] != null ? new Guid.fromJson(json['title']) : null;
+    title = json['title'] != null ? Guid.fromJson(json['title']) : null;
     content =
-    json['content'] != null ? new Content.fromJson(json['content']) : null;
+    json['content'] != null ? Content.fromJson(json['content']) : null;
     excerpt =
-    json['excerpt'] != null ? new Content.fromJson(json['excerpt']) : null;
+    json['excerpt'] != null ? Content.fromJson(json['excerpt']) : null;
     author = json['author'];
     featuredMedia = json['featured_media'];
     commentStatus = json['comment_status'];
@@ -79,59 +79,59 @@ class NewsByCategoryModel {
     sticky = json['sticky'];
     template = json['template'];
     format = json['format'];
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
     categories = json['categories'].cast<int>();
     tags = json['tags'].cast<int>();
     yoastHead = json['yoast_head'];
     yoastHeadJson = json['yoast_head_json'] != null
-        ? new YoastHeadJson.fromJson(json['yoast_head_json'])
+        ? YoastHeadJson.fromJson(json['yoast_head_json'])
         : null;
     jetpackFeaturedMediaUrl = json['jetpack_featured_media_url'];
-    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+    lLinks = json['_links'] != null ? Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['date'] = this.date;
-    data['date_gmt'] = this.dateGmt;
-    if (this.guid != null) {
-      data['guid'] = this.guid!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['date'] = date;
+    data['date_gmt'] = dateGmt;
+    if (guid != null) {
+      data['guid'] = guid!.toJson();
     }
-    data['modified'] = this.modified;
-    data['modified_gmt'] = this.modifiedGmt;
-    data['slug'] = this.slug;
-    data['status'] = this.status;
-    data['type'] = this.type;
-    data['link'] = this.link;
-    if (this.title != null) {
-      data['title'] = this.title!.toJson();
+    data['modified'] = modified;
+    data['modified_gmt'] = modifiedGmt;
+    data['slug'] = slug;
+    data['status'] = status;
+    data['type'] = type;
+    data['link'] = link;
+    if (title != null) {
+      data['title'] = title!.toJson();
     }
-    if (this.content != null) {
-      data['content'] = this.content!.toJson();
+    if (content != null) {
+      data['content'] = content!.toJson();
     }
-    if (this.excerpt != null) {
-      data['excerpt'] = this.excerpt!.toJson();
+    if (excerpt != null) {
+      data['excerpt'] = excerpt!.toJson();
     }
-    data['author'] = this.author;
-    data['featured_media'] = this.featuredMedia;
-    data['comment_status'] = this.commentStatus;
-    data['ping_status'] = this.pingStatus;
-    data['sticky'] = this.sticky;
-    data['template'] = this.template;
-    data['format'] = this.format;
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    data['author'] = author;
+    data['featured_media'] = featuredMedia;
+    data['comment_status'] = commentStatus;
+    data['ping_status'] = pingStatus;
+    data['sticky'] = sticky;
+    data['template'] = template;
+    data['format'] = format;
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
-    data['categories'] = this.categories;
-    data['tags'] = this.tags;
-    data['yoast_head'] = this.yoastHead;
-    if (this.yoastHeadJson != null) {
-      data['yoast_head_json'] = this.yoastHeadJson!.toJson();
+    data['categories'] = categories;
+    data['tags'] = tags;
+    data['yoast_head'] = yoastHead;
+    if (yoastHeadJson != null) {
+      data['yoast_head_json'] = yoastHeadJson!.toJson();
     }
-    data['jetpack_featured_media_url'] = this.jetpackFeaturedMediaUrl;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks!.toJson();
+    data['jetpack_featured_media_url'] = jetpackFeaturedMediaUrl;
+    if (lLinks != null) {
+      data['_links'] = lLinks!.toJson();
     }
     return data;
   }
@@ -140,15 +140,15 @@ class NewsByCategoryModel {
 class Guid {
   String? rendered;
 
-  Guid({this.rendered});
+  Guid({rendered});
 
   Guid.fromJson(Map<String, dynamic> json) {
     rendered = json['rendered'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rendered'] = this.rendered;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['rendered'] = rendered;
     return data;
   }
 }
@@ -157,7 +157,7 @@ class Content {
   String? rendered;
   bool? protected;
 
-  Content({this.rendered, this.protected});
+  Content({rendered, protected});
 
   Content.fromJson(Map<String, dynamic> json) {
     rendered = json['rendered'];
@@ -165,9 +165,9 @@ class Content {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rendered'] = this.rendered;
-    data['protected'] = this.protected;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['rendered'] = rendered;
+    data['protected'] = protected;
     return data;
   }
 }
@@ -183,14 +183,14 @@ class Meta {
   int? cscoPostVideoBgEndTime;
 
   Meta(
-      {this.cscoSingularSidebar,
-        this.cscoPageHeaderType,
-        this.cscoAppearanceGrid,
-        this.cscoPageLoadNextpost,
-        this.cscoPostVideoLocationHash,
-        this.cscoPostVideoUrl,
-        this.cscoPostVideoBgStartTime,
-        this.cscoPostVideoBgEndTime});
+      {cscoSingularSidebar,
+        cscoPageHeaderType,
+        cscoAppearanceGrid,
+        cscoPageLoadNextpost,
+        cscoPostVideoLocationHash,
+        cscoPostVideoUrl,
+        cscoPostVideoBgStartTime,
+        cscoPostVideoBgEndTime});
 
   Meta.fromJson(Map<String, dynamic> json) {
     cscoSingularSidebar = json['csco_singular_sidebar'];
@@ -204,15 +204,15 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['csco_singular_sidebar'] = this.cscoSingularSidebar;
-    data['csco_page_header_type'] = this.cscoPageHeaderType;
-    data['csco_appearance_grid'] = this.cscoAppearanceGrid;
-    data['csco_page_load_nextpost'] = this.cscoPageLoadNextpost;
-    data['csco_post_video_location_hash'] = this.cscoPostVideoLocationHash;
-    data['csco_post_video_url'] = this.cscoPostVideoUrl;
-    data['csco_post_video_bg_start_time'] = this.cscoPostVideoBgStartTime;
-    data['csco_post_video_bg_end_time'] = this.cscoPostVideoBgEndTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['csco_singular_sidebar'] = cscoSingularSidebar;
+    data['csco_page_header_type'] = cscoPageHeaderType;
+    data['csco_appearance_grid'] = cscoAppearanceGrid;
+    data['csco_page_load_nextpost'] = cscoPageLoadNextpost;
+    data['csco_post_video_location_hash'] = cscoPostVideoLocationHash;
+    data['csco_post_video_url'] = cscoPostVideoUrl;
+    data['csco_post_video_bg_start_time'] = cscoPostVideoBgStartTime;
+    data['csco_post_video_bg_end_time'] = cscoPostVideoBgEndTime;
     return data;
   }
 }
@@ -234,25 +234,25 @@ class YoastHeadJson {
   Schema? schema;
 
   YoastHeadJson(
-      {this.title,
-        this.robots,
-        this.canonical,
-        this.ogLocale,
-        this.ogType,
-        this.ogTitle,
-        this.ogDescription,
-        this.ogUrl,
-        this.ogSiteName,
-        this.articlePublishedTime,
-        this.ogImage,
-        this.twitterCard,
-        this.twitterMisc,
-        this.schema});
+      {title,
+        robots,
+        canonical,
+        ogLocale,
+        ogType,
+        ogTitle,
+        ogDescription,
+        ogUrl,
+        ogSiteName,
+        articlePublishedTime,
+        ogImage,
+        twitterCard,
+        twitterMisc,
+        schema});
 
   YoastHeadJson.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     robots =
-    json['robots'] != null ? new Robots.fromJson(json['robots']) : null;
+    json['robots'] != null ? Robots.fromJson(json['robots']) : null;
     canonical = json['canonical'];
     ogLocale = json['og_locale'];
     ogType = json['og_type'];
@@ -264,40 +264,40 @@ class YoastHeadJson {
     if (json['og_image'] != null) {
       ogImage = <OgImage>[];
       json['og_image'].forEach((v) {
-        ogImage!.add(new OgImage.fromJson(v));
+        ogImage!.add(OgImage.fromJson(v));
       });
     }
     twitterCard = json['twitter_card'];
     twitterMisc = json['twitter_misc'] != null
-        ? new TwitterMisc.fromJson(json['twitter_misc'])
+        ? TwitterMisc.fromJson(json['twitter_misc'])
         : null;
     schema =
-    json['schema'] != null ? new Schema.fromJson(json['schema']) : null;
+    json['schema'] != null ? Schema.fromJson(json['schema']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    if (this.robots != null) {
-      data['robots'] = this.robots!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    if (robots != null) {
+      data['robots'] = robots!.toJson();
     }
-    data['canonical'] = this.canonical;
-    data['og_locale'] = this.ogLocale;
-    data['og_type'] = this.ogType;
-    data['og_title'] = this.ogTitle;
-    data['og_description'] = this.ogDescription;
-    data['og_url'] = this.ogUrl;
-    data['og_site_name'] = this.ogSiteName;
-    data['article_published_time'] = this.articlePublishedTime;
-    if (this.ogImage != null) {
-      data['og_image'] = this.ogImage!.map((v) => v.toJson()).toList();
+    data['canonical'] = canonical;
+    data['og_locale'] = ogLocale;
+    data['og_type'] = ogType;
+    data['og_title'] = ogTitle;
+    data['og_description'] = ogDescription;
+    data['og_url'] = ogUrl;
+    data['og_site_name'] = ogSiteName;
+    data['article_published_time'] = articlePublishedTime;
+    if (ogImage != null) {
+      data['og_image'] = ogImage!.map((v) => v.toJson()).toList();
     }
-    data['twitter_card'] = this.twitterCard;
-    if (this.twitterMisc != null) {
-      data['twitter_misc'] = this.twitterMisc!.toJson();
+    data['twitter_card'] = twitterCard;
+    if (twitterMisc != null) {
+      data['twitter_misc'] = twitterMisc!.toJson();
     }
-    if (this.schema != null) {
-      data['schema'] = this.schema!.toJson();
+    if (schema != null) {
+      data['schema'] = schema!.toJson();
     }
     return data;
   }
@@ -311,11 +311,11 @@ class Robots {
   String? maxVideoPreview;
 
   Robots(
-      {this.index,
-        this.follow,
-        this.maxSnippet,
-        this.maxImagePreview,
-        this.maxVideoPreview});
+      {index,
+        follow,
+        maxSnippet,
+        maxImagePreview,
+        maxVideoPreview});
 
   Robots.fromJson(Map<String, dynamic> json) {
     index = json['index'];
@@ -326,12 +326,12 @@ class Robots {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['index'] = this.index;
-    data['follow'] = this.follow;
-    data['max-snippet'] = this.maxSnippet;
-    data['max-image-preview'] = this.maxImagePreview;
-    data['max-video-preview'] = this.maxVideoPreview;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['index'] = index;
+    data['follow'] = follow;
+    data['max-snippet'] = maxSnippet;
+    data['max-image-preview'] = maxImagePreview;
+    data['max-video-preview'] = maxVideoPreview;
     return data;
   }
 }
@@ -342,7 +342,7 @@ class OgImage {
   String? url;
   String? type;
 
-  OgImage({this.width, this.height, this.url, this.type});
+  OgImage({width, height, url, type});
 
   OgImage.fromJson(Map<String, dynamic> json) {
     width = json['width'];
@@ -352,11 +352,11 @@ class OgImage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['width'] = this.width;
-    data['height'] = this.height;
-    data['url'] = this.url;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['width'] = width;
+    data['height'] = height;
+    data['url'] = url;
+    data['type'] = type;
     return data;
   }
 }
@@ -365,7 +365,7 @@ class TwitterMisc {
   String? writtenBy;
   String? estReadingTime;
 
-  TwitterMisc({this.writtenBy, this.estReadingTime});
+  TwitterMisc({writtenBy, estReadingTime});
 
   TwitterMisc.fromJson(Map<String, dynamic> json) {
     writtenBy = json['Written by'];
@@ -373,9 +373,9 @@ class TwitterMisc {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Written by'] = this.writtenBy;
-    data['Est. reading time'] = this.estReadingTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Written by'] = writtenBy;
+    data['Est. reading time'] = estReadingTime;
     return data;
   }
 }
@@ -384,23 +384,23 @@ class Schema {
   String? context;
   List<Graph>? graph;
 
-  Schema({this.context, this.graph});
+  Schema({context, graph});
 
   Schema.fromJson(Map<String, dynamic> json) {
     context = json['@context'];
     if (json['@graph'] != null) {
       graph = <Graph>[];
       json['@graph'].forEach((v) {
-        graph!.add(new Graph.fromJson(v));
+        graph!.add(Graph.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@context'] = this.context;
-    if (this.graph != null) {
-      data['@graph'] = this.graph!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@context'] = context;
+    if (graph != null) {
+      data['@graph'] = graph!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -411,7 +411,7 @@ class Graph {
   String? id;
   String? name;
   String? url;
-  List<Null>? sameAs;
+  List<void>? sameAs;
   Logo? logo;
   Image? image;
   String? description;
@@ -437,50 +437,50 @@ class Graph {
   List<String>? articleSection;
 
   Graph(
-      {this.type,
-        this.id,
-        this.name,
-        this.url,
-        this.sameAs,
-        this.logo,
-        this.image,
-        this.description,
-        this.publisher,
-        this.potentialAction,
-        this.inLanguage,
-        this.contentUrl,
-        this.width,
-        this.height,
-        this.isPartOf,
-        this.primaryImageOfPage,
-        this.datePublished,
-        this.dateModified,
-        this.breadcrumb,
-        this.itemListElement,
-        this.author,
-        this.headline,
-        this.mainEntityOfPage,
-        this.wordCount,
-        this.commentCount,
-        this.thumbnailUrl,
-        this.keywords,
-        this.articleSection});
+      {type,
+        id,
+        name,
+        url,
+        sameAs,
+        logo,
+        image,
+        description,
+        publisher,
+        potentialAction,
+        inLanguage,
+        contentUrl,
+        width,
+        height,
+        isPartOf,
+        primaryImageOfPage,
+        datePublished,
+        dateModified,
+        breadcrumb,
+        itemListElement,
+        author,
+        headline,
+        mainEntityOfPage,
+        wordCount,
+        commentCount,
+        thumbnailUrl,
+        keywords,
+        articleSection});
 
   Graph.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
     id = json['@id'];
     name = json['name'];
     url = json['url'];
-    logo = json['logo'] != null ? new Logo.fromJson(json['logo']) : null;
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+    logo = json['logo'] != null ? Logo.fromJson(json['logo']) : null;
+    image = json['image'] != null ? Image.fromJson(json['image']) : null;
     description = json['description'];
     publisher = json['publisher'] != null
-        ? new Publisher.fromJson(json['publisher'])
+        ? Publisher.fromJson(json['publisher'])
         : null;
     if (json['potentialAction'] != null) {
       potentialAction = <PotentialAction>[];
       json['potentialAction'].forEach((v) {
-        potentialAction!.add(new PotentialAction.fromJson(v));
+        potentialAction!.add(PotentialAction.fromJson(v));
       });
     }
     inLanguage = json['inLanguage'];
@@ -488,27 +488,27 @@ class Graph {
     width = json['width'];
     height = json['height'];
     isPartOf = json['isPartOf'] != null
-        ? new Publisher.fromJson(json['isPartOf'])
+        ? Publisher.fromJson(json['isPartOf'])
         : null;
     primaryImageOfPage = json['primaryImageOfPage'] != null
-        ? new Publisher.fromJson(json['primaryImageOfPage'])
+        ? Publisher.fromJson(json['primaryImageOfPage'])
         : null;
     datePublished = json['datePublished'];
     dateModified = json['dateModified'];
     breadcrumb = json['breadcrumb'] != null
-        ? new Publisher.fromJson(json['breadcrumb'])
+        ? Publisher.fromJson(json['breadcrumb'])
         : null;
     if (json['itemListElement'] != null) {
       itemListElement = <ItemListElement>[];
       json['itemListElement'].forEach((v) {
-        itemListElement!.add(new ItemListElement.fromJson(v));
+        itemListElement!.add(ItemListElement.fromJson(v));
       });
     }
     author =
-    json['author'] != null ? new Publisher.fromJson(json['author']) : null;
+    json['author'] != null ? Publisher.fromJson(json['author']) : null;
     headline = json['headline'];
     mainEntityOfPage = json['mainEntityOfPage'] != null
-        ? new Publisher.fromJson(json['mainEntityOfPage'])
+        ? Publisher.fromJson(json['mainEntityOfPage'])
         : null;
     wordCount = json['wordCount'];
     commentCount = json['commentCount'];
@@ -518,57 +518,57 @@ class Graph {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    data['@id'] = this.id;
-    data['name'] = this.name;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    data['@id'] = id;
+    data['name'] = name;
+    data['url'] = url;
 
-    if (this.logo != null) {
-      data['logo'] = this.logo!.toJson();
+    if (logo != null) {
+      data['logo'] = logo!.toJson();
     }
-    if (this.image != null) {
-      data['image'] = this.image!.toJson();
+    if (image != null) {
+      data['image'] = image!.toJson();
     }
-    data['description'] = this.description;
-    if (this.publisher != null) {
-      data['publisher'] = this.publisher!.toJson();
+    data['description'] = description;
+    if (publisher != null) {
+      data['publisher'] = publisher!.toJson();
     }
-    if (this.potentialAction != null) {
+    if (potentialAction != null) {
       data['potentialAction'] =
-          this.potentialAction!.map((v) => v.toJson()).toList();
+          potentialAction!.map((v) => v.toJson()).toList();
     }
-    data['inLanguage'] = this.inLanguage;
-    data['contentUrl'] = this.contentUrl;
-    data['width'] = this.width;
-    data['height'] = this.height;
-    if (this.isPartOf != null) {
-      data['isPartOf'] = this.isPartOf!.toJson();
+    data['inLanguage'] = inLanguage;
+    data['contentUrl'] = contentUrl;
+    data['width'] = width;
+    data['height'] = height;
+    if (isPartOf != null) {
+      data['isPartOf'] = isPartOf!.toJson();
     }
-    if (this.primaryImageOfPage != null) {
-      data['primaryImageOfPage'] = this.primaryImageOfPage!.toJson();
+    if (primaryImageOfPage != null) {
+      data['primaryImageOfPage'] = primaryImageOfPage!.toJson();
     }
-    data['datePublished'] = this.datePublished;
-    data['dateModified'] = this.dateModified;
-    if (this.breadcrumb != null) {
-      data['breadcrumb'] = this.breadcrumb!.toJson();
+    data['datePublished'] = datePublished;
+    data['dateModified'] = dateModified;
+    if (breadcrumb != null) {
+      data['breadcrumb'] = breadcrumb!.toJson();
     }
-    if (this.itemListElement != null) {
+    if (itemListElement != null) {
       data['itemListElement'] =
-          this.itemListElement!.map((v) => v.toJson()).toList();
+          itemListElement!.map((v) => v.toJson()).toList();
     }
-    if (this.author != null) {
-      data['author'] = this.author!.toJson();
+    if (author != null) {
+      data['author'] = author!.toJson();
     }
-    data['headline'] = this.headline;
-    if (this.mainEntityOfPage != null) {
-      data['mainEntityOfPage'] = this.mainEntityOfPage!.toJson();
+    data['headline'] = headline;
+    if (mainEntityOfPage != null) {
+      data['mainEntityOfPage'] = mainEntityOfPage!.toJson();
     }
-    data['wordCount'] = this.wordCount;
-    data['commentCount'] = this.commentCount;
-    data['thumbnailUrl'] = this.thumbnailUrl;
-    data['keywords'] = this.keywords;
-    data['articleSection'] = this.articleSection;
+    data['wordCount'] = wordCount;
+    data['commentCount'] = commentCount;
+    data['thumbnailUrl'] = thumbnailUrl;
+    data['keywords'] = keywords;
+    data['articleSection'] = articleSection;
     return data;
   }
 }
@@ -584,14 +584,14 @@ class Logo {
   String? caption;
 
   Logo(
-      {this.type,
-        this.id,
-        this.inLanguage,
-        this.url,
-        this.contentUrl,
-        this.width,
-        this.height,
-        this.caption});
+      {type,
+        id,
+        inLanguage,
+        url,
+        contentUrl,
+        width,
+        height,
+        caption});
 
   Logo.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
@@ -605,15 +605,15 @@ class Logo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    data['@id'] = this.id;
-    data['inLanguage'] = this.inLanguage;
-    data['url'] = this.url;
-    data['contentUrl'] = this.contentUrl;
-    data['width'] = this.width;
-    data['height'] = this.height;
-    data['caption'] = this.caption;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    data['@id'] = id;
+    data['inLanguage'] = inLanguage;
+    data['url'] = url;
+    data['contentUrl'] = contentUrl;
+    data['width'] = width;
+    data['height'] = height;
+    data['caption'] = caption;
     return data;
   }
 }
@@ -627,12 +627,12 @@ class Image {
   String? caption;
 
   Image(
-      {this.id,
-        this.type,
-        this.inLanguage,
-        this.url,
-        this.contentUrl,
-        this.caption});
+      {id,
+        type,
+        inLanguage,
+        url,
+        contentUrl,
+        caption});
 
   Image.fromJson(Map<String, dynamic> json) {
     id = json['@id'];
@@ -644,13 +644,13 @@ class Image {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@id'] = this.id;
-    data['@type'] = this.type;
-    data['inLanguage'] = this.inLanguage;
-    data['url'] = this.url;
-    data['contentUrl'] = this.contentUrl;
-    data['caption'] = this.caption;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@id'] = id;
+    data['@type'] = type;
+    data['inLanguage'] = inLanguage;
+    data['url'] = url;
+    data['contentUrl'] = contentUrl;
+    data['caption'] = caption;
     return data;
   }
 }
@@ -658,15 +658,15 @@ class Image {
 class Publisher {
   String? id;
 
-  Publisher({this.id});
+  Publisher({id});
 
   Publisher.fromJson(Map<String, dynamic> json) {
     id = json['@id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@id'] = id;
     return data;
   }
 }
@@ -677,24 +677,24 @@ class PotentialAction {
   String? queryInput;
   String? name;
 
-  PotentialAction({this.type, this.target, this.queryInput, this.name});
+  PotentialAction({type, target, queryInput, name});
 
   PotentialAction.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
     target =
-    json['target'] != null ? new Target.fromJson(json['target']) : null;
+    json['target'] != null ? Target.fromJson(json['target']) : null;
     queryInput = json['query-input'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    if (this.target != null) {
-      data['target'] = this.target!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    if (target != null) {
+      data['target'] = target!.toJson();
     }
-    data['query-input'] = this.queryInput;
-    data['name'] = this.name;
+    data['query-input'] = queryInput;
+    data['name'] = name;
     return data;
   }
 }
@@ -703,7 +703,7 @@ class Target {
   String? type;
   String? urlTemplate;
 
-  Target({this.type, this.urlTemplate});
+  Target({type, urlTemplate});
 
   Target.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
@@ -711,9 +711,9 @@ class Target {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    data['urlTemplate'] = this.urlTemplate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    data['urlTemplate'] = urlTemplate;
     return data;
   }
 }
@@ -724,7 +724,7 @@ class ItemListElement {
   String? name;
   String? item;
 
-  ItemListElement({this.type, this.position, this.name, this.item});
+  ItemListElement({type, position, name, item});
 
   ItemListElement.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
@@ -734,11 +734,11 @@ class ItemListElement {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    data['position'] = this.position;
-    data['name'] = this.name;
-    data['item'] = this.item;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    data['position'] = position;
+    data['name'] = name;
+    data['item'] = item;
     return data;
   }
 }
@@ -752,79 +752,79 @@ class Links {
   List<Curies>? curies;
 
   Links(
-      {this.self,
-        this.author,
-        this.versionHistory,
-        this.predecessorVersion,
-        this.wpTerm,
-        this.curies});
+      {self,
+        author,
+        versionHistory,
+        predecessorVersion,
+        wpTerm,
+        curies});
 
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {
       self = <Self>[];
       json['self'].forEach((v) {
-        self!.add(new Self.fromJson(v));
+        self!.add(Self.fromJson(v));
       });
     }
 
     if (json['author'] != null) {
       author = <Author>[];
       json['author'].forEach((v) {
-        author!.add(new Author.fromJson(v));
+        author!.add(Author.fromJson(v));
       });
     }
 
     if (json['version-history'] != null) {
       versionHistory = <VersionHistory>[];
       json['version-history'].forEach((v) {
-        versionHistory!.add(new VersionHistory.fromJson(v));
+        versionHistory!.add(VersionHistory.fromJson(v));
       });
     }
     if (json['predecessor-version'] != null) {
       predecessorVersion = <PredecessorVersion>[];
       json['predecessor-version'].forEach((v) {
-        predecessorVersion!.add(new PredecessorVersion.fromJson(v));
+        predecessorVersion!.add(PredecessorVersion.fromJson(v));
       });
     }
 
     if (json['wp:term'] != null) {
       wpTerm = <WpTerm>[];
       json['wp:term'].forEach((v) {
-        wpTerm!.add(new WpTerm.fromJson(v));
+        wpTerm!.add(WpTerm.fromJson(v));
       });
     }
     if (json['curies'] != null) {
       curies = <Curies>[];
       json['curies'].forEach((v) {
-        curies!.add(new Curies.fromJson(v));
+        curies!.add(Curies.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.self != null) {
-      data['self'] = this.self!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (self != null) {
+      data['self'] = self!.map((v) => v.toJson()).toList();
     }
 
-    if (this.author != null) {
-      data['author'] = this.author!.map((v) => v.toJson()).toList();
+    if (author != null) {
+      data['author'] = author!.map((v) => v.toJson()).toList();
     }
 
-    if (this.versionHistory != null) {
+    if (versionHistory != null) {
       data['version-history'] =
-          this.versionHistory!.map((v) => v.toJson()).toList();
+          versionHistory!.map((v) => v.toJson()).toList();
     }
-    if (this.predecessorVersion != null) {
+    if (predecessorVersion != null) {
       data['predecessor-version'] =
-          this.predecessorVersion!.map((v) => v.toJson()).toList();
+          predecessorVersion!.map((v) => v.toJson()).toList();
     }
 
-    if (this.wpTerm != null) {
-      data['wp:term'] = this.wpTerm!.map((v) => v.toJson()).toList();
+    if (wpTerm != null) {
+      data['wp:term'] = wpTerm!.map((v) => v.toJson()).toList();
     }
-    if (this.curies != null) {
-      data['curies'] = this.curies!.map((v) => v.toJson()).toList();
+    if (curies != null) {
+      data['curies'] = curies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -833,15 +833,15 @@ class Links {
 class Self {
   String? href;
 
-  Self({this.href});
+  Self({href});
 
   Self.fromJson(Map<String, dynamic> json) {
     href = json['href'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['href'] = href;
     return data;
   }
 }
@@ -850,7 +850,7 @@ class Author {
   bool? embeddable;
   String? href;
 
-  Author({this.embeddable, this.href});
+  Author({embeddable, href});
 
   Author.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -858,9 +858,9 @@ class Author {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['embeddable'] = embeddable;
+    data['href'] = href;
     return data;
   }
 }
@@ -869,7 +869,7 @@ class VersionHistory {
   int? count;
   String? href;
 
-  VersionHistory({this.count, this.href});
+  VersionHistory({count, href});
 
   VersionHistory.fromJson(Map<String, dynamic> json) {
     count = json['count'];
@@ -877,9 +877,9 @@ class VersionHistory {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['count'] = this.count;
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['count'] = count;
+    data['href'] = href;
     return data;
   }
 }
@@ -888,7 +888,7 @@ class PredecessorVersion {
   int? id;
   String? href;
 
-  PredecessorVersion({this.id, this.href});
+  PredecessorVersion({id, href});
 
   PredecessorVersion.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -896,9 +896,9 @@ class PredecessorVersion {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['href'] = href;
     return data;
   }
 }
@@ -908,7 +908,7 @@ class WpTerm {
   bool? embeddable;
   String? href;
 
-  WpTerm({this.taxonomy, this.embeddable, this.href});
+  WpTerm({taxonomy, embeddable, href});
 
   WpTerm.fromJson(Map<String, dynamic> json) {
     taxonomy = json['taxonomy'];
@@ -917,10 +917,10 @@ class WpTerm {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['taxonomy'] = this.taxonomy;
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['taxonomy'] = taxonomy;
+    data['embeddable'] = embeddable;
+    data['href'] = href;
     return data;
   }
 }
@@ -930,7 +930,7 @@ class Curies {
   String? href;
   bool? templated;
 
-  Curies({this.name, this.href, this.templated});
+  Curies({name, href, templated});
 
   Curies.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -939,10 +939,10 @@ class Curies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['href'] = this.href;
-    data['templated'] = this.templated;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['href'] = href;
+    data['templated'] = templated;
     return data;
   }
 }

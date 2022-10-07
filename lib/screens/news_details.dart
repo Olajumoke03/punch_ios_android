@@ -1,21 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:punch_ios_android/news_tag/news_tag_bloc.dart';
 import 'package:punch_ios_android/news_tag/news_tag_event.dart';
 import 'package:punch_ios_android/news_tag/news_tag_state.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/disqus.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
-import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
-import 'package:punch_ios_android/widgets/build_loading_widget.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
@@ -25,14 +21,15 @@ import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 
+import '../widgets/build_loading_widget.dart';
+
 
 class NewsDetails extends StatefulWidget {
-  late HomeNewsModel? newsModel;
-  late SearchResultModel? searchResultModel;
+   final HomeNewsModel? newsModel;
+  final  SearchResultModel? searchResultModel;
   final String? newsId;
 
-
-  NewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel,}) : super( key: key );
+  const NewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel,}) : super( key: key );
 
   @override
   _NewsDetailsState createState() => _NewsDetailsState();
@@ -43,12 +40,12 @@ class _NewsDetailsState extends State<NewsDetails> {
   late NewsTagBloc newsTagBloc;
 
   int maxFailedLoadAttempts = 3;
-  double _height =0;
-  double _mediumHeight= 0;
+  double height =0;
+  double mediumHeight= 0;
   bool isSaved=false;
-  bool videoloader = false;
+  bool videoLoader = false;
   int currentPage = 1;
-  bool _adShown=true;
+  bool adShown=true;
 
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
@@ -151,7 +148,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     showDialog(
       context: context,
       builder: (context) => CustomAlertDialog(
-          child:   ChangeTextSizeWithSeekBar()
+          child:   const ChangeTextSizeWithSeekBar()
       ),
     );
   }
@@ -162,12 +159,12 @@ class _NewsDetailsState extends State<NewsDetails> {
     newsTagBloc = BlocProvider.of<NewsTagBloc>(context);
     newsTagBloc.add(FetchNewsTagEvent(id: widget.newsModel!.tags!.join(",").toString()));
 
-    DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
-    _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
-      setState(() {
-        isSaved = value;
-      });
-    });
+    // DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
+    // _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
+    //   setState(() {
+    //     isSaved = value;
+    //   });
+    // });
 
     articleMedium.load();
     inArticleAds.load();
@@ -194,14 +191,15 @@ class _NewsDetailsState extends State<NewsDetails> {
 
     return Consumer<FontSizeController>(
         builder: ( context,  fontScale,  child) {
-          return Consumer<DetailsProvider> (
+          // return Consumer<DetailsProvider> (
+          return Consumer (
               builder: ( context ,  detailsProvider,  child) {
                 return Scaffold (
                     appBar: AppBar (
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                             _showInterstitialAd();
+                             // _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),
@@ -235,19 +233,19 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                         IconButton (
                           onPressed: () async {
-                            if ( isSaved == true ) {
-                              detailsProvider.removeFav ( widget.newsModel!.id! );
-                              // detailsProvider.removeFav ( widget.newsModel.id);
-
-                              setState ( () {
-                                isSaved = false;
-                              } );
-                            } else {
-                              detailsProvider.addFav ( widget.newsModel! );
-                              setState ( () {
-                                isSaved = true;
-                              } );
-                            }
+                            // if ( isSaved == true ) {
+                            //   detailsProvider.removeFav ( widget.newsModel!.id! );
+                            //   // detailsProvider.removeFav ( widget.newsModel.id);
+                            //
+                            //   setState ( () {
+                            //     isSaved = false;
+                            //   } );
+                            // } else {
+                            //   detailsProvider.addFav ( widget.newsModel! );
+                            //   setState ( () {
+                            //     isSaved = true;
+                            //   } );
+                            // }
                           } ,
                           icon: Icon (
                             isSaved == true
@@ -271,7 +269,6 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
                               linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
                               chooserTitle: 'Something for chooser title',
-
                             );
                             print("share text "  '${widget.newsModel!.title!.rendered}');
                             print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
@@ -290,7 +287,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                         Navigator.push( context, MaterialPageRoute(builder: (context) => DisqusScreen(id:widget.newsModel!.id.toString(),slug: widget.newsModel!.slug,)) );
 
                       },
-                      child: Icon(Icons.comment,color: Colors.white,),
+                      child: const Icon(Icons.comment,color: Colors.white,),
                     ),
 
 
@@ -350,7 +347,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                         Container (
                                           padding: const EdgeInsets.only ( left: 0 ) ,
                                           child: Icon ( Icons.person ,
-                                            color: Theme.of ( context ).accentColor ,
+                                            color: Theme.of ( context ).colorScheme.secondary ,
                                             size: 12.0 ,
                                           ) ,
                                         ) ,
@@ -482,8 +479,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                               if ( state is NewsTagRefreshingState ) {
                                 // Scaffold.of ( context ).showSnackBar (SnackBar (content: Text ( 'Refreshing' ) ) );
                               }
-                              else if ( state is NewsTagLoadedState &&
-                                  state.message != null ) {
+                              else if ( state is NewsTagLoadedState ) {
                                 // Scaffold.of ( context ).showSnackBar (SnackBar (content: Text ( '' ) ) );
                               }
                               else if ( state is NewsTagMoreLoadedState ) {
@@ -502,19 +498,20 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 // returning false here when we have a load failure state means that.
                                 // we do not want the widget to rebuild when there is error
                                 if ( current is NewsTagLoadFailureState ||
-                                    current is NewsTagState ||
+                                    // current is NewsTagState ||
                                     current is NewsTagMoreLoadedState ||
                                     current is NewsTagMoreFailureState ||
-                                    current is NewsTagLoadingMoreState )
+                                    current is NewsTagLoadingMoreState ) {
                                   return false;
-                                else
+                                } else {
                                   return true;
+                                }
                               } ,
                               builder: (context , state) {
                                 if ( state is NewsTagInitialState ) {
-                                  return BuildLoadingWidget ( );
+                                  return const BuildLoadingWidget ( );
                                 } else if ( state is NewsTagLoadingState ) {
-                                  return BuildLoadingWidget ( );
+                                  return const BuildLoadingWidget ( );
                                 } else if ( state is NewsTagLoadedState ) {
                                   return buildNewsTagList ( state.newsTag );
                                 } else if ( state is NewsTagLoadFailureState ) {
@@ -530,7 +527,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                           const SizedBox ( height: 10 ) ,
 
                           //FOR AD MANAGER UNITS
-                          _adShown?  Center(
+                          adShown?  Center(
                               child: SizedBox(
                                 width: 300,
                                 height: 250,
@@ -710,7 +707,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                 BoxShadow(
                     color: Theme.of(context).focusColor.withOpacity(0.1),
                     blurRadius: 5,
-                    offset: Offset(0, 2)),
+                    offset: const Offset(0, 2)),
               ],
             ),
             child: InkWell(

@@ -311,6 +311,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'deeplink_news_details_with_bloc.dart';
 
 class DeepLinkWrapper extends StatefulWidget {
+  const DeepLinkWrapper({Key? key}) : super(key: key);
+
   @override
   _DeepLinkWrapperState createState() => _DeepLinkWrapperState();
 }
@@ -333,7 +335,7 @@ class _DeepLinkWrapperState extends State<DeepLinkWrapper> {
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             // print ("problem , trying to build the first screen underneath" + snapshot.data.toString());
-            return SplashScreen();
+            return const SplashScreen();
           }
           else    if(snapshot.data!.contains('https://punchng.com/advertise-with-us')){
             launchAdvertise() async {
@@ -345,13 +347,13 @@ class _DeepLinkWrapperState extends State<DeepLinkWrapper> {
               }
             }
             launchAdvertise();
-            print('the url link' + snapshot.data!);
+            // print('the url link' + snapshot.data!);
 
           }
 
-          print("this is the news url " + snapshot.data!.replaceAll("https://punchng.com/", "")
-              .replaceAll("/", "").replaceAll("?utm_source=OneSignal&utm_medium=web-push","")
-              .replaceAll("?amp", " "));
+          // print("this is the news url " + snapshot.data!.replaceAll("https://punchng.com/", "")
+          //     .replaceAll("/", "").replaceAll("?utm_source=OneSignal&utm_medium=web-push","")
+          //     .replaceAll("?amp", " "));
 
           return BlocProvider<DeepLinkDetailsBloc>(
               create: (context) => DeepLinkDetailsBloc(repository: Repository()),

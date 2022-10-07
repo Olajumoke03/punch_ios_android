@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:punch_ios_android/featured_news/featured_news_event.dart';
 import 'package:punch_ios_android/featured_news/featured_news_response.dart';
 import 'package:punch_ios_android/featured_news/featured_news_state.dart';
@@ -15,7 +14,6 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent,FeaturedNewsState>{
 
   FeaturedNewsBloc({required this.repository}) : super(FeaturedNewsInitialState());
 
-  @override
   FeaturedNewsState get initialState => FeaturedNewsInitialState();
 
   @override
@@ -23,13 +21,13 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent,FeaturedNewsState>{
     if (event is FetchFeaturedNewsEvent) {
       // load news initially from cache
       String cachedJson =  await repository.getAnyStringValueFromCache(Constants.featuredNewsCacheKey);
-      if(cachedJson!=null && cachedJson.isNotEmpty){
+      if(cachedJson.isNotEmpty){
         FeaturedNewsResponse chachedNewsResponse = FeaturedNewsResponse.fromJson(jsonDecode(cachedJson));
         List<HomeNewsModel> cachedNews = chachedNewsResponse.featuredNewss;
         yield FeaturedCachedNewsLoadedState(featuredNews:cachedNews,message: "");
         // we want to check if there's any thing cached
         // if nothing is cached, then yield loading state
-        if(cachedNews.length<=0){
+        if(cachedNews.isEmpty){
           yield FeaturedNewsLoadingState();
         }
 

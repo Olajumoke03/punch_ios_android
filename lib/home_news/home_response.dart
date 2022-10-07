@@ -7,9 +7,9 @@ class HomeNewsResponse {
 
   HomeNewsResponse.fromJson(List<dynamic> json) {
     homeNewss =  <HomeNewsModel>[];
-    json.forEach((v) {
+    for (var v in json) {
       homeNewss.add(HomeNewsModel.fromJson(v));
-    });
+    }
   }
 
   String toJson() {

@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class NewsByCategoryEvent extends Equatable {
@@ -9,7 +8,7 @@ abstract class NewsByCategoryEvent extends Equatable {
 
 class FetchNewsByCategoryEvent extends NewsByCategoryEvent {
 
-  String? id;
+  final String? id;
   FetchNewsByCategoryEvent({required this.id});
 
    @override

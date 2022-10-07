@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -28,7 +27,7 @@ class AppProvider extends ChangeNotifier {
     theme = value;
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString("theme", c).then((val) {
-        SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
           statusBarColor:
           c == "dark" ? Constants.darkPrimary : Constants.lightPrimary,
@@ -62,10 +61,10 @@ class AppProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     ThemeData t;
-    String? r = prefs.getString("theme") == null ? "light" : prefs.getString("theme");
+    String? r = prefs.getString("theme") ?? "light";
 
 
-    isNotificationOn = (prefs.getString("isNotificationOn") == null? "1" : prefs.getString("isNotificationOn"))!;
+    isNotificationOn = (prefs.getString("isNotificationOn") ?? "1")!;
 
     // isNotificationOn = (prefs.getString("isNotificationOn") ?? "1")!;
 

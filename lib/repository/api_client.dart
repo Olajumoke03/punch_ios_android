@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'package:punch_ios_android/repository/app_exceptions.dart';
-import 'package:punch_ios_android/utility/constants.dart' as Constants;
 import 'package:http/http.dart' as http;
 
 class ApiClient {
 
   final  httpClient = http.Client() ;
-   final String? _baseUrl = Constants.BASE_URL;
+   // final String? _baseUrl = constants.BASE_URL;
 
   // Future<dynamic> get(String url) async {
   //   print('Api Get, url $_baseUrl$url');

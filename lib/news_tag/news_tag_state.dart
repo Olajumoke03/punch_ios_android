@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/news_tag/news_tag_model.dart';
 
@@ -32,8 +31,8 @@ class NewsTagRefreshingState extends NewsTagState {
 }
 
 class NewsTagLoadedState extends NewsTagState {
-  List<HomeNewsModel> newsTag;
-  String message;
+  final List<HomeNewsModel> newsTag;
+  final String message;
   NewsTagLoadedState({required this.newsTag, required this.message});
 
   @override
@@ -41,8 +40,8 @@ class NewsTagLoadedState extends NewsTagState {
 }
 
 class NewsTagCachedNewsLoadedState extends NewsTagState {
-  List<NewsTagModel> cachedNews;
-  String message;
+ final List<NewsTagModel> cachedNews;
+ final String message;
   NewsTagCachedNewsLoadedState({required this.cachedNews, required this.message});
 
   @override
@@ -50,8 +49,8 @@ class NewsTagCachedNewsLoadedState extends NewsTagState {
 }
 
 class NewsTagRefreshedState extends NewsTagState {
-  List<NewsTagModel> newsTag;
-  String message;
+  final List<NewsTagModel> newsTag;
+ final String message;
   NewsTagRefreshedState({required this.newsTag, required this.message});
 
   @override
@@ -59,7 +58,7 @@ class NewsTagRefreshedState extends NewsTagState {
 }
 
 class NewsTagMoreLoadedState extends NewsTagState {
-  List<NewsTagModel> newsTag;
+ final List<NewsTagModel> newsTag;
   NewsTagMoreLoadedState({required this.newsTag});
 
   @override

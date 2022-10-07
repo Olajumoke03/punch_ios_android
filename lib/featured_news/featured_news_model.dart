@@ -20,25 +20,25 @@ class FeaturedNewsModel {
   String? xAuthor;
 
   FeaturedNewsModel(
-      {this.id,
-        this.date,
-        this.dateGmt,
-        this.link,
-        this.title,
-        this.content,
-        this.excerpt,
-        this.author,
-        this.featuredMedia,
-        this.categories,
-        this.categoriesString,
-        this.xCategories,
-        this.xTags,
-        this.xFeaturedMedia,
-        this.xFeaturedMediaMedium,
-        this.xFeaturedMediaOriginal,
-        this.xFeaturedMediaLarge,
-        this.xDate,
-        this.xAuthor
+      {id,
+        date,
+        dateGmt,
+        link,
+        title,
+        content,
+        excerpt,
+        author,
+        featuredMedia,
+        categories,
+        categoriesString,
+        xCategories,
+        xTags,
+        xFeaturedMedia,
+        xFeaturedMediaMedium,
+        xFeaturedMediaOriginal,
+        xFeaturedMediaLarge,
+        xDate,
+        xAuthor
       });
 
   FeaturedNewsModel.fromJson(Map<String, dynamic> json) {
@@ -46,11 +46,11 @@ class FeaturedNewsModel {
     date = json['date'];
     dateGmt = json['date_gmt'];
     link = json['link'];
-    title = json['title'] != null ? new Title.fromJson(json['title']) : null;
+    title = json['title'] != null ? Title.fromJson(json['title']) : null;
     content =
-    json['content'] != null ? new Content.fromJson(json['content']) : null;
+    json['content'] != null ? Content.fromJson(json['content']) : null;
     excerpt =
-    json['excerpt'] != null ? new Content.fromJson(json['excerpt']) : null;
+    json['excerpt'] != null ? Content.fromJson(json['excerpt']) : null;
     author = json['author'];
     featuredMedia = json['featured_media'];
     categories = json['categories'].cast<int>();
@@ -66,31 +66,31 @@ class FeaturedNewsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['date'] = this.date;
-    data['date_gmt'] = this.dateGmt;
-    data['link'] = this.link;
-    if (this.title != null) {
-      data['title'] = this.title!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['date'] = date;
+    data['date_gmt'] = dateGmt;
+    data['link'] = link;
+    if (title != null) {
+      data['title'] = title!.toJson();
     }
-    if (this.content != null) {
-      data['content'] = this.content!.toJson();
+    if (content != null) {
+      data['content'] = content!.toJson();
     }
-    if (this.excerpt != null) {
-      data['excerpt'] = this.excerpt!.toJson();
+    if (excerpt != null) {
+      data['excerpt'] = excerpt!.toJson();
     }
-    data['author'] = this.author;
-    data['featured_media'] = this.featuredMedia;
-    data['categories'] = this.categories;
-    data['x_categories'] = this.xCategories;
-    data['x_tags'] = this.xTags;
-    data['x_featured_media'] = this.xFeaturedMedia;
-    data['x_featured_media_medium'] = this.xFeaturedMediaMedium;
-    data['x_featured_media_original'] = this.xFeaturedMediaOriginal;
-    data['x_featured_media_large'] = this.xFeaturedMediaLarge;
-    data['x_date'] = this.xDate;
-    data['x_author'] = this.xAuthor;
+    data['author'] = author;
+    data['featured_media'] = featuredMedia;
+    data['categories'] = categories;
+    data['x_categories'] = xCategories;
+    data['x_tags'] = xTags;
+    data['x_featured_media'] = xFeaturedMedia;
+    data['x_featured_media_medium'] = xFeaturedMediaMedium;
+    data['x_featured_media_original'] = xFeaturedMediaOriginal;
+    data['x_featured_media_large'] = xFeaturedMediaLarge;
+    data['x_date'] = xDate;
+    data['x_author'] = xAuthor;
     return data;
   }
 }
@@ -98,15 +98,15 @@ class FeaturedNewsModel {
 class Title {
   String? rendered;
 
-  Title({this.rendered});
+  Title({rendered});
 
   Title.fromJson(Map<String, dynamic> json) {
     rendered = json['rendered'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rendered'] = this.rendered;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['rendered'] = rendered;
     return data;
   }
 }
@@ -115,7 +115,7 @@ class Content {
   String? rendered;
   bool? protected;
 
-  Content({this.rendered, this.protected});
+  Content({rendered, protected});
 
   Content.fromJson(Map<String, dynamic> json) {
     rendered = json['rendered'];
@@ -123,9 +123,9 @@ class Content {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rendered'] = this.rendered;
-    data['protected'] = this.protected;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['rendered'] = rendered;
+    data['protected'] = protected;
     return data;
   }
 }
