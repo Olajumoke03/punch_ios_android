@@ -64,7 +64,7 @@ class AppProvider extends ChangeNotifier {
     String? r = prefs.getString("theme") ?? "light";
 
 
-    isNotificationOn = (prefs.getString("isNotificationOn") ?? "1")!;
+    isNotificationOn = (prefs.getString("isNotificationOn") ?? "1");
 
     // isNotificationOn = (prefs.getString("isNotificationOn") ?? "1")!;
 
