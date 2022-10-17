@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
 import 'package:punch_ios_android/category_list/screen.dart';
 // import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:punch_ios_android/screens/more_screen.dart';
 import 'package:punch_ios_android/screens/saved_news_screen.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
+import 'package:punch_ios_android/utility/favorites_provider.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 
 class HomePage extends StatefulWidget{
@@ -45,16 +47,13 @@ class _HomeState extends State<HomePage> {
 
     const SavedNewsScreen(),
     MoreScreen()
-
-
-    // MoreScreen(),
   ];
 
   void onTabTapped(int index) {
-    // if(index==2){
-    //   FavoritesProvider _favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
-    //   _favoritesProvider.getFeed();
-    // }
+    if(index==2){
+      FavoritesProvider _favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
+      _favoritesProvider.getFeed();
+    }
     setState(() {
       _page = index;
     });
@@ -139,35 +138,35 @@ class _HomeState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 40,
-                    width: 80,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: const Text( "Yes",
-                        style: TextStyle( color: Colors.white, fontSize: 16,
-                        ),
-                      ),
-                      onPressed: ()=> exit(0),
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 40,
+                  //   width: 80,
+                  //   child: RaisedButton(
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(5.0),
+                  //     ),
+                  //     child: const Text( "Yes",
+                  //       style: TextStyle( color: Colors.white, fontSize: 16,
+                  //       ),
+                  //     ),
+                  //     onPressed: ()=> exit(0),
+                  //     color: Theme.of(context).colorScheme.secondary,
+                  //   ),
+                  // ),
                   const SizedBox(width: 20),
                   SizedBox(
                     height: 40,
                     width: 80,
-                    child: OutlineButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                    child: OutlinedButton(
+                      // shape: RoundedRectangleBorder(
+                      //   borderRadius: BorderRadius.circular(5.0),
+                      // ),
+                      // borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
                       child: Text( "No", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
                       ),
                       ),
                       onPressed: ()=>Navigator.pop(context),
-                      color: Colors.white,
+                      // color: Colors.white,
                     ),
                   ),
                 ],

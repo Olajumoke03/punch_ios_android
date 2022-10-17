@@ -112,8 +112,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   @override
   void initState() {
     super.initState();
-    fontSizeController =
-        Provider.of<FontSizeController>(context, listen: false);
+    fontSizeController = Provider.of<FontSizeController>(context, listen: false);
     homeNewsBloc = BlocProvider.of<HomeNewsBloc>(context);
     homeNewsBloc.add(FetchHomeNewsEvent());
 

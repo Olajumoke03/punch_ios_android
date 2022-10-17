@@ -120,16 +120,16 @@ class _MoreScreenState extends State<MoreScreen> {
                             child: Container(
                               margin: EdgeInsets.only(left:5),
                               height: 40,
-                              child: OutlineButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                              child: OutlinedButton(
+                                // shape: RoundedRectangleBorder(
+                                //   borderRadius: BorderRadius.circular(5.0),
+                                // ),
+                                // borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
                                 child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
                                 ),
                                 ),
                                 onPressed: ()=>Navigator.pop(context),
-                                color: Colors.white,
+                                // color: Colors.white,
                               ),
                             ),
                           ),
@@ -138,27 +138,34 @@ class _MoreScreenState extends State<MoreScreen> {
                             child: Container(
                               margin: EdgeInsets.only(left:5),
                               height: 40,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                child:_subscribeProvider.loading==true ? SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                  child: Center ( child: CircularProgressIndicator ( strokeWidth: 2,
-                                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.white)
-                                  ) ,
-                                  ),
-                                ): Text( "Subscribe",
-                                  style: TextStyle( color: Colors.white, fontSize: 16,
-                                  ),
-                                ),
-                                onPressed: (){
-                                  // _subscribeProvider.setEmail(emailController.text);
-                                  _subscribeProvider.subscribe();
-                                },
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                              child: OutlinedButton(
+                                      onPressed: () {
+                                      debugPrint('Received click');
+                                         },
+                                      child: const Text('Click Me'),
+                                      ),
+
+                              // RaisedButton(
+                              //   shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(5.0),
+                              //   ),
+                              //   child:_subscribeProvider.loading==true ? const SizedBox(
+                              //     height: 16,
+                              //     width: 16,
+                              //     child: Center ( child: CircularProgressIndicator ( strokeWidth: 2,
+                              //         valueColor:  AlwaysStoppedAnimation<Color>(Colors.white)
+                              //     ) ,
+                              //     ),
+                              //   ): const Text( "Subscribe",
+                              //     style: TextStyle( color: Colors.white, fontSize: 16,
+                              //     ),
+                              //   ),
+                              //   onPressed: (){
+                              //     // _subscribeProvider.setEmail(emailController.text);
+                              //     _subscribeProvider.subscribe();
+                              //   },
+                              //   color: Theme.of(context).colorScheme.secondary,
+                              // ),
                             ),
                           ),
 
@@ -174,16 +181,16 @@ class _MoreScreenState extends State<MoreScreen> {
                             child: Container(
                               margin: EdgeInsets.only(left:5),
                               height: 40,
-                              child: OutlineButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                              child: OutlinedButton(
+                                // shape: RoundedRectangleBorder(
+                                //   borderRadius: BorderRadius.circular(5.0),
+                                // ),
+                                // borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
                                 child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
                                 ),
                                 ),
                                 onPressed: ()=>Navigator.pop(context),
-                                color: Colors.white,
+                                // color: Colors.white,
                               ),
                             ),
                           ),
