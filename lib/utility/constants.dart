@@ -44,7 +44,6 @@ return time;
 // return difference;
 }
 
-
 class Constants {
 
   static String readTimestamp(String timestamp) {

@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
 import 'package:punch_ios_android/category_list/event.dart';
 import 'package:punch_ios_android/category_list/model.dart';
@@ -21,6 +22,7 @@ import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
+import 'package:punch_ios_android/utility/time_ago.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -497,8 +499,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               Container(
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Text(
-                                    Constants.readTimestamp(
-                                        '${homeNewsModel[pos].date}'),
+                                  Jiffy('${homeNewsModel[pos].date}').fromNow(),
                                     style: TextStyle(
                                         fontSize: 4 * fontSizeController.value,
                                         color: Theme.of(context)
@@ -682,9 +683,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                             Container(
                               padding: const EdgeInsets.only(left: 5),
                               child: Text(
-                                  Constants.readTimestamp(
-                                      '${homeNewsModel[pos].date}'),
-                                  //   Jiffy('${homeNewsModel[pos].date}').fromNow(),
+                                  // Constants.readTimestamp('${homeNewsModel[pos].date}'),
+                                    Jiffy('${homeNewsModel[pos].date}').fromNow(),
                                   style: TextStyle(
                                       fontSize: 4 * fontSizeController.value,
                                       color: Theme.of(context).textTheme.bodyText1!.color)),

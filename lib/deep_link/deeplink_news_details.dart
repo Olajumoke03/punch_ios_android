@@ -195,7 +195,6 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                   child: Text (
                                       Jiffy('${newsModel.date}').fromNow(),
                                       // Constants.readTimestamp('${newsModel.date}'),
-
                                       maxLines: 2 ,
                                       style: TextStyle (fontSize: 12, color: Theme.of(context).textTheme.bodyText1!.color,
                                       ) ) ,

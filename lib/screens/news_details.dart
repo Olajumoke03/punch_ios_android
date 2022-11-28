@@ -406,14 +406,11 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   Container (
                                     padding: const EdgeInsets.only ( left: 5 ) ,
                                     child: Text (
-                                        Constants.readTimestamp('${widget.newsModel!.date}'),
-
-                                        // Jiffy('${widget.newsModel!.date}').fromNow(),
+                                        Jiffy('${widget.newsModel!.date}').fromNow(),
                                         maxLines: 2 ,
                                         style: TextStyle (fontSize: 12, color: Theme.of(context).textTheme.bodyText1!.color,
                                         ) ) ,
                                   ) ,
-
                                 ] ,
                               ) ,
 
