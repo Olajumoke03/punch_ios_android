@@ -25,7 +25,7 @@ import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:jiffy/jiffy.dart';
+// import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -633,10 +633,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                 "body": Style(
                                     fontSize: const FontSize(18.0),
                                     fontWeight: FontWeight.w400,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .color),
+                                    color: Theme.of(context).textTheme.bodyText1!.color),
                               },
                             )),
                         const SizedBox(height: 10),
@@ -653,11 +650,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   CategoryListModel cLM = CategoryListModel();
-                                  cLM.id = homeNewsModel[pos]
-                                      .categories![0]
-                                      .toString();
-                                  cLM.categoryName =
-                                      homeNewsModel[pos].categoriesString![0];
+                                  cLM.id = homeNewsModel[pos].categories![0].toString();
+                                  cLM.categoryName = homeNewsModel[pos].categoriesString![0];
 
                                   Navigator.push(
                                       context,
@@ -693,10 +687,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                   //   Jiffy('${homeNewsModel[pos].date}').fromNow(),
                                   style: TextStyle(
                                       fontSize: 4 * fontSizeController.value,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color)),
+                                      color: Theme.of(context).textTheme.bodyText1!.color)),
                             ),
                           ],
                         ),
@@ -926,6 +917,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   // }
 
   //FOR FEATURED NEWS
+
   Widget imageSlider(List<HomeNewsModel> featuredNewsModel) {
     return ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -991,8 +983,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                   onTap: () {
                     CategoryListModel cLM = CategoryListModel(
                         id: "34", categoryName: "Top Stories");
-                    Navigator.push(
-                        context,
+                    Navigator.push(context,
                         MaterialPageRoute(
                           builder: (context) =>
                               BlocProvider<NewsByCategoryBloc>(
@@ -1088,8 +1079,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel(
-                        id: "34", categoryName: "Top Stories");
+                    CategoryListModel cLM = CategoryListModel(id: "34", categoryName: "Top Stories");
                     Navigator.push(
                         context,
                         MaterialPageRoute(

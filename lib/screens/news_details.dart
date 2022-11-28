@@ -11,6 +11,7 @@ import 'package:punch_ios_android/news_tag/news_tag_state.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/disqus.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
+import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
@@ -159,12 +160,12 @@ class _NewsDetailsState extends State<NewsDetails> {
     newsTagBloc = BlocProvider.of<NewsTagBloc>(context);
     newsTagBloc.add(FetchNewsTagEvent(id: widget.newsModel!.tags!.join(",").toString()));
 
-    // DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
-    // _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
-    //   setState(() {
-    //     isSaved = value;
-    //   });
-    // });
+    DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
+    _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
+      setState(() {
+        isSaved = value;
+      });
+    });
 
     articleMedium.load();
     inArticleAds.load();
@@ -191,8 +192,7 @@ class _NewsDetailsState extends State<NewsDetails> {
 
     return Consumer<FontSizeController>(
         builder: ( context,  fontScale,  child) {
-          // return Consumer<DetailsProvider> (
-          return Consumer (
+          return Consumer<DetailsProvider> (
               builder: ( context ,  detailsProvider,  child) {
                 return Scaffold (
                     appBar: AppBar (
@@ -233,19 +233,19 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                         IconButton (
                           onPressed: () async {
-                            // if ( isSaved == true ) {
-                            //   detailsProvider.removeFav ( widget.newsModel!.id! );
-                            //   // detailsProvider.removeFav ( widget.newsModel.id);
-                            //
-                            //   setState ( () {
-                            //     isSaved = false;
-                            //   } );
-                            // } else {
-                            //   detailsProvider.addFav ( widget.newsModel! );
-                            //   setState ( () {
-                            //     isSaved = true;
-                            //   } );
-                            // }
+                            if ( isSaved == true ) {
+                              detailsProvider.removeFav ( widget.newsModel!.id! );
+                              // detailsProvider.removeFav ( widget.newsModel.id);
+
+                              setState ( () {
+                                isSaved = false;
+                              } );
+                            } else {
+                              detailsProvider.addFav ( widget.newsModel! );
+                              setState ( () {
+                                isSaved = true;
+                              } );
+                            }
                           } ,
                           icon: Icon (
                             isSaved == true

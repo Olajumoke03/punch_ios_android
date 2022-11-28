@@ -14,12 +14,12 @@ import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/search_result/search_response.dart';
 import 'package:punch_ios_android/utility/constants.dart' as constants;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 
 class Repository   {
   final ApiClient _apiClient = ApiClient();
-  SharedPreferences? prefs ;
+ late SharedPreferences prefs ;
   Repository() {
     openCache();
   }
@@ -33,14 +33,14 @@ class Repository   {
    */
   void saveAnyStringToCache(String value,String key) async {
     // check if the key even exists
-    prefs!.setString(key,value);
+    prefs.setString(key,value);
   }
 
 
   // checks shared preferences and fetches the  data saved there
   Future<String> getAnyStringValueFromCache(String key) async {
      openCache();
-    String? value = prefs!.getString(key);
+    String? value = prefs.getString(key);
     return value!;
   }
 

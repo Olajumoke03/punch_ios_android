@@ -107,7 +107,10 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title:  Text(widget.model.categoryName!, style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color, fontWeight: FontWeight.bold, fontSize: 18),),
+
+        title:  Text("widget.model.categoryName!", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
+            fontWeight: FontWeight.bold, fontSize: 18),
+        ),
 
       leading: IconButton(
             onPressed: (){

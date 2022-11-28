@@ -1,20 +1,24 @@
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:objectdb/objectdb.dart';
 import 'package:objectdb/src/objectdb_storage_filesystem.dart';
 
 class FavoriteDB  {
-  getPath() async {
-    Directory documentDirectory = await getApplicationDocumentsDirectory();
-    final path = documentDirectory.path + '/favorites.db';
-    print("favorite helper path: " + path);
-    return path;
-  }
+  // getPath() async {
+  //   Directory documentDirectory = await getApplicationDocumentsDirectory();
+  //   final path = documentDirectory.path + '/favorites.db';
+  //   print("favorite helper path: " + path);
+  //   return path;
+  // }
 
   //Insertion
   add(Map item) async {
     // print('trying to save in FaVDb.add');
-    final db = ObjectDB(FileSystemStorage(getPath()));
+    final path = Directory.current.path + '/favorites.db';
+    // Directory documentDirectory = await getApplicationDocumentsDirectory();
+    // final path = documentDirectory.path + '/favorites.db';
+    print("favorite helper path = " + path);
+
+    final db = ObjectDB(FileSystemStorage(path));
     // final db = ObjectDB(getPath());
 
     db.insert(item).catchError((e){
@@ -27,8 +31,12 @@ class FavoriteDB  {
   }
 
   Future<int> remove(Map item) async {
-    final db = ObjectDB(getPath());
+    // Directory documentDirectory = await getApplicationDocumentsDirectory();
+    // final path = documentDirectory.path + '/favorites.db';
+    final path = Directory.current.path + '/favorites.db';
+    print("favorite helper path = " + path);
 
+    final db = ObjectDB(FileSystemStorage(path));
     int val = await db.remove(item);
     db.cleanup();
     await db.close();
@@ -36,8 +44,12 @@ class FavoriteDB  {
   }
 
   Future<List> listAll() async {
-    final db = ObjectDB(getPath());
+    // Directory documentDirectory = await getApplicationDocumentsDirectory();
+    // final path = documentDirectory.path + '/favorites.db';
+    final path = Directory.current.path + '/favorites.db';
+    print("favorite helper path = " + path);
 
+    final db = ObjectDB(FileSystemStorage(path));
     List val = await db.find({});
     // print('items existing VDb.add :' + val.length.toString());
     // print('items existing VDb.add :' + val.toString());
@@ -47,8 +59,12 @@ class FavoriteDB  {
   }
 
   Future<List> check(Map item) async {
-    final db = ObjectDB(getPath());
+    // Directory documentDirectory = await getApplicationDocumentsDirectory();
+    // final path = documentDirectory.path + '/favorites.db';
+    final path = Directory.current.path + '/favorites.db';
+    print("favorite helper path = " + path);
 
+    final db = ObjectDB(FileSystemStorage(path));
     List val = await db.find(item);
 
     db.cleanup();

@@ -17,7 +17,6 @@ class _ContactUsState extends State<ContactUs> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
-
   }
 
   @override
