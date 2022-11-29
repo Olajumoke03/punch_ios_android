@@ -13,6 +13,7 @@ import 'package:punch_ios_android/news_by_category/news_by_category_event.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_state.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/utility/colors.dart';
+import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -24,7 +25,7 @@ class NewsByCategory extends StatefulWidget {
   final  CategoryListModel model;
   // String? id;
 
-  NewsByCategory({Key? key, required this.model}) : super(key: key);
+  const NewsByCategory({Key? key, required this.model}) : super(key: key);
 
   @override
   _NewsByCategoryState createState() => _NewsByCategoryState();
@@ -107,11 +108,9 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-
-        title:  Text("widget.model.categoryName!", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
+        title: Text("widget.model.categoryName!", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
             fontWeight: FontWeight.bold, fontSize: 18),
         ),
-
       leading: IconButton(
             onPressed: (){
               Navigator.pop(context);

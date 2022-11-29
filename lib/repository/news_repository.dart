@@ -65,7 +65,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchFeaturedNews() async {
     final response = await _apiClient.get(constants.featuredNews+"34");
     var data = json.decode(response);
-      print("featured news  response " + response);
+      print("featured news response " + response);
 
     FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
     saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
@@ -75,10 +75,9 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchHomeNews() async {
     final response = await _apiClient.get(constants.latestNews);
     var data = json.decode(response);
-    print("home news  response " + response);
+    print("home news response " + response);
     // try{
     HomeNewsResponse  homeNewsResponse = HomeNewsResponse.fromJson(data);
-
     // pick just 10 out of the news
     List<HomeNewsModel> newsToCache = homeNewsResponse.homeNewss;
     // cache latest  news to shared preferences

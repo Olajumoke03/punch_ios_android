@@ -13,30 +13,6 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
  final Repository repository;
 
   HomeNewsBloc({required this.repository}) : super(InitialState());
-
- // HomeNewsBloc(this.repository, HomeNewsState homeNewsState) : super(homeNewsState) {
- //   on<FetchHomeNewsEvent>((event, emit) {});
- // }
-
- // void _onRegisterUser(HomeNewsEvent event, Emitter<HomeNewsState> emit) async {
- //   emit(UserRegistering());
- //   try {
- //     // detect when the user is registered
- //     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
- //       if (state is UserRegistering && user != null) {
- //         // save user to db
- //         try {
- //           await _userRepository.addUpdateUserInfo(user.uid, userInfo);
- //         } catch (e) {
- //           emit(UserRegisteringError("Could not save user"));
- //         }
- //         emit(UserLoggedIn(user));
- //       }
- //     });
- //   }
- // }
- //
-
   HomeNewsState get initialState => InitialState();
 
   @override
@@ -45,7 +21,7 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
     if (event is FetchHomeNewsEvent) {
       try{
         // load news initially from cache
-        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.featuredNewsCacheKey);
+        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
         // print("home cachedJson  : "+ cachedJson);
 
         if(cachedJson.isNotEmpty){

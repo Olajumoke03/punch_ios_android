@@ -43,8 +43,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<FontSizeController>(
-        builder: ( context,  fontScale,
-             child) {
+        builder: ( context,  fontScale, child) {
 
           return Scaffold(
               appBar: AppBar(

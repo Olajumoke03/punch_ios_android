@@ -133,7 +133,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                         Container (
                                           padding: const EdgeInsets.only ( left: 0 ) ,
                                           child: Icon ( Icons.person ,
-                                            color: Theme.of ( context ).colorScheme.secondary ,
+                                            color: Theme.of ( context ).primaryColor,
                                             size: 12.0 ,
                                           ) ,
                                         ) ,
