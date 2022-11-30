@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
+import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart';
 import 'package:punch_ios_android/news_tag/news_tag_bloc.dart';
 import 'package:punch_ios_android/news_tag/news_tag_event.dart';
 import 'package:punch_ios_android/news_tag/news_tag_state.dart';
@@ -22,6 +24,7 @@ import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 
+import '../category_list/model.dart';
 import '../widgets/build_loading_widget.dart';
 
 
@@ -217,7 +220,20 @@ class _NewsDetailsState extends State<NewsDetails> {
 
 
                         // IconButton (
-                        //   onPressed: ()  {
+                        //   onPressed: () async {
+                        //     if ( isSaved == true ) {
+                        //       detailsProvider.removeFav ( widget.newsModel!.id! );
+                        //       // detailsProvider.removeFav ( widget.newsModel.id);
+                        //
+                        //       setState ( () {
+                        //         isSaved = false;
+                        //       } );
+                        //     } else {
+                        //       detailsProvider.addFav ( widget.newsModel! );
+                        //       setState ( () {
+                        //         isSaved = true;
+                        //       } );
+                        //     }
                         //   } ,
                         //   icon: Icon (
                         //     isSaved == true
@@ -241,7 +257,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 isSaved = false;
                               } );
                             } else {
-                              detailsProvider.addFav ( widget.newsModel! );
+                              detailsProvider.addFav ( widget!.newsModel! );
                               setState ( () {
                                 isSaved = true;
                               } );
@@ -258,6 +274,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 .color ,
                           ) ,
                         ) ,
+
+
+
                         IconButton (
                           onPressed: () {
                             FlutterShare.share(
@@ -390,6 +409,17 @@ class _NewsDetailsState extends State<NewsDetails> {
                                             child: Center (
                                               child: GestureDetector (
                                                 onTap: () {
+                                                  CategoryListModel cLM = CategoryListModel ( );
+                                                  cLM.id = widget.newsModel!.categories![index].toString ( );
+                                                  cLM.categoryName = widget.newsModel!.categoriesString![index];
+                                                  Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+                                                      BlocProvider<NewsByCategoryBloc> (
+                                                          create: (context) =>
+                                                              NewsByCategoryBloc (repository:Repository ( ) ) ,
+                                                          child: NewsByCategory (
+                                                            model: cLM , )
+                                                      ) ,
+                                                  ));
                                                 } ,
                                                 child:  Text (
                                                   widget.newsModel!.categoriesString![0].replaceAll("&amp;", "&"),

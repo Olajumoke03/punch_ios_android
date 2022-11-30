@@ -23,9 +23,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsByCategory extends StatefulWidget {
   final  CategoryListModel model;
-  // String? id;
+  String? id;
 
-  const NewsByCategory({Key? key, required this.model}) : super(key: key);
+   NewsByCategory({Key? key, required this.model, this.id}) : super(key: key);
 
   @override
   _NewsByCategoryState createState() => _NewsByCategoryState();
@@ -108,10 +108,10 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text("widget.model.categoryName!", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
+        title: Text(widget.model.categoryName!, style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color,
             fontWeight: FontWeight.bold, fontSize: 18),
         ),
-      leading: IconButton(
+           leading: IconButton(
             onPressed: (){
               Navigator.pop(context);
             },
@@ -371,6 +371,9 @@ class _NewsByCategoryState extends State<NewsByCategory> {
   }
 
 }
+
+
+
 
 
 

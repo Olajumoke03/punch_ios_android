@@ -85,3 +85,7 @@ class DeepLinkNewsDetailsProvider extends ChangeNotifier {
     return newsModel;
   }
 }
+
+
+
+

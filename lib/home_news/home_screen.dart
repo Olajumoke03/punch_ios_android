@@ -761,27 +761,18 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  // onTap: () {
-                  //   CategoryListModel cLM = CategoryListModel(id: "34", categoryName: "Top Stories");
-                  //   Navigator.push(context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) =>
-                  //             BlocProvider<NewsByCategoryBloc>(
-                  //                 create: (context) => NewsByCategoryBloc(
-                  //                     repository: Repository()),
-                  //                 child: NewsByCategory(
-                  //                   model: cLM,
-                  //                 )),
-                  //       ));
-                  // },
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel(categoryId: "34", categoryName: "Top Stories");
-                    Navigator.push( context, MaterialPageRoute(builder: (context)=>
-                        BlocProvider<NewsByCategoryBloc>(
-                            create: (context) => NewsByCategoryBloc(repository: Repository()),
-                            child: NewsByCategory(model: cLM,)
-                        ) )
-                    );
+                    CategoryListModel cLM = CategoryListModel ( );
+                    cLM.id = "34";
+                    cLM.categoryName = "Top Stories";
+                    Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+                        BlocProvider<NewsByCategoryBloc> (
+                            create: (context) =>
+                                NewsByCategoryBloc (repository:Repository ( ) ) ,
+                            child: NewsByCategory (
+                              model: cLM , )
+                        ) ,
+                    ));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -868,19 +859,27 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel(id: "34", categoryName: "Top Stories");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              BlocProvider<NewsByCategoryBloc>(
-                                  create: (context) => NewsByCategoryBloc(
-                                      repository: Repository()),
-                                  child: NewsByCategory(
-                                    model: cLM,
-                                  )),
-                        ));
+                    // CategoryListModel cLM = CategoryListModel(id:"34",categoryName:"Top Stories");
+                    // Navigator.push( context, MaterialPageRoute(builder: (context)=>
+                    //     BlocProvider<NewsByCategoryBloc>(
+                    //         create: (context) => NewsByCategoryBloc(repository: Repository()),
+                    //         child: NewsByCategory(model: cLM,)
+                    //     ),
+                    // ));
+
+                    CategoryListModel cLM = CategoryListModel ( );
+                    cLM.id = "34";
+                    cLM.categoryName = "Top Stories";
+                    Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+                        BlocProvider<NewsByCategoryBloc> (
+                            create: (context) =>
+                                NewsByCategoryBloc (repository:Repository ( ) ) ,
+                            child: NewsByCategory (
+                              model: cLM , )
+                        ) ,
+                    ));
                   },
+
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(

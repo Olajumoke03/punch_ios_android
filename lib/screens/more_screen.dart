@@ -125,7 +125,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                 //   borderRadius: BorderRadius.circular(5.0),
                                 // ),
                                 // borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
-                                child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
+                                child: Text( "  Close  ", style: TextStyle( color: Theme.of(context).primaryColor, fontSize: 16,
                                 ),
                                 ),
                                 onPressed: ()=>Navigator.pop(context),
@@ -142,7 +142,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                       onPressed: () {
                                       debugPrint('Received click');
                                          },
-                                      child: const Text('Click Me'),
+                                      child: Text('Subscribe', style: TextStyle(color: Theme.of(context).primaryColor),),
                                       ),
 
                               // RaisedButton(

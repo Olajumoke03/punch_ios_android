@@ -12,6 +12,7 @@ import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
+import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -78,7 +79,6 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     contentUrl: 'http://foo.com/bar.html',
     nonPersonalizedAds: true,
   );
-
 
   void _createInterstitialAd() {
     InterstitialAd.load(
@@ -161,9 +161,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
       builder: (context, fontScale, child) {
         return Consumer<DeepLinkNewsDetailsProvider>(
             builder: ( context,  deepProvider,  child) {
-          HomeNewsModel newsModel = deepProvider.getNewsDetails();
-          // return Consumer<DetailsProvider>(
-          return Consumer(
+          HomeNewsModel? newsModel = deepProvider.getNewsDetails();
+          return Consumer<DetailsProvider>(
               builder: ( context,  detailsProvider,  child) {
 
         return Scaffold (
@@ -186,20 +185,52 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                     color: Theme.of(context).textTheme.bodyText1!.color
                 ) ,
               ) ,
+
+              // IconButton (
+              //   onPressed: ()  {
+              //   } ,
+              //   icon: Icon (
+              //     isSaved == true
+              //         ? Icons.favorite : Icons.favorite_border ,
+              //     color: isSaved == true
+              //         ? Colors.red
+              //         : Theme
+              //         .of ( context )
+              //         .iconTheme
+              //         .color ,
+              //   ) ,
+              // ) ,
+
               IconButton (
-                onPressed: ()  {
+                onPressed: () async {
+                  if ( isSaved==true ) {
+
+                    detailsProvider.removeFav ( newsModel!.id!);
+                    setState(() {
+                      isSaved = false;
+                    });
+
+                  } else {
+                    detailsProvider.addFav (newsModel! );
+                    setState(() {
+                      isSaved = true;
+                    });
+                  }
                 } ,
-                icon: Icon (
-                  isSaved == true
-                      ? Icons.favorite : Icons.favorite_border ,
-                  color: isSaved == true
-                      ? Colors.red
-                      : Theme
-                      .of ( context )
-                      .iconTheme
-                      .color ,
+                icon: Visibility(
+                  visible: deepProvider.isLoadSuccessful==true,
+                  child: Icon (
+                    isSaved==true
+                        ? Icons.favorite: Icons.favorite_border ,
+                    color:  isSaved==true
+                        ? Colors.red
+                        : Theme.of ( context ).iconTheme.color ,
+                  ),
                 ) ,
               ) ,
+
+
+
               IconButton (
                 onPressed: () {
                   FlutterShare.share(
@@ -231,11 +262,11 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 if ( state is DeepLinkDetailsLoadedState ) {
                   deepProvider.setLoadSuccess(true);
                   deepProvider.setNewsDetails(state.model);
-                  // detailsProvider.checkFav(state.model.id!).then((value) {
-                  //   setState(() {
-                  //     isSaved = value;
-                  //   });
-                  // });
+                 //  detailsProvider.checkFav(state.model.id!).then((value) {
+                 //    setState(() {
+                 //      isSaved = value;
+                 //    });
+                 //  });
                  }
                 },
 
@@ -443,5 +474,6 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
   }
 }
+
 
 

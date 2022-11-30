@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
-
 import 'favorite_helper.dart';
-
 
 class FavoritesProvider extends ChangeNotifier {
   late String message;
@@ -15,7 +13,6 @@ class FavoritesProvider extends ChangeNotifier {
     List c = await db.listAll();
     posts.addAll(c);
     setLoading(false);
-
   }
 
   void setLoading(value) {

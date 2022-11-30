@@ -51,7 +51,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
 
     return Consumer<DeepLinkNewsDetailsProvider>(
         builder: ( context,  deepProvider, child) {
-          HomeNewsModel newsModel = deepProvider.getNewsDetails();
+          HomeNewsModel? newsModel = deepProvider.getNewsDetails();
           // return Consumer<DetailsProvider>(
           return Consumer(
               builder: ( context,  detailsProvider, child) {
@@ -72,10 +72,10 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                             onPressed: () {
                               FlutterShare.share(
                                 title: 'Punch News' ,
-                                text: 'Read: ' '${newsModel.title!.rendered}' ', on Punch News' .replaceAll (r"\n" , "\n" )
+                                text: 'Read: ' '${newsModel!.title!.rendered}' ', on Punch News' .replaceAll (r"\n" , "\n" )
                                     .replaceAll ( r"\r" , "" ).replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" ).replaceAll ("&#8217;" , "'" )
                                     .replaceAll ("&#038;" , "&" ).replaceAll ("&#8216;" , "‘" ),
-                                linkUrl:'https:// punchng.com/' '${newsModel.slug} ',
+                                linkUrl:'https:// punchng.com/' '${newsModel!.slug} ',
                                 chooserTitle: 'Something for chooser title',
                               );
                             } ,
@@ -101,7 +101,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                               borderRadius: const BorderRadius.all (
                                 Radius.circular ( 10.0 ) , ) ,
                               child: CachedNetworkImage (
-                                imageUrl: '${newsModel.xFeaturedMediaLarge}' ,
+                                imageUrl: '${newsModel!.xFeaturedMediaLarge}' ,
                                 placeholder: (context , url) =>
                                 const Center (
                                   child: CircularProgressIndicator ( ) , ) ,

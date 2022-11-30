@@ -14,7 +14,6 @@ import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:provider/provider.dart';
 
-
 class CategoryListScreen extends StatefulWidget {
    final  CategoryListModel? categoryListModel;
 
@@ -44,7 +43,6 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget build(BuildContext context) {
     return Consumer<FontSizeController>(
         builder: ( context,  fontScale, child) {
-
           return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
