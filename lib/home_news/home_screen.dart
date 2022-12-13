@@ -413,8 +413,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                 width: 248,
                                 child: Center(
                                     child: CircularProgressIndicator(
-                                        color:
-                                            Theme.of(context).primaryColor))),
+                                        color: Theme.of(context).primaryColor))),
                             errorWidget: (context, url, error) => Image.asset(
                               "assets/punchLogo.png",
                               fit: BoxFit.contain,

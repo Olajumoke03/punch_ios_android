@@ -219,34 +219,6 @@ class _NewsDetailsState extends State<NewsDetails> {
                         ) ,
 
 
-                        // IconButton (
-                        //   onPressed: () async {
-                        //     if ( isSaved == true ) {
-                        //       detailsProvider.removeFav ( widget.newsModel!.id! );
-                        //       // detailsProvider.removeFav ( widget.newsModel.id);
-                        //
-                        //       setState ( () {
-                        //         isSaved = false;
-                        //       } );
-                        //     } else {
-                        //       detailsProvider.addFav ( widget.newsModel! );
-                        //       setState ( () {
-                        //         isSaved = true;
-                        //       } );
-                        //     }
-                        //   } ,
-                        //   icon: Icon (
-                        //     isSaved == true
-                        //         ? Icons.favorite : Icons.favorite_border ,
-                        //     color: isSaved == true
-                        //         ? Colors.red
-                        //         : Theme
-                        //         .of ( context )
-                        //         .iconTheme
-                        //         .color ,
-                        //   ) ,
-                        // ) ,
-
                         IconButton (
                           onPressed: () async {
                             if ( isSaved == true ) {

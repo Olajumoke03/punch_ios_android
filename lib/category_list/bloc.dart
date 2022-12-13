@@ -23,7 +23,9 @@ class CategoryListBloc extends Bloc<CategoryListEvent, CategoryListState>{
         }
 
       }catch(e){
-        yield CategoryListLoadFailureState(error: e.toString());
+        // yield CategoryListLoadFailureState(error: e.toString());
+        yield CategoryListLoadFailureState(error: "No internet connection");
+
       }
     }
     if (event is RefreshCategoryListEvent) {
