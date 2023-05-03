@@ -1,3 +1,4 @@
+//
 // import 'package:flutter/foundation.dart';
 // import 'favorite_helper.dart';
 //
@@ -13,6 +14,7 @@
 //     List c = await db.listAll();
 //     posts.addAll(c);
 //     setLoading(false);
+//
 //   }
 //
 //   void setLoading(value) {
@@ -47,13 +49,16 @@
 //     return posts;
 //   }
 // }
+//
+
+
 
 import 'package:flutter/foundation.dart';
 import 'favorite_helper.dart';
 
 
 class FavoritesProvider extends ChangeNotifier {
-  late String message;
+  String? message;
   List posts = [];
   bool loading = true;
   var db = FavoriteDB();
@@ -87,7 +92,7 @@ class FavoritesProvider extends ChangeNotifier {
   }
 
   String getMessage() {
-    return message;
+    return message!;
   }
 
   void setPosts(value) {
@@ -99,4 +104,3 @@ class FavoritesProvider extends ChangeNotifier {
     return posts;
   }
 }
-

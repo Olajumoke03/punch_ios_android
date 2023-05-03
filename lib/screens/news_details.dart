@@ -216,6 +216,35 @@ class _NewsDetailsState extends State<NewsDetails> {
                           ) ,
                         ) ,
 
+                        // IconButton (
+                        //   onPressed: () async {
+                        //     if ( isSaved == true ) {
+                        //       detailsProvider.removeFav ( widget.newsModel!.id! );
+                        //
+                        //       setState ( () {
+                        //         isSaved = false;
+                        //       } );
+                        //     } else {
+                        //       detailsProvider.addFav ( widget!.newsModel! );
+                        //       setState ( () {
+                        //         isSaved = true;
+                        //       } );
+                        //       print("what I am trying to save in news details = " +  widget!.newsModel!.toJson().toString());
+                        //     }
+                        //   } ,
+                        //   icon: Icon (
+                        //     isSaved == true
+                        //         ? Icons.favorite : Icons.favorite_border ,
+                        //     color: isSaved == true
+                        //         ? Colors.red
+                        //         : Theme
+                        //         .of ( context )
+                        //         .iconTheme
+                        //         .color ,
+                        //   ) ,
+                        // ) ,
+
+
                         IconButton (
                           onPressed: () async {
                             if ( isSaved == true ) {
@@ -225,11 +254,12 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 isSaved = false;
                               } );
                             } else {
-                              detailsProvider.addFav ( widget!.newsModel! );
+                              detailsProvider.addFav ( widget.newsModel! );
                               setState ( () {
                                 isSaved = true;
                               } );
                               print("what I am trying to save in news details = " +  widget!.newsModel!.toJson().toString());
+
                             }
                           } ,
                           icon: Icon (
@@ -243,7 +273,6 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 .color ,
                           ) ,
                         ) ,
-
 
 
                         IconButton (

@@ -46,7 +46,7 @@ class _HomeState extends State<HomePage> {
         child: const CategoryListScreen()
     ),
 
-    const SavedNewsScreen(),
+    SavedNewsScreen(),
     MoreScreen()
   ];
 
