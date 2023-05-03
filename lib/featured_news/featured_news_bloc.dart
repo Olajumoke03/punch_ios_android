@@ -90,7 +90,7 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
     if (event is FetchFeaturedNewsEvent) {
       try{
         // load news initially from cache
-        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.featuredNewsCacheKey);
+        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
         // print("home cachedJson  : "+ cachedJson);
 
         if(cachedJson.isNotEmpty){

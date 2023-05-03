@@ -201,41 +201,23 @@
 
 
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/model/latest_news_model.dart';
 import 'favorite_helper.dart';
 
+
+
 class DetailsProvider extends ChangeNotifier {
   late String message;
-  // CategoryFeed related = CategoryFeed();
   bool loading = true;
   late LatestNewsModel entry;
   var favDB = FavoriteDB();
-
   bool faved = false;
-
   static var httpClient = HttpClient();
 
-  // getFeed(String url) async {
-  //   setxaLoading(true);
-  //   checkFav();
-  //   Api.updateCount(Api.baseURL + "api_count.php?get=update&id=" + entry.id)
-  //       .then((wow) {})
-  //       .catchError((e) {
-  //     throw (e);
-  //   });
-  //   Api.getNews(url).then((feed) {
-  //     setRelated(feed);
-  //     setLoading(false);
-  //   }).catchError((e) {
-  //     throw (e);
-  //   });
-  // }
 
-  // suspected culprit
   Future<bool> checkFav(int id) async {
     List c = await favDB.check({"id": id});
     print('its liking :' +c.isNotEmpty.toString());
@@ -250,10 +232,21 @@ class DetailsProvider extends ChangeNotifier {
 
   }
 
-  addFav(HomeNewsModel item) async {
-    print('trying to save in adFav');
-    await favDB.add({"id": item.id, "item": item.toJson()}); // this adds
+  // addFav(HomeNewsModel item) async {
+  //   print('trying to save in adFav');
+  //   await favDB.add({"id": item.id, "item": {item.date, item.jetpackFeaturedMediaUrl, item.title!.rendered} }).then((v){
+  //     checkFav(item.id!);
+  //   }); // this adds
+  //   print("what I am trying to save in db " + item.toString());
+  //   print("checkFav(item.id!) " + item.id!.toString());
+  // }
+
+    addFav(HomeNewsModel item) async {
+    print('trying to save iin adFav');
+    await favDB.add({"id": item.id, "item": item}); // this adds
     checkFav(item.id!);
+        print("what I am trying to save in db = " + item.toJson().toString());
+        print("checkFav(item.id!) " + item.id!.toString());
   }
 
   removeFav(int id) async {

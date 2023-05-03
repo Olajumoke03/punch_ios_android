@@ -2,6 +2,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:punch_ios_android/screens/test_fiile.dart';
+import 'package:punch_ios_android/utility/ad_open_admanager.dart';
+import 'package:punch_ios_android/utility/app_open_notifier.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/utility/favorites_provider.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
@@ -55,6 +58,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   HomeNewsModel? homeNewsModel;
   AppProvider? _appProvider;
+  late AppLifecycleReactor _appLifecycleReactor;
+
 
   // Future<String?> initialLink() async {
   //   try {
@@ -123,6 +128,11 @@ class _MyAppState extends State<MyApp> {
       // Will be called whenever then user's email subscription changes
       // (ie. OneSignal.setEmail(email) is called and the user gets registered
     });
+
+    //App Open Ad
+    AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAd();
+    _appLifecycleReactor = AppLifecycleReactor(
+    appOpenAdManager: appOpenAdManager);
   }
 
   @override

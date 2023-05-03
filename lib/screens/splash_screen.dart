@@ -72,6 +72,7 @@ import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
 import 'package:punch_ios_android/home_news/home_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/home_page.dart';
+import 'package:punch_ios_android/utility/ad_open_admanager.dart';
 
 
 
@@ -83,10 +84,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  AppOpenAdManager appOpenAdManager = AppOpenAdManager();
 
   @override
   void initState() {
     super.initState();
+    appOpenAdManager.loadAd();
+
     startTime();
   }
   startTime() async {
@@ -97,6 +101,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   nextPage() async {
     if(mounted){
+      appOpenAdManager.showAdIfAvailable();
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context)=>
           MultiBlocProvider(

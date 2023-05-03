@@ -21,13 +21,10 @@ import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/colors.dart';
-import 'package:punch_ios_android/utility/constants.dart';
-import 'package:punch_ios_android/utility/time_ago.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-// import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

@@ -22,8 +22,6 @@ import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:punch_ios_android/utility/constants.dart';
-
 import '../category_list/model.dart';
 import '../widgets/build_loading_widget.dart';
 
@@ -218,12 +216,10 @@ class _NewsDetailsState extends State<NewsDetails> {
                           ) ,
                         ) ,
 
-
                         IconButton (
                           onPressed: () async {
                             if ( isSaved == true ) {
                               detailsProvider.removeFav ( widget.newsModel!.id! );
-                              // detailsProvider.removeFav ( widget.newsModel.id);
 
                               setState ( () {
                                 isSaved = false;
@@ -233,6 +229,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                               setState ( () {
                                 isSaved = true;
                               } );
+                              print("what I am trying to save in news details = " +  widget!.newsModel!.toJson().toString());
                             }
                           } ,
                           icon: Icon (
