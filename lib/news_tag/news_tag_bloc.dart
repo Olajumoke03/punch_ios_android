@@ -20,7 +20,6 @@ Stream<NewsTagState> mapEventToState(NewsTagEvent event) async* {
         List<HomeNewsModel> newsTag = await repository.fetchNewsTag(event.id);
         if(newsTag.isNotEmpty){
           yield NewsTagLoadedState(newsTag:newsTag,message: "News Tag Updated");
-          print("NewsTagLoadedState");
         }
 
         // yield NewsByCategoryLoadedState(newsByCategory:newsByCategory);

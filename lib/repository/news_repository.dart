@@ -137,7 +137,7 @@ class Repository   {
 
   Future<List<HomeNewsModel>>fetchNewsTag(String id) async {
     final response = await _apiClient.get(constants.newsTag+id);
-    print("NewsTag " + response);
+    // print("NewsTag " + response);
     var data = json.decode(response);
     NewsTagResponse newsTag = NewsTagResponse.fromJson(data);
     return newsTag.newsTags;

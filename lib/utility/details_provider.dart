@@ -122,6 +122,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
+
+
+
 import 'favorite_helper.dart';
 
 class DetailsProvider extends ChangeNotifier {
@@ -136,55 +139,50 @@ class DetailsProvider extends ChangeNotifier {
   static var httpClient = HttpClient();
 
 
-  // suspected culpruit
-
-  // checkFav() async {
-  //   List c = await favDB.check({"id": entry!.id});
+  // suspected culprit
+  // Future<bool> checkFav(int id) async {
+  //   List c = await favDB.check({"id": id});
+  //   print('its liking :' +c.isNotEmpty.toString());
+  //   print('length : ' + c.length.toString());
   //   if (c.isNotEmpty) {
-  //     setFaved(true);
+  //     print('i exist'); // if c is not empty means that something was found
+  //     return true;
   //   } else {
-  //     setFaved(false);
+  //     print('i don\'t exist'); // this means that it didn't find anything
+  //     return false;
   //   }
   // }
-  //
-  // addFav() async {
-  //   await favDB.add({"id": entry!.id, "item": entry!.toJson()});
-  //   checkFav();
-  // }
-  //
-  // removeFav() async {
-  //   favDB.remove({"id": entry!.id}).then((v) {
-  //     print(v);
-  //     checkFav();
-  //   });
-  // }
 
-
-  Future<bool> checkFav(int id) async {
-    List c = await favDB.check({"id": id});
+  checkFav(int id) async {
+    List c = await favDB.check({"id":id});
     print('its liking :' +c.isNotEmpty.toString());
     print('length : ' + c.length.toString());
     if (c.isNotEmpty) {
-      // print('i exist'); // if c is not empty means that something was found
-      return true;
-    } else {
-      print('i dont exist'); // this means that it didn't find anything
-      return false;
-    }
+      setFaved(true);
+      print('i exist'); // if c is not empty means that something was found
 
+      // return true;
+
+    } else {
+      setFaved(false);
+      print('i don\'t exist'); // this means that it didn't find anything
+      // return false;
+
+    }
   }
 
   addFav(HomeNewsModel item) async {
     print('trying to save in adFav');
-    await favDB.add({"id": item.id, "item": item}); // this adds
-    print("item error with json: " + item.toJson().toString());
-    print("item error without json: " + item.toJson().toString());
+    await favDB.add({"id": item.id, "item": item.toJson()}); // this adds
+    // await favDB.add({"id": item.id}); // this adds
+    print("what I am trying to save in details provider: " +  item.toJson().toString());
+    // print("trying to save in details provider: " + {"id": item.id, "item": item.toJson()}.toString());
     checkFav(item.id!);
   }
 
   removeFav(int id) async {
-    favDB.remove({"id": id}).then((v) {
-      print(v);
+    await favDB.remove({"id": id}).then((v) {
+      print("error from removeFav: " + v.toString());
       checkFav(id);
     });
   }
@@ -211,7 +209,15 @@ class DetailsProvider extends ChangeNotifier {
   String getMessage() {
     return message!;
   }
-
+  //
+  // void setRelated(value) {
+  //   related = value;
+  //   notifyListeners();
+  // }
+  //
+  // CategoryFeed getRelated() {
+  //   return related;
+  // }
 
   void setEntry(value) {
     entry = value;

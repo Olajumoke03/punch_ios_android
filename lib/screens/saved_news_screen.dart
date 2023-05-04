@@ -256,6 +256,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
@@ -263,6 +264,7 @@ import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart';
 import 'package:punch_ios_android/news_tag/news_tag_bloc.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
+import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/favorites_provider.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:uuid/uuid.dart';
@@ -297,10 +299,8 @@ class _SavedNewsScreenState extends State<SavedNewsScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
             centerTitle: true,
-            leading: Container(
-              alignment: Alignment.center,
-            ),
-            title: Text( "Saved News", ),
+            title: Image.asset(
+                'assets/punchLogo.png', width: 100, height: 40),
           ),
 
           body: favoritesProvider.posts.isEmpty
@@ -334,153 +334,439 @@ class _SavedNewsScreenState extends State<SavedNewsScreen> {
         );
       },
     );
-
   }
+
+
   Widget buildSavedNews(HomeNewsModel newsModel){
     final uuid = Uuid();
     final String imgTag = uuid.v4();
-    return Padding (
-      padding: EdgeInsets.symmetric (vertical: 5 ),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        decoration: BoxDecoration(
-          color: Theme.of(context).textTheme.bodyText2!.color,
-          boxShadow: [
-            BoxShadow(
-                color: Theme.of(context).focusColor.withOpacity(0.1),
-                blurRadius: 5,
-                offset: Offset(0, 2)),
-          ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
         ),
-        child: InkWell(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-          onTap: (){
-            Navigator.push ( context , MaterialPageRoute(builder: (context)=>
-                BlocProvider<NewsTagBloc> (
-                    create: (context) => NewsTagBloc (repository: Repository ()) ,
-                    child: NewsDetails ( newsModel: newsModel , )
-                ) ,
-            ));
-          },
-          child: Row(
-            children: <Widget>[
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all( Radius.circular(10), ),
+        boxShadow: [
+          BoxShadow(
+              color: Theme.of(context).focusColor.withOpacity(0.1),
+              blurRadius: 5,
+              offset: const Offset(0, 2)),
+        ],
+      ),
+      child: InkWell(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+        onTap: () {
+          Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+              BlocProvider<NewsTagBloc> (
+                  create: (context) => NewsTagBloc (repository: Repository ()) ,
+                  child: NewsDetails ( newsModel: newsModel , )
+              ) ,
+          ));
+        },
+        child: Row(
+          children: <Widget>[
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
                 ),
-                elevation: 4,
+              ),
+              elevation: 4,
+              child: Hero(
+                tag: imgTag,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all( Radius.circular(10)),
-                  child: Hero(
-                    tag: imgTag,
-                    child: CachedNetworkImage(
-                      //imageUrl: "$img",
-                      imageUrl: '${newsModel.xFeaturedMedia}',
-                      placeholder: (context, url) => Container(
-                          height: 125,
-                          width: 248,
-                          child: Center(child: CircularProgressIndicator())),
-                      errorWidget: (context, url, error) => Image.asset(
-                        "assets/images/place.png",
-                        fit: BoxFit.cover,
-                        height: 100,
-                        width: 100,
-                      ),
-                      fit: BoxFit.cover,
-                      height: 100,
-                      width: 100,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: CachedNetworkImage(
+                    imageUrl: '${newsModel.xFeaturedMedia}',
+                    placeholder: (context, url) => SizedBox(
+                        height: 125,
+                        width: 248,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                                color: Theme.of(context).primaryColor))),
+                    errorWidget: (context, url, error) => Image.asset(
+                      "assets/punchLogo.png",
+                      fit: BoxFit.contain,
+                      // height: 100,
+                      // width: 100,
                     ),
+                    fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
                   ),
                 ),
               ),
+            ),
+            const SizedBox(width: 10),
+            Flexible(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Material(
+                      type: MaterialType.transparency,
+                      child: Html(
+                        data: '${newsModel.title!.rendered}',
+                        style: {
+                          "body": Style(
+                              fontSize: const FontSize(18.0),
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color),
+                        },
+                      )),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 150),
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: redColor,
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            CategoryListModel cLM = CategoryListModel ( );
+                            cLM.categoryId = newsModel.categories![0].toString ( );
+                            cLM.categoryName = newsModel.categoriesString![0];
 
-              SizedBox( width: 10),
-
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Hero(
-                      tag: newsModel.title!.rendered!, //the.rendered nko
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child:
-                        Html(
-                          data:  newsModel.title!.rendered!,
-                          style: {
-                            "body": Style(
-                                fontSize: const FontSize(18.0),
-                                fontWeight: FontWeight.w500,
-                                color:Theme.of(context).textTheme.bodyText1!.color
-                            ),
+                            Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+                                BlocProvider<NewsByCategoryBloc> (
+                                    create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
+                                    child: NewsByCategory ( model: cLM , )
+                                ) ,
+                            ));
                           },
-                        )
-                        // Html(
-                        //   data : newsModel.title!.rendered!,
-                        //   useRichText: true,
-                        //   renderNewlines: true,
-                        //   defaultTextStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1.color, fontSize:  8*_fontSizeController.value,  fontWeight:FontWeight.w500),
-                        // ),
-                      ),
-                    ),
-                    SizedBox( height: 15),
-
-                    SizedBox( height: 3),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          constraints: BoxConstraints( maxWidth: 100),
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Theme.of(context).accentColor,
-                          ),
-                          child: GestureDetector (
-                            onTap: () {
-                              CategoryListModel cLM = CategoryListModel ( );
-                              cLM.categoryId = newsModel.categories![0].toString ( );
-                              cLM.categoryName = newsModel.categoriesString![0];
-
-                              Navigator.push ( context , MaterialPageRoute(builder: (context)=>
-                                  BlocProvider<NewsByCategoryBloc> (
-                                      create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
-                                      child: NewsByCategory ( model: cLM , )
-                                  ) ,
-                              ));
-                            } ,
-                            child: Text (
-                              newsModel.categoriesString![0].replaceAll("&amp;", "&") ,
-                              style: TextStyle ( fontSize:  6*_fontSizeController!.value , color: Colors.white ,
-                              ) ,
-                            ) ,
-                          ) ,
-
-                        ),
-                        Spacer(),
-                        Container(
-                          padding: EdgeInsets.only(left: 5),
                           child: Text(
-                              Constants.readTimestamp(newsModel.date!),
-                              style: TextStyle( fontSize: 4*_fontSizeController!.value,
-                                color: Theme.of(context).textTheme.bodyText1!.color,
-                              )),
+                            newsModel.categoriesString![0].replaceAll("&amp;", "&"),
+                            style: TextStyle(
+                              fontSize: 4.5 * _fontSizeController!.value,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                            Jiffy('${newsModel.date}').fromNow(),
+                            style: TextStyle(
+                                fontSize: 4 * _fontSizeController!.value,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color)),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+
+    //   Padding (
+    //   padding: EdgeInsets.symmetric (vertical: 5 ),
+    //   child: Container(
+    //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+    //     decoration: BoxDecoration(
+    //       color: Theme.of(context).textTheme.bodyText2!.color,
+    //       boxShadow: [
+    //         BoxShadow(
+    //             color: Theme.of(context).focusColor.withOpacity(0.1),
+    //             blurRadius: 5,
+    //             offset: Offset(0, 2)),
+    //       ],
+    //     ),
+    //     child: InkWell(
+    //       borderRadius: const BorderRadius.only(
+    //         topLeft: Radius.circular(10),
+    //         topRight: Radius.circular(10),
+    //       ),
+    //       onTap: (){
+    //         Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+    //             BlocProvider<NewsTagBloc> (
+    //                 create: (context) => NewsTagBloc (repository: Repository ()) ,
+    //                 child: NewsDetails ( newsModel: newsModel , )
+    //             ) ,
+    //         ));
+    //       },
+    //       child: Row(
+    //         children: <Widget>[
+    //           Card(
+    //             shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.all( Radius.circular(10), ),
+    //             ),
+    //             elevation: 4,
+    //             child: ClipRRect(
+    //               borderRadius: BorderRadius.all( Radius.circular(10)),
+    //               child: Hero(
+    //                 tag: imgTag,
+    //                 child: CachedNetworkImage(
+    //                   //imageUrl: "$img",
+    //                   imageUrl: '${newsModel.xFeaturedMedia}',
+    //                   placeholder: (context, url) => Container(
+    //                       height: 125,
+    //                       width: 248,
+    //                       child: Center(child: CircularProgressIndicator())),
+    //                   errorWidget: (context, url, error) => Image.asset(
+    //                     "assets/images/place.png",
+    //                     fit: BoxFit.cover,
+    //                     height: 100,
+    //                     width: 100,
+    //                   ),
+    //                   fit: BoxFit.cover,
+    //                   height: 100,
+    //                   width: 100,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //
+    //           SizedBox( width: 10),
+    //
+    //           Flexible(
+    //             child: Column(
+    //               mainAxisSize: MainAxisSize.max,
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: <Widget>[
+    //                 Hero(
+    //                   tag: newsModel.title!.rendered!, //the.rendered nko
+    //                   child: Material(
+    //                     type: MaterialType.transparency,
+    //                     child:
+    //                     Html(
+    //                       data:  newsModel.title!.rendered!,
+    //                       style: {
+    //                         "body": Style(
+    //                             fontSize: const FontSize(18.0),
+    //                             fontWeight: FontWeight.w500,
+    //                             color:Theme.of(context).textTheme.bodyText1!.color
+    //                         ),
+    //                       },
+    //                     )
+    //                     // Html(
+    //                     //   data : newsModel.title!.rendered!,
+    //                     //   useRichText: true,
+    //                     //   renderNewlines: true,
+    //                     //   defaultTextStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1.color, fontSize:  8*_fontSizeController.value,  fontWeight:FontWeight.w500),
+    //                     // ),
+    //                   ),
+    //                 ),
+    //                 SizedBox( height: 15),
+    //
+    //                 SizedBox( height: 3),
+    //                 Row(
+    //                   children: <Widget>[
+    //                     Container(
+    //                       constraints: BoxConstraints( maxWidth: 100),
+    //                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+    //                       decoration: BoxDecoration(
+    //                         borderRadius: BorderRadius.circular(5),
+    //                         color: Theme.of(context).accentColor,
+    //                       ),
+    //                       child: GestureDetector (
+    //                         onTap: () {
+    //                           CategoryListModel cLM = CategoryListModel ( );
+    //                           cLM.categoryId = newsModel.categories![0].toString ( );
+    //                           cLM.categoryName = newsModel.categoriesString![0];
+    //
+    //                           Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+    //                               BlocProvider<NewsByCategoryBloc> (
+    //                                   create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
+    //                                   child: NewsByCategory ( model: cLM , )
+    //                               ) ,
+    //                           ));
+    //                         } ,
+    //                         child: Text (
+    //                           newsModel.categoriesString![0].replaceAll("&amp;", "&") ,
+    //                           style: TextStyle ( fontSize:  6*_fontSizeController!.value , color: Colors.white ,
+    //                           ) ,
+    //                         ) ,
+    //                       ) ,
+    //
+    //                     ),
+    //                     Spacer(),
+    //                     Container(
+    //                       padding: EdgeInsets.only(left: 5),
+    //                       child: Text(
+    //                           Constants.readTimestamp(newsModel.date!),
+    //                           style: TextStyle( fontSize: 4*_fontSizeController!.value,
+    //                             color: Theme.of(context).textTheme.bodyText1!.color,
+    //                           )),
+    //                     ),
+    //
+    //                   ],
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
+
+  // Widget buildSavedNews(HomeNewsModel newsModel){
+  //   final uuid = Uuid();
+  //   final String imgTag = uuid.v4();
+  //   return Padding (
+  //     padding: EdgeInsets.symmetric (vertical: 5 ),
+  //     child: Container(
+  //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+  //       decoration: BoxDecoration(
+  //         color: Theme.of(context).textTheme.bodyText2!.color,
+  //         boxShadow: [
+  //           BoxShadow(
+  //               color: Theme.of(context).focusColor.withOpacity(0.1),
+  //               blurRadius: 5,
+  //               offset: Offset(0, 2)),
+  //         ],
+  //       ),
+  //       child: InkWell(
+  //         borderRadius: const BorderRadius.only(
+  //           topLeft: Radius.circular(10),
+  //           topRight: Radius.circular(10),
+  //         ),
+  //         onTap: (){
+  //           Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+  //               BlocProvider<NewsTagBloc> (
+  //                   create: (context) => NewsTagBloc (repository: Repository ()) ,
+  //                   child: NewsDetails ( newsModel: newsModel , )
+  //               ) ,
+  //           ));
+  //         },
+  //         child: Row(
+  //           children: <Widget>[
+  //             Card(
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.all( Radius.circular(10), ),
+  //               ),
+  //               elevation: 4,
+  //               child: ClipRRect(
+  //                 borderRadius: BorderRadius.all( Radius.circular(10)),
+  //                 child: Hero(
+  //                   tag: imgTag,
+  //                   child: CachedNetworkImage(
+  //                     //imageUrl: "$img",
+  //                     imageUrl: '${newsModel.xFeaturedMedia}',
+  //                     placeholder: (context, url) => Container(
+  //                         height: 125,
+  //                         width: 248,
+  //                         child: Center(child: CircularProgressIndicator())),
+  //                     errorWidget: (context, url, error) => Image.asset(
+  //                       "assets/images/place.png",
+  //                       fit: BoxFit.cover,
+  //                       height: 100,
+  //                       width: 100,
+  //                     ),
+  //                     fit: BoxFit.cover,
+  //                     height: 100,
+  //                     width: 100,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //
+  //             SizedBox( width: 10),
+  //
+  //             Flexible(
+  //               child: Column(
+  //                 mainAxisSize: MainAxisSize.max,
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   Hero(
+  //                     tag: newsModel.title!.rendered!, //the.rendered nko
+  //                     child: Material(
+  //                       type: MaterialType.transparency,
+  //                       child:
+  //                       Html(
+  //                         data:  newsModel.title!.rendered!,
+  //                         style: {
+  //                           "body": Style(
+  //                               fontSize: const FontSize(18.0),
+  //                               fontWeight: FontWeight.w500,
+  //                               color:Theme.of(context).textTheme.bodyText1!.color
+  //                           ),
+  //                         },
+  //                       )
+  //                       // Html(
+  //                       //   data : newsModel.title!.rendered!,
+  //                       //   useRichText: true,
+  //                       //   renderNewlines: true,
+  //                       //   defaultTextStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1.color, fontSize:  8*_fontSizeController.value,  fontWeight:FontWeight.w500),
+  //                       // ),
+  //                     ),
+  //                   ),
+  //                   SizedBox( height: 15),
+  //
+  //                   SizedBox( height: 3),
+  //                   Row(
+  //                     children: <Widget>[
+  //                       Container(
+  //                         constraints: BoxConstraints( maxWidth: 100),
+  //                         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+  //                         decoration: BoxDecoration(
+  //                           borderRadius: BorderRadius.circular(5),
+  //                           color: Theme.of(context).accentColor,
+  //                         ),
+  //                         child: GestureDetector (
+  //                           onTap: () {
+  //                             CategoryListModel cLM = CategoryListModel ( );
+  //                             cLM.categoryId = newsModel.categories![0].toString ( );
+  //                             cLM.categoryName = newsModel.categoriesString![0];
+  //
+  //                             Navigator.push ( context , MaterialPageRoute(builder: (context)=>
+  //                                 BlocProvider<NewsByCategoryBloc> (
+  //                                     create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
+  //                                     child: NewsByCategory ( model: cLM , )
+  //                                 ) ,
+  //                             ));
+  //                           } ,
+  //                           child: Text (
+  //                             newsModel.categoriesString![0].replaceAll("&amp;", "&") ,
+  //                             style: TextStyle ( fontSize:  6*_fontSizeController!.value , color: Colors.white ,
+  //                             ) ,
+  //                           ) ,
+  //                         ) ,
+  //
+  //                       ),
+  //                       Spacer(),
+  //                       Container(
+  //                         padding: EdgeInsets.only(left: 5),
+  //                         child: Text(
+  //                             Constants.readTimestamp(newsModel.date!),
+  //                             style: TextStyle( fontSize: 4*_fontSizeController!.value,
+  //                               color: Theme.of(context).textTheme.bodyText1!.color,
+  //                             )),
+  //                       ),
+  //
+  //                     ],
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
