@@ -136,40 +136,40 @@ class DetailsProvider extends ChangeNotifier {
 
 
   // suspected culprit
-  // Future<bool> checkFav(int id) async {
-  //     List c = await favDB.check({"id": id});
-  //     print('its liking :' +c.isNotEmpty.toString());
-  //     print('length : ' + c.length.toString());
-  //     if (c.isNotEmpty) {
-  //       print('i exist'); // if c is not empty means that something was found
-  //       setFaved(true);
-  //       // return true;
-  //     } else {
-  //       print('i don\'t exist'); // this means that it didn't find anything
-  //       setFaved(false);
-  //       // return false;
-  //     }
-  //
-  //     return true;
-  // }
+  Future<bool> checkFav(int id) async {
+      List c = await favDB.check({"id": id});
+      print('its liking :' +c.isNotEmpty.toString());
+      print('length : ' + c.length.toString());
+      if (c.isNotEmpty) {
+        print('i exist'); // if c is not empty means that something was found
+        setFaved(true);
+        // return true;
+      } else {
+        print('i don\'t exist'); // this means that it didn't find anything
+        setFaved(false);
+        // return false;
+      }
 
-  checkFav(int id) async {
-    List c = await favDB.check({"id":id});
-    print('its liking :' +c.isNotEmpty.toString());
-    print('length : ' + c.length.toString());
-    if (c.isNotEmpty) {
-      setFaved(true);
-      print('i exist'); // if c is not empty means that something was found
-
-      // return true;
-
-    } else {
-      setFaved(false);
-      print('i don\'t exist'); // this means that it didn't find anything
-      // return false;
-
-    }
+      return true;
   }
+
+  // checkFav(int id) async {
+  //   List c = await favDB.check({"id":id});
+  //   print('its liking :' +c.isNotEmpty.toString());
+  //   print('length : ' + c.length.toString());
+  //   if (c.isNotEmpty) {
+  //     setFaved(true);
+  //     print('i exist'); // if c is not empty means that something was found
+  //
+  //     // return true;
+  //
+  //   } else {
+  //     setFaved(false);
+  //     print('i don\'t exist'); // this means that it didn't find anything
+  //     // return false;
+  //
+  //   }
+  // }
 
   addFav(HomeNewsModel item) async {
     print('trying to save in adFav');
@@ -229,15 +229,3 @@ class DetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

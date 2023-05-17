@@ -158,21 +158,27 @@ import 'package:objectdb/src/objectdb_storage_filesystem.dart';
 
 class FavoriteDB {
 
-  var path ="";
+  // var path ="";
+  // FavoriteDB(){
+  //   getPath();
+  // }
+  //
+  // getPath() async {
+  //   Directory documentDirectory = await getApplicationDocumentsDirectory();
+  //   path = documentDirectory.path + '/favorites.db';
+  //   print("favorite helper path: " + path);
+  //   //return path;
+  // }
 
-  FavoriteDB(){getPath();}
+  // final path = Directory.current.path + '/favorites.db';
+  final path = Directory.current.path;
 
-  getPath() async {
-    Directory documentDirectory = await getApplicationDocumentsDirectory();
-    path = documentDirectory.path + '/favorites.db';
-    print("favorite helper path: " + path);
-    //return path;
-  }
 
   //Insertion
   add(Map item) async {
     print('trying to save in FaVDb.add');
     final db = ObjectDB(FileSystemStorage(path));
+    print("favorite helper path: " + path);
 
     print('saved in favorite helper');
 
@@ -214,3 +220,4 @@ class FavoriteDB {
     return val;
   }
 }
+

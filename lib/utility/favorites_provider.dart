@@ -104,3 +104,4 @@ class FavoritesProvider extends ChangeNotifier {
     return posts;
   }
 }
+
