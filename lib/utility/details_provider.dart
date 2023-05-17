@@ -118,13 +118,9 @@
 
 
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
-
-
-
 import 'favorite_helper.dart';
 
 class DetailsProvider extends ChangeNotifier {
@@ -141,16 +137,20 @@ class DetailsProvider extends ChangeNotifier {
 
   // suspected culprit
   // Future<bool> checkFav(int id) async {
-  //   List c = await favDB.check({"id": id});
-  //   print('its liking :' +c.isNotEmpty.toString());
-  //   print('length : ' + c.length.toString());
-  //   if (c.isNotEmpty) {
-  //     print('i exist'); // if c is not empty means that something was found
+  //     List c = await favDB.check({"id": id});
+  //     print('its liking :' +c.isNotEmpty.toString());
+  //     print('length : ' + c.length.toString());
+  //     if (c.isNotEmpty) {
+  //       print('i exist'); // if c is not empty means that something was found
+  //       setFaved(true);
+  //       // return true;
+  //     } else {
+  //       print('i don\'t exist'); // this means that it didn't find anything
+  //       setFaved(false);
+  //       // return false;
+  //     }
+  //
   //     return true;
-  //   } else {
-  //     print('i don\'t exist'); // this means that it didn't find anything
-  //     return false;
-  //   }
   // }
 
   checkFav(int id) async {
@@ -209,7 +209,7 @@ class DetailsProvider extends ChangeNotifier {
   String getMessage() {
     return message!;
   }
-  //
+
   // void setRelated(value) {
   //   related = value;
   //   notifyListeners();

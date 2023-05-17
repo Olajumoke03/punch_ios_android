@@ -247,9 +247,9 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                         IconButton (
                           onPressed: () async {
+                            print("isSaved on start: " + isSaved.toString());
                             if ( isSaved == true ) {
                               detailsProvider.removeFav ( widget.newsModel!.id! );
-
                               setState ( () {
                                 isSaved = false;
                               } );
@@ -259,7 +259,6 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 isSaved = true;
                               } );
                               print("what I am trying to save in news details = " +  widget!.newsModel!.toJson().toString());
-
                             }
                           } ,
                           icon: Icon (
@@ -298,14 +297,15 @@ class _NewsDetailsState extends State<NewsDetails> {
                         ) ,
                       ] ,
                     ) ,
-                    floatingActionButton:FloatingActionButton(
-                      backgroundColor: redColor,
-                      onPressed: (){
-                        Navigator.push( context, MaterialPageRoute(builder: (context) => DisqusScreen(id:widget.newsModel!.id.toString(),slug: widget.newsModel!.slug,)) );
 
-                      },
-                      child: const Icon(Icons.comment,color: Colors.white,),
-                    ),
+                    //DISQUS
+                    // floatingActionButton:FloatingActionButton(
+                    //   backgroundColor: redColor,
+                    //   onPressed: (){
+                    //     Navigator.push( context, MaterialPageRoute(builder: (context) => DisqusScreen(id:widget.newsModel!.id.toString(),slug: widget.newsModel!.slug,)) );
+                    //   },
+                    //   child: const Icon(Icons.comment,color: Colors.white,),
+                    // ),
 
 
                     body: Padding (
