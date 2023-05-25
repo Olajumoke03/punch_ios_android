@@ -200,7 +200,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                             // _showInterstitialAd();
+                             _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),
@@ -441,18 +441,20 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   ) ,
                                 ] ,
                               ) ,
-
                             ] ,
                           ) ,
                           Divider ( color: Theme.of ( context ).textTheme.caption!.color ) ,
 
                          const SizedBox ( height: 10 ) ,
 
-                          SizedBox (
-                            child: mediumWidget ,
-                            width: MediaQuery.of ( context ).size.width ,
-                            height: 250,
-                          ) ,
+                        //FOR AD MANAGER UNITS
+                        adShown?  Center(
+                            child: SizedBox(
+                              width: 300,
+                              height: 250,
+                              child: adManagerBannerWidget,
+                            ))
+                            : Container(height: 0),
 
                           const SizedBox ( height: 5 ) ,
 
@@ -551,17 +553,16 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                           const SizedBox ( height: 10 ) ,
 
-                          //FOR AD MANAGER UNITS
-                          adShown?  Center(
-                              child: SizedBox(
-                                width: 300,
-                                height: 250,
-                                child: adManagerBannerWidget,
-                              ))
-                              : Container(height: 0),
+                          //MEDIUM BANNER ADMOB
+                          SizedBox (
+                            child: mediumWidget ,
+                            width: MediaQuery.of ( context ).size.width ,
+                            height: 250,
+                          ) ,
                         ] ,
                       ) ,
-                    ) );
+                    )
+                );
               }
           );
         }
@@ -569,140 +570,6 @@ class _NewsDetailsState extends State<NewsDetails> {
   }
 
   Widget buildNewsTagList (List<HomeNewsModel> newsTagModel){
-    // return ListView.builder (
-    //   shrinkWrap: true ,
-    //   scrollDirection: Axis.vertical ,
-    //   physics: NeverScrollableScrollPhysics(),
-    //   itemCount: newsTagModel.length,
-    //   itemBuilder: (ctx, pos) {
-    //     return Padding (
-    //       padding:const EdgeInsets.symmetric (vertical: 5 ),
-    //       child: Container(
-    //         padding:const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-    //         decoration: BoxDecoration(
-    //           color: Theme.of(context).cardColor,
-    //           borderRadius: const BorderRadius.only(
-    //             topLeft: Radius.circular(10),
-    //             topRight: Radius.circular(10),
-    //           ),
-    //         ),
-    //         child: InkWell(
-    //           borderRadius: const BorderRadius.only(
-    //             topLeft: Radius.circular(10),
-    //             topRight: Radius.circular(10),
-    //           ),
-    //           onTap: (){
-    //             HomeNewsModel lNM = newsTagModel[pos];
-    //             Navigator.push ( context , MaterialPageRoute(builder: (context)=> BlocProvider<NewsTagBloc> (
-    //                 create: (context) => NewsTagBloc (repository: Repository ()) ,
-    //                 child: NewsDetails ( newsModel: lNM , )
-    //             ) ,
-    //             ));
-    //           },
-    //
-    //           child: Row(
-    //             children: <Widget>[
-    //               Card(
-    //                 shape: const RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.all( Radius.circular(10), ),
-    //                 ),
-    //                 elevation: 4,
-    //                 child: ClipRRect(
-    //                   borderRadius: const BorderRadius.all( Radius.circular(10)),
-    //                   child: Hero(
-    //                     tag: pos,
-    //                     child: CachedNetworkImage(
-    //                       imageUrl: '${newsTagModel[pos].xFeaturedMediaLarge}',
-    //                       placeholder: (context, url) => const SizedBox(
-    //                           height: 125,
-    //                           width: 248,
-    //                           child: Center(child: CircularProgressIndicator())),
-    //                       errorWidget: (context, url, error) =>
-    //                       const Center(child: Text("Punch News")),
-    //                       fit: BoxFit.cover,
-    //                       height: 100,
-    //                       width: 100,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //
-    //               const SizedBox( width: 10),
-    //
-    //               Flexible(
-    //                 child: Column(
-    //                   mainAxisSize: MainAxisSize.max,
-    //                   mainAxisAlignment: MainAxisAlignment.center,
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: <Widget>[
-    //                     Row(
-    //                       children: <Widget>[
-    //                         Container(
-    //                           padding: const EdgeInsets.only(left: 5),
-    //                           child:  Text(
-    //                               Jiffy('${newsTagModel[pos].date}').fromNow(),
-    //                               style: TextStyle(
-    //                                 color: Theme.of(context).primaryColor,
-    //                                 fontSize:12, )),
-    //                         ),
-    //                       ],
-    //                     ),
-    //
-    //                     const SizedBox( width: 10),
-    //
-    //                     Material(
-    //                         type: MaterialType.transparency,
-    //                         child: Html(
-    //                           data:  '${newsTagModel[pos].title!.rendered}',
-    //                           style: {
-    //                             "body": Style(
-    //                                 fontSize: const FontSize(18.0),
-    //                                 fontWeight: FontWeight.w400,
-    //                                 color:Theme.of(context).textTheme.bodyText1!.color
-    //                             ),
-    //                           },
-    //                         )
-    //                     ),
-    //                     const SizedBox( height: 10),
-    //                     SizedBox (
-    //                       height: 25 ,
-    //                       child: ListView.builder (
-    //                         scrollDirection: Axis.horizontal ,
-    //                         itemCount: 1 ,
-    //                         shrinkWrap: true ,
-    //                         itemBuilder: (BuildContext context , int index) {
-    //                           return
-    //                             Container (
-    //                               padding: const EdgeInsets.symmetric ( horizontal: 5 , vertical: 3 ) ,
-    //                               margin: const EdgeInsets.only ( right: 5.0 ) ,
-    //                               decoration: BoxDecoration ( borderRadius: BorderRadius.circular ( 5 ) ,
-    //                                 color: mainColor ,
-    //                               ) ,
-    //                               child: Center (
-    //                                 child: GestureDetector (
-    //                                   onTap: () {} ,
-    //                                   child:  Text (
-    //                                     "${newsTagModel[pos].xCategories}",
-    //                                     style: const TextStyle (fontSize: 10 , color: whiteColor) ,
-    //                                   ) ,
-    //                                 ) ,
-    //                               ) ,
-    //                             );
-    //                         } ,
-    //                       ) ,
-    //                     ),
-    //
-    //                   ],
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     );
-    //   } ,
-    // );
-
    return ListView.builder (
       padding: const EdgeInsets.symmetric ( horizontal: 7 ) ,
       scrollDirection: Axis.vertical ,
