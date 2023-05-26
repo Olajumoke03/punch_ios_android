@@ -106,8 +106,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                 const Center (
                                   child: CircularProgressIndicator ( ) , ) ,
                                 errorWidget: (context , url , error) =>
-                                // Image.asset ( 'assets/punchLogo.png' ) ,
-                                const Text(" Punch News  "),
+                                Image.asset ( 'assets/punchLogo.png' ) ,
                                 // Ico n ( Icons.close ) ,
                                 fit: BoxFit.contain ,
                               ) ,

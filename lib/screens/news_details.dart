@@ -39,6 +39,7 @@ class NewsDetails extends StatefulWidget {
 
 class _NewsDetailsState extends State<NewsDetails> {
   late FontSizeController _fontSizeController;
+  late DetailsProvider _detailsProvider;
   late NewsTagBloc newsTagBloc;
 
   int maxFailedLoadAttempts = 3;
@@ -161,12 +162,13 @@ class _NewsDetailsState extends State<NewsDetails> {
     newsTagBloc = BlocProvider.of<NewsTagBloc>(context);
     newsTagBloc.add(FetchNewsTagEvent(id: widget.newsModel!.tags!.join(",").toString()));
 
-    DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
-    _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
-      setState(() {
-        isSaved = value;
-      });
-    });
+    _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
+    // DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
+    // _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
+    //   setState(() {
+    //     isSaved = value;
+    //   });
+    // });
 
     articleMedium.load();
     inArticleAds.load();
@@ -194,7 +196,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     return Consumer<FontSizeController>(
         builder: ( context,  fontScale,  child) {
           return Consumer<DetailsProvider> (
-              builder: ( context ,  detailsProvider,  child) {
+              builder: ( context ,  detailsProviderr,  child) {
                 return Scaffold (
                     appBar: AppBar (
                       leading: IconButton(
@@ -249,16 +251,14 @@ class _NewsDetailsState extends State<NewsDetails> {
                           onPressed: () async {
                             print("isSaved on start: " + isSaved.toString());
                             if ( isSaved == true ) {
-                              // detailsProvider.removeFav ( widget.newsModel!.id! );
-                              detailsProvider.removeFav ( widget.newsModel! );
-
+                              _detailsProvider.removeFav ( widget.newsModel!.id! );
                               setState ( () {
                                 isSaved = false;
                               });
                               print("what I am trying to remove in news details = " +  widget!.newsModel!.id!.toString());
 
                             } else {
-                              detailsProvider.addFav ( widget.newsModel! );
+                              _detailsProvider.addFav ( widget.newsModel! );
                               setState ( () {
                                 isSaved = true;
                               } );
@@ -327,8 +327,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   placeholder: (context , url) => Center (
                                       child: CircularProgressIndicator ( color: Theme.of(context).primaryColor) , ) ,
                                   errorWidget: (context , url , error) =>
-                                      // Image.asset ( 'assets/punchLogo.png' ) ,
-                                 const Text(" Punch News  "),
+                                      Image.asset ( 'assets/punchLogo.png' ) ,
                                   // Ico n ( Icons.close ) ,
                                   fit: BoxFit.contain ,
                                 ) ,

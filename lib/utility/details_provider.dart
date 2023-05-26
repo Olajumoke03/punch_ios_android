@@ -154,20 +154,20 @@ class DetailsProvider extends ChangeNotifier {
   //     return true;
   // }
 
-  Future<bool> checkFav(int id) async {
+  Future<bool?> checkFav(int id) async {
     List c = await favDB.check({"id": id});
     print('its liking :' +c.isNotEmpty.toString());
     print('length : ' + c.length.toString());
     if (c.isNotEmpty) {
       print('i exist'); // if c is not empty means that something was found
-      setFaved(true);
-      // return true;
+      // setFaved(true);
+      return true;
     } else {
       print('i don\'t exist'); // this means that it didn't find anything
-      setFaved(false);
-      // return false;
+      // setFaved(false);
+      return false;
     }
-    return true;
+    // return true;
   }
 
 
@@ -212,20 +212,20 @@ class DetailsProvider extends ChangeNotifier {
     checkFav(item.id!);
   }
 
-  removeFav(HomeNewsModel item) async {
-    await favDB.remove({"id": item.id, "item": item.toJson() }).then((v) {
-      print("error from removeFav: " + item.id.toString());
-      checkFav(item.id!);
-    });
-  }
-
-  // //ORIGINAL
-  // removeFav(int id) async {
-  //   await favDB.remove({"id": id}).then((v) {
-  //     print("error from removeFav: " + id.toString());
-  //     checkFav(id);
+  // removeFav(HomeNewsModel item) async {
+  //   await favDB.remove({"id": item.id, "item": item.toJson() }).then((v) {
+  //     print("error from removeFav: " + item.id.toString());
+  //     checkFav(item.id!);
   //   });
   // }
+
+  //ORIGINAL
+  removeFav(int id) async {
+    await favDB.remove({"id": id}).then((v) {
+      print("error from removeFav: " + id.toString());
+      checkFav(id);
+    });
+  }
 
 
   void setFaved(value) {

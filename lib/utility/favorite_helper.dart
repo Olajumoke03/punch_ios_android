@@ -180,25 +180,17 @@ class FavoriteDB {
     await db.close();
   }
 
-  remove(Map item) async {
+
+
+  //original
+  Future<int> remove(Map item) async {
     final db = ObjectDB(FileSystemStorage(path!));
-    print(path);
     // db.open();
-    // db.insert(item);
-    await db.remove(item);
+    int val = await db.remove(item);
     // db.tidy();
     await db.close();
+    return val;
   }
-
-  // //original
-  // Future<int> remove(Map item) async {
-  //   final db = ObjectDB(FileSystemStorage(path));
-  //   // db.open();
-  //   int val = await db.remove(item);
-  //   // db.tidy();
-  //   await db.close();
-  //   return val;
-  // }
 
   Future<List> listAll() async {
     final db = ObjectDB(FileSystemStorage(path!));
