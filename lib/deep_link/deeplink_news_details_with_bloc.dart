@@ -201,33 +201,33 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
               //   ) ,
               // ) ,
 
-              IconButton (
-                onPressed: () async {
-                  if ( isSaved==true ) {
-
-                    detailsProvider.removeFav ( newsModel!.id!);
-                    setState(() {
-                      isSaved = false;
-                    });
-
-                  } else {
-                    detailsProvider.addFav (newsModel! );
-                    setState(() {
-                      isSaved = true;
-                    });
-                  }
-                } ,
-                icon: Visibility(
-                  visible: deepProvider.isLoadSuccessful==true,
-                  child: Icon (
-                    isSaved==true
-                        ? Icons.favorite: Icons.favorite_border ,
-                    color:  isSaved==true
-                        ? Colors.red
-                        : Theme.of ( context ).iconTheme.color ,
-                  ),
-                ) ,
-              ) ,
+              // IconButton (
+              //   onPressed: () async {
+              //     if ( isSaved==true ) {
+              //
+              //       detailsProvider.removeFav ( newsModel!.id!);
+              //       setState(() {
+              //         isSaved = false;
+              //       });
+              //
+              //     } else {
+              //       detailsProvider.addFav (newsModel! );
+              //       setState(() {
+              //         isSaved = true;
+              //       });
+              //     }
+              //   } ,
+              //   icon: Visibility(
+              //     visible: deepProvider.isLoadSuccessful==true,
+              //     child: Icon (
+              //       isSaved==true
+              //           ? Icons.favorite: Icons.favorite_border ,
+              //       color:  isSaved==true
+              //           ? Colors.red
+              //           : Theme.of ( context ).iconTheme.color ,
+              //     ),
+              //   ) ,
+              // ) ,
 
 
 

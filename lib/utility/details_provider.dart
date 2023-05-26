@@ -212,13 +212,20 @@ class DetailsProvider extends ChangeNotifier {
     checkFav(item.id!);
   }
 
-  //ORIGINAL
-  removeFav(int id) async {
-    await favDB.remove({"id": id}).then((v) {
-      print("error from removeFav: " + id.toString());
-      checkFav(id);
+  removeFav(HomeNewsModel item) async {
+    await favDB.remove({"id": item.id, "item": item.toJson() }).then((v) {
+      print("error from removeFav: " + item.id.toString());
+      checkFav(item.id!);
     });
   }
+
+  // //ORIGINAL
+  // removeFav(int id) async {
+  //   await favDB.remove({"id": id}).then((v) {
+  //     print("error from removeFav: " + id.toString());
+  //     checkFav(id);
+  //   });
+  // }
 
 
   void setFaved(value) {

@@ -158,8 +158,8 @@ import 'package:objectdb/src/objectdb_storage_filesystem.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FavoriteDB {
-  var path ="";
-  // late String path;
+  // var path ="";
+  String? path;
 
   FavoriteDB(){getPath();}
 
@@ -172,7 +172,7 @@ class FavoriteDB {
 
   //Insertion
   add(Map item) async {
-    final db = ObjectDB(FileSystemStorage(path));
+    final db = ObjectDB(FileSystemStorage(path!));
     print(path);
     // db.open();
     db.insert(item);
@@ -180,17 +180,28 @@ class FavoriteDB {
     await db.close();
   }
 
-  Future<int> remove(Map item) async {
-    final db = ObjectDB(FileSystemStorage(path));
+  remove(Map item) async {
+    final db = ObjectDB(FileSystemStorage(path!));
+    print(path);
     // db.open();
-    int val = await db.remove(item);
+    // db.insert(item);
+    await db.remove(item);
     // db.tidy();
     await db.close();
-    return val;
   }
 
+  // //original
+  // Future<int> remove(Map item) async {
+  //   final db = ObjectDB(FileSystemStorage(path));
+  //   // db.open();
+  //   int val = await db.remove(item);
+  //   // db.tidy();
+  //   await db.close();
+  //   return val;
+  // }
+
   Future<List> listAll() async {
-    final db = ObjectDB(FileSystemStorage(path));
+    final db = ObjectDB(FileSystemStorage(path!));
     // db.open();
     List val = await db.find({});
     // db.tidy();
@@ -199,7 +210,7 @@ class FavoriteDB {
   }
 
   Future<List> check(Map item) async {
-    final db = ObjectDB(FileSystemStorage(path));
+    final db = ObjectDB(FileSystemStorage(path!));
     // db.open();
     List val = await db.find(item);
     // db.tidy();

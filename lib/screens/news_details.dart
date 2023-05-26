@@ -249,7 +249,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                           onPressed: () async {
                             print("isSaved on start: " + isSaved.toString());
                             if ( isSaved == true ) {
-                              detailsProvider.removeFav ( widget.newsModel!.id! );
+                              // detailsProvider.removeFav ( widget.newsModel!.id! );
+                              detailsProvider.removeFav ( widget.newsModel! );
+
                               setState ( () {
                                 isSaved = false;
                               });
