@@ -200,7 +200,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                             _showInterstitialAd();
+                             // _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),
@@ -252,7 +252,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                               detailsProvider.removeFav ( widget.newsModel!.id! );
                               setState ( () {
                                 isSaved = false;
-                              } );
+                              });
+                              print("what I am trying to remove in news details = " +  widget!.newsModel!.id!.toString());
+
                             } else {
                               detailsProvider.addFav ( widget.newsModel! );
                               setState ( () {

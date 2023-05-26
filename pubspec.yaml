@@ -63,7 +63,12 @@ dependencies:
   webview_flutter: ^2.8.0
   path_provider: ^2.0.11
   favorite_button: ^0.0.4
+  app_tracking_transparency: ^2.0.4
 
+flutter_icons:
+  image_path: "assets/icons/punch_icon.png"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:

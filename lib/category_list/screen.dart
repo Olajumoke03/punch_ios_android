@@ -146,7 +146,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                       child: SizedBox(
                           height: 10,
                           width: 10,
-                          child: CircularProgressIndicator())),
+                          child: CircularProgressIndicator(color: mainColor,
+                          ))),
                   errorWidget: (context, url, error) => Container(
                     color: Theme.of(context).colorScheme.secondary,
                     height: 20,

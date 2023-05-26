@@ -1,3 +1,4 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -24,6 +25,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
   // Admob.initialize();
+
+  // App Tracking Transparency
+  final status = await AppTrackingTransparency.requestTrackingAuthorization();
+  final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
 
   // Initialize Firebase.
   await Firebase.initializeApp();
@@ -59,6 +64,7 @@ class _MyAppState extends State<MyApp> {
   HomeNewsModel? homeNewsModel;
   AppProvider? _appProvider;
   late AppLifecycleReactor _appLifecycleReactor;
+  String _authStatus = 'Unknown';
 
 
   // Future<String?> initialLink() async {
@@ -133,7 +139,51 @@ class _MyAppState extends State<MyApp> {
     AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAd();
     _appLifecycleReactor = AppLifecycleReactor(
     appOpenAdManager: appOpenAdManager);
+
+    // App Tracking Transparency
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) => initPlugin());
+
   }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlugin() async {
+    final TrackingStatus status =
+    await AppTrackingTransparency.trackingAuthorizationStatus;
+    setState(() => _authStatus = '$status');
+    // If the system can show an authorization request dialog
+    if (status == TrackingStatus.notDetermined) {
+      // Show a custom explainer dialog before the system dialog
+      await showCustomTrackingDialog(context);
+      // Wait for dialog popping animation
+      await Future.delayed(const Duration(milliseconds: 200));
+      // Request system's tracking authorization dialog
+      final TrackingStatus status =
+      await AppTrackingTransparency.requestTrackingAuthorization();
+      setState(() => _authStatus = '$status');
+    }
+
+    final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    print("UUID: $uuid");
+  }
+
+  Future<void> showCustomTrackingDialog(BuildContext context) async =>
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Dear User'),
+          content: const Text(
+            'We care about your privacy and data security. We keep this app free by showing ads. '
+                'Can we continue to use your data to tailor ads for you?\n\nYou can change your choice anytime in the app settings. '
+                'Our partners will collect data and use a unique identifier on your device to show you ads.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Continue'),
+            ),
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
