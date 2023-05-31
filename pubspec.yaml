@@ -65,6 +65,7 @@ dependencies:
   favorite_button: ^0.0.4
   app_tracking_transparency: ^2.0.4
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -14,6 +14,7 @@ import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/disqus.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
+import 'package:punch_ios_android/utility/favorite_helper.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
@@ -31,7 +32,7 @@ class NewsDetails extends StatefulWidget {
   final  SearchResultModel? searchResultModel;
   final String? newsId;
 
-  const NewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel,}) : super( key: key );
+  const NewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel}) : super( key: key );
 
   @override
   _NewsDetailsState createState() => _NewsDetailsState();
@@ -39,7 +40,6 @@ class NewsDetails extends StatefulWidget {
 
 class _NewsDetailsState extends State<NewsDetails> {
   late FontSizeController _fontSizeController;
-  late DetailsProvider _detailsProvider;
   late NewsTagBloc newsTagBloc;
 
   int maxFailedLoadAttempts = 3;
@@ -49,6 +49,7 @@ class _NewsDetailsState extends State<NewsDetails> {
   bool videoLoader = false;
   int currentPage = 1;
   bool adShown=true;
+
 
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
@@ -162,13 +163,12 @@ class _NewsDetailsState extends State<NewsDetails> {
     newsTagBloc = BlocProvider.of<NewsTagBloc>(context);
     newsTagBloc.add(FetchNewsTagEvent(id: widget.newsModel!.tags!.join(",").toString()));
 
-    _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
-    // DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
-    // _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
-    //   setState(() {
-    //     isSaved = value;
-    //   });
-    // });
+    DetailsProvider _detailsProvider = Provider.of<DetailsProvider>(context, listen: false);
+    _detailsProvider.checkFav(widget.newsModel!.id!).then((value) {
+      setState(() {
+        isSaved = value;
+      });
+    });
 
     articleMedium.load();
     inArticleAds.load();
@@ -196,7 +196,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     return Consumer<FontSizeController>(
         builder: ( context,  fontScale,  child) {
           return Consumer<DetailsProvider> (
-              builder: ( context ,  detailsProviderr,  child) {
+              builder: ( context ,  detailsProvider,  child) {
                 return Scaffold (
                     appBar: AppBar (
                       leading: IconButton(
@@ -251,18 +251,19 @@ class _NewsDetailsState extends State<NewsDetails> {
                           onPressed: () async {
                             print("isSaved on start: " + isSaved.toString());
                             if ( isSaved == true ) {
-                              _detailsProvider.removeFav ( widget.newsModel!.id! );
+                              detailsProvider.removeFav ( widget.newsModel!.id! );
+                              // detailsProvider.removeFav ( widget.newsModel! );
                               setState ( () {
                                 isSaved = false;
                               });
-                              print("what I am trying to remove in news details = " +  widget!.newsModel!.id!.toString());
+                              print("what I am trying to remove in news details = " +  widget.newsModel!.id!.toString());
 
                             } else {
-                              _detailsProvider.addFav ( widget.newsModel! );
+                              detailsProvider.addFav ( widget.newsModel! );
                               setState ( () {
                                 isSaved = true;
                               } );
-                              print("what I am trying to save in news details = " +  widget!.newsModel!.toJson().toString());
+                              print("what I am trying to save in news details = " +  widget.newsModel!.toJson().toString());
                             }
                           } ,
                           icon: Icon (

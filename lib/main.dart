@@ -45,6 +45,14 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SubscribeToNewsLetterProvider()),
         ChangeNotifierProvider(create: (_) => FontSizeController()),
 
+        // Provider(create: (context) => FavoriteListModel()),
+        // ChangeNotifierProxyProvider<FavoriteListModel, FavoritePageModel>(
+        //     create: (context) => FavoritePageModel(),
+        //     update: (context, favoriteList, favoritepage){
+        //       if (favoritepage = null)
+        //     }
+        // )
+
       ],
       child: const MyApp(),
     ),

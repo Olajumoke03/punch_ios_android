@@ -90,10 +90,8 @@ class HomeNewsModel {
     type = json['type'];
     link = json['link'];
     title = json['title'] != null ? Guid.fromJson(json['title']) : null;
-    content =
-    json['content'] != null ? Content.fromJson(json['content']) : null;
-    excerpt =
-    json['excerpt'] != null ? Content.fromJson(json['excerpt']) : null;
+    content = json['content'] != null ? Content.fromJson(json['content']) : null;
+    excerpt = json['excerpt'] != null ? Content.fromJson(json['excerpt']) : null;
     author = json['author'];
     featuredMedia = json['featured_media'];
     commentStatus = json['comment_status'];
