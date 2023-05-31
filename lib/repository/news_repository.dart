@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:punch_ios_android/about_us/about_model.dart';
 import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/category_list/responses.dart';
-import 'package:punch_ios_android/featured_news/featured_news_response.dart';
-// import 'package:punch_ios_android/featured_news/featured_news_response.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/home_news/home_response.dart';
+import 'package:punch_ios_android/live_video/live_video_model.dart';
+import 'package:punch_ios_android/live_video/live_video_response.dart';
 import 'package:punch_ios_android/model/responses/net_core_response.dart';
 import 'package:punch_ios_android/news_by_category/response.dart';
 import 'package:punch_ios_android/news_tag/news_tag_response.dart';
@@ -14,12 +14,15 @@ import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/search_result/search_response.dart';
 import 'package:punch_ios_android/utility/constants.dart' as constants;
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:http/http.dart' as http;
+import '../featured_news/featured_news_response.dart';
+import 'package:http/http.dart' as http;
 
 
 class Repository   {
   final ApiClient _apiClient = ApiClient();
- late SharedPreferences prefs ;
+  final  httpClient = http.Client() ;
+
+  late SharedPreferences prefs ;
   Repository() {
     openCache();
   }
@@ -52,21 +55,19 @@ class Repository   {
     return  HomeNewsResponse.fromJson(data);
   }
 
+
   // Future<List<HomeNewsModel>>fetchFeaturedNews() async {
-  //   final response = await _apiClient.get(Constants.FEATURED_NEWS+"34");
+  //   final response = await _apiClient.get(constants.featuredNews+"34");
   //   var data = json.decode(response);
-  //   print("featured news  response " + response);
+  //     print("featured news response " + response);
   //   FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
-  //   saveAnyStringToCache(response, Constants.Constants.featuredNewsCacheKey);
+  //   saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
   //   return featuredNews.featuredNewss;
   // }
-
 
   Future<List<HomeNewsModel>>fetchFeaturedNews() async {
     final response = await _apiClient.get(constants.featuredNews+"34");
     var data = json.decode(response);
-      print("featured news response " + response);
-
     FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
     saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
     return featuredNews.featuredNewss;
@@ -147,6 +148,16 @@ class Repository   {
     final response = await _apiClient.get ( constants.aboutUs );
     final data = json.decode ( response );
     return  AboutUsModel.fromJson ( json.decode ( response ) );
+  }
+
+  Future<List<LiveVideoModel>>fetchLiveVideo() async {
+    final response = await httpClient.get(Uri.parse(constants.liveVideo));
+    print("live video url - " + constants.liveVideo);
+    print("live video " + response.body);
+
+    var data = json.decode(response.body);
+    LiveVideoResponse liveVideo = LiveVideoResponse.fromJson(data);
+    return liveVideo.liveVideos;
   }
 
 }

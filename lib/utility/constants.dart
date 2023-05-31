@@ -25,6 +25,9 @@ const String categoryList ="https://punchng.com/category-payload/?v2";
 
 const String featuredNews =baseUrl+"posts?categories=";
 
+const String liveVideo ="https://punchng.com/mobile-app-streaming/";
+
+
 
 // newly added
 const String netCoreUrl ="https://api.netcoresmartech.com/apiv2?type=contact&activity=add&apikey=28b46bfdfd06f61d3a5b1d266e0b30d8";
