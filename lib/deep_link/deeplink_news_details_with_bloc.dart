@@ -235,7 +235,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 onPressed: () {
                   FlutterShare.share(
                     title: 'Punch News' ,
-                    text: 'Read: ' '${widget.newsModel!.title!.rendered}' ', on Punch News'
+                    text: '${widget.newsModel!.title!.rendered}'
                         .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
                         .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
                         .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )

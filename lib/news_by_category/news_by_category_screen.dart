@@ -12,8 +12,8 @@ import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_event.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_state.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
+import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/colors.dart';
-import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:punch_ios_android/widgets/build_loading_widget.dart';
@@ -23,7 +23,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsByCategory extends StatefulWidget {
   final  CategoryListModel model;
-  String? id;
+  final String? id;
 
    NewsByCategory({Key? key, required this.model, this.id}) : super(key: key);
 
@@ -42,18 +42,20 @@ class _NewsByCategoryState extends State<NewsByCategory> {
   bool isLoadingMore = false;
   bool isRefreshing=false;
 
-  final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-    size: AdSize.largeBanner,
-    request: const AdRequest(),
-    listener:const  BannerAdListener(),
+
+  BannerAd articleMedium = BannerAd(
+    adUnitId: AdHelper.articleMedium,
+    size: AdSize.mediumRectangle,
+    request: AdRequest(),
+    listener: BannerAdListener(),
   );
 
-  final BannerAd secondBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-    size: AdSize.largeBanner,
-    request:const  AdRequest(),
-    listener: const BannerAdListener(),
+  BannerAd articleMedium2 = BannerAd(
+    adUnitId: AdHelper.articleMedium,
+    // adUnitId: AdHelper.articleMedium2,
+    size: AdSize.mediumRectangle,
+    request: AdRequest(),
+    listener: BannerAdListener(),
   );
 
   void loadMore() {
@@ -96,9 +98,13 @@ class _NewsByCategoryState extends State<NewsByCategory> {
     newsByCategoryBloc = BlocProvider.of<NewsByCategoryBloc>(context);
     newsByCategoryBloc.add(FetchNewsByCategoryEvent(id: widget.model.id));
     // _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
-    //
-    myBanner.load();
-    secondBanner.load();
+
+
+    // myBanner.load();
+    // secondBanner.load();
+
+    articleMedium.load();
+    articleMedium2.load();
 
   }
 
@@ -208,8 +214,8 @@ class _NewsByCategoryState extends State<NewsByCategory> {
   }
 
   Widget buildNewsByCategoryList (List<HomeNewsModel> newsByCategoryModel){
-    final AdWidget adWidget = AdWidget(ad: myBanner);
-    final AdWidget secondWidget = AdWidget(ad: secondBanner);
+    final AdWidget adWidget = AdWidget(ad: articleMedium);
+    final AdWidget secondWidget = AdWidget(ad: articleMedium2);
 
     return SmartRefresher(
           enablePullDown: true,
@@ -224,7 +230,8 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                 print("current status of is loading more :" + isLoadingMore.toString());
               }
               else {
-                body =  SizedBox(child: CircularProgressIndicator(),height: 30,width: 30);
+                body =  SizedBox(child: CircularProgressIndicator( color: mainColor,
+                ),height: 30,width: 30);
               }
 
               return Container(
@@ -280,7 +287,8 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                               placeholder: (context, url) =>const SizedBox(
                                   height: 125,
                                   width: 248,
-                                  child:Center(child: CircularProgressIndicator())),
+                                  child:Center(child: CircularProgressIndicator( color: mainColor,
+                                  ))),
                               errorWidget: (context, url, error) => Image.asset(
                                 "assets/punchLogo.png",
                                 fit: BoxFit.contain,
@@ -345,7 +353,6 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                             ],
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -360,9 +367,9 @@ class _NewsByCategoryState extends State<NewsByCategory> {
                   margin: EdgeInsets.symmetric( vertical: 5),
                   child: index % 10 == 0 ?
                   Container(
-                    child: adWidget, height: 100,
+                    child: adWidget, height: 250,
                   )
-                      :Container( child: secondWidget , height: 100, )
+                      :Container( child: secondWidget , height: 250, )
               )
                   : Container(height: 10);
             }

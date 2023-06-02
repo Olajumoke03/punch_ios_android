@@ -62,4 +62,24 @@ class AdHelper {
     throw  UnsupportedError("Unsupported platform");
   }
 
+  static String get articleMedium {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-7167863529667065/7963339325';
+      //  return 'ca-app-pub-3940256099942544/2247696110'; test native ad
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-7167863529667065/1645777752';
+    }
+    throw new UnsupportedError("Unsupported platform");
+  }
+
+  static String get articleMedium2 {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-7167863529667065/7963339325';
+      //  return 'ca-app-pub-3940256099942544/2247696110'; test native ad
+    } else if (Platform.isIOS) {
+      return '  ca-app-pub-7167863529667065/5749801962';
+    }
+    throw new UnsupportedError("Unsupported platform");
+  }
+
 }
