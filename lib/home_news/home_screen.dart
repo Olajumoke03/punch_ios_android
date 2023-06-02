@@ -19,6 +19,7 @@ import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart'
 import 'package:punch_ios_android/news_tag/news_tag_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
+import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
@@ -65,14 +66,14 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   bool isLoadingMore = false;
 
   final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdHelper.homeBanner,
     size: AdSize.largeBanner,
     request: const AdRequest(),
     listener: const BannerAdListener(),
   );
 
   final BannerAd secondBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdHelper.homeBanner2,
     size: AdSize.largeBanner,
     request: const AdRequest(),
     listener: const BannerAdListener(),
@@ -228,13 +229,9 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           margin:const EdgeInsets.symmetric(horizontal: 5),
                           // color: Colors.white,
                           width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            "LATEST NEWS",
+                          child: Text("LATEST NEWS",
                             style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .color,
+                                color: Theme.of(context).textTheme.bodyText1!.color,
                                 fontSize: 16.5,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1),
@@ -329,9 +326,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     final AdWidget secondWidget = AdWidget(ad: secondBanner);
 
     return ListView.separated(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 7,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 7,),
         scrollDirection: Axis.vertical,
         itemCount: homeNewsModel.length + 1,
         shrinkWrap: true,

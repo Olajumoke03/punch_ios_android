@@ -41,10 +41,12 @@ class AdHelper {
 
   static String get nativeHomeAd {
     if (Platform.isAndroid) {
-      // return 'ca-app-pub-7167863529667065/1621406884';
-       return 'ca-app-pub-3940256099942544/2247696110'; //test native ad
+      return 'ca-app-pub-7167863529667065/1621406884';
+      //  return 'ca-app-pub-3940256099942544/2247696110'; //test native ad
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/3986624511'; // test ad
+      return 'ca-app-pub-7167863529667065/2421810980';
+
+      // return 'ca-app-pub-3940256099942544/3986624511'; // test ad
     }
     throw  UnsupportedError("Unsupported platform");
   }
@@ -78,6 +80,36 @@ class AdHelper {
       //  return 'ca-app-pub-3940256099942544/2247696110'; test native ad
     } else if (Platform.isIOS) {
       return '  ca-app-pub-7167863529667065/5749801962';
+    }
+    throw new UnsupportedError("Unsupported platform");
+  }
+
+  static String get interstitialAd {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-7167863529667065/3759929490';
+      // return 'ca-app-pub-3940256099942544/1033173712';
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-3940256099942544/4411468910';
+    }
+    throw new UnsupportedError("Unsupported platform");
+  }
+
+  static String get homeBanner {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-7167863529667065/1090906571';
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-7167863529667065/1810744262';
+
+    }
+    throw new UnsupportedError("Unsupported platform");
+  }
+
+  static String get homeBanner2 {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-7167863529667065/9852885816';
+      //  return 'ca-app-pub-3940256099942544/2247696110'; test native ad
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-7167863529667065/4732421076';
     }
     throw new UnsupportedError("Unsupported platform");
   }

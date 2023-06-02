@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
+import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -25,12 +26,29 @@ class DeepLinkNewsDetails extends StatefulWidget {
 class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
   StreamSubscription? subscription;
   bool isSaved=false;
+  bool adShown=true;
+
 
   final BannerAd articleMedium = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdHelper.articleMedium2,
     size: AdSize.mediumRectangle,
     request: const AdRequest(),
     listener: const BannerAdListener(),
+  );
+
+  final BannerAd inArticleAds = BannerAd(
+    adUnitId: AdHelper.homeBanner,
+    size: AdSize.largeBanner,
+    request: const AdRequest(),
+    listener: const BannerAdListener(),
+  );
+
+  final AdManagerBannerAd adManagerBannerAd = AdManagerBannerAd(
+    adUnitId: AdHelper.adManagerBannerUnitId,
+    // sizes: [AdSize.largeBanner],
+    sizes: [AdSize(width: 300, height: 250)],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
   );
 
   @override
@@ -48,6 +66,9 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
   @override
   Widget build (BuildContext context) {
     final AdWidget mediumWidget = AdWidget(ad: articleMedium);
+    final AdWidget adManagerBannerWidget = AdWidget(ad: adManagerBannerAd);
+    final AdWidget inArticleWidget = AdWidget(ad: inArticleAds);
+
 
     return Consumer<DeepLinkNewsDetailsProvider>(
         builder: ( context,  deepProvider, child) {
@@ -104,7 +125,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                 imageUrl: '${newsModel!.xFeaturedMediaLarge}' ,
                                 placeholder: (context , url) =>
                                 const Center (
-                                  child: CircularProgressIndicator ( ) , ) ,
+                                  child: CircularProgressIndicator (color: mainColor, ) , ) ,
                                 errorWidget: (context , url , error) =>
                                 Image.asset ( 'assets/punchLogo.png' ) ,
                                 // Ico n ( Icons.close ) ,
@@ -222,11 +243,15 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
 
                         const SizedBox ( height: 10 ) ,
 
-                        SizedBox (
-                          child: mediumWidget ,
-                          width: MediaQuery.of ( context ).size.width ,
-                          height: 250,
-                        ) ,
+                        //FOR AD MANAGER UNITS
+                        adShown?  Center(
+                            child: SizedBox(
+                              width: 300,
+                              height: 250,
+                              child: adManagerBannerWidget,
+                            ))
+                            : Container(height: 0),
+
 
                         const SizedBox ( height: 5 ) ,
 
@@ -252,7 +277,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                               return index != 0 && index % 5 == 0
                                   ? Container(
                                 alignment: Alignment.center,
-                                // child: adWidget,
+                                child: inArticleWidget,
                                 color: Colors.blue,
                                 height: 100,
                               )

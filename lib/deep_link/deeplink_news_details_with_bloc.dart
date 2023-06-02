@@ -10,6 +10,7 @@ import 'package:punch_ios_android/deep_link/deep_link_details_state.dart';
 import 'package:punch_ios_android/deep_link/deeplink_details_bloc.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
+import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
@@ -45,6 +46,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
   int maxFailedLoadAttempts = 3;
+  bool adShown=true;
 
 
   final Completer<WebViewController> controller = Completer<WebViewController>();
@@ -59,17 +61,25 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   }
 
   final BannerAd articleMedium = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdHelper.articleMedium,
     size: AdSize.mediumRectangle,
     request: const AdRequest(),
     listener:  const BannerAdListener(),
   );
 
   final BannerAd inArticleAds = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdHelper.homeBanner,
     size: AdSize.largeBanner,
     request: const AdRequest(),
     listener: const BannerAdListener(),
+  );
+
+  final AdManagerBannerAd adManagerBannerAd = AdManagerBannerAd(
+    adUnitId: AdHelper.adManagerBannerUnitId,
+    // sizes: [AdSize.largeBanner],
+    sizes: [AdSize(width: 300, height: 250)],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
   );
 
   final AdSize adSize =  const AdSize(width: 300, height: 250);
@@ -83,8 +93,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   void _createInterstitialAd() {
     InterstitialAd.load(
         adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/1033173712'
-            : 'ca-app-pub-3940256099942544/4411468910',
+            ? 'ca-app-pub-7167863529667065/3759929490'
+            : 'ca-app-pub-7167863529667065/7063763571',
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
@@ -156,6 +166,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
   Widget build (BuildContext context) {
     final AdWidget mediumWidget = AdWidget(ad: articleMedium);
     final AdWidget inArticleWidget = AdWidget(ad: inArticleAds);
+    final AdWidget adManagerBannerWidget = AdWidget(ad: adManagerBannerAd);
+
 
     return Consumer<FontSizeController>(
       builder: (context, fontScale, child) {
@@ -186,48 +198,33 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 ) ,
               ) ,
 
-              // IconButton (
-              //   onPressed: ()  {
-              //   } ,
-              //   icon: Icon (
-              //     isSaved == true
-              //         ? Icons.favorite : Icons.favorite_border ,
-              //     color: isSaved == true
-              //         ? Colors.red
-              //         : Theme
-              //         .of ( context )
-              //         .iconTheme
-              //         .color ,
-              //   ) ,
-              // ) ,
+              IconButton (
+                onPressed: () async {
+                  if ( isSaved==true ) {
 
-              // IconButton (
-              //   onPressed: () async {
-              //     if ( isSaved==true ) {
-              //
-              //       detailsProvider.removeFav ( newsModel!.id!);
-              //       setState(() {
-              //         isSaved = false;
-              //       });
-              //
-              //     } else {
-              //       detailsProvider.addFav (newsModel! );
-              //       setState(() {
-              //         isSaved = true;
-              //       });
-              //     }
-              //   } ,
-              //   icon: Visibility(
-              //     visible: deepProvider.isLoadSuccessful==true,
-              //     child: Icon (
-              //       isSaved==true
-              //           ? Icons.favorite: Icons.favorite_border ,
-              //       color:  isSaved==true
-              //           ? Colors.red
-              //           : Theme.of ( context ).iconTheme.color ,
-              //     ),
-              //   ) ,
-              // ) ,
+                    detailsProvider.removeFav ( newsModel!.id!);
+                    setState(() {
+                      isSaved = false;
+                    });
+
+                  } else {
+                    detailsProvider.addFav (newsModel! );
+                    setState(() {
+                      isSaved = true;
+                    });
+                  }
+                } ,
+                icon: Visibility(
+                  visible: deepProvider.isLoadSuccessful==true,
+                  child: Icon (
+                    isSaved==true
+                        ? Icons.favorite: Icons.favorite_border ,
+                    color:  isSaved==true
+                        ? Colors.red
+                        : Theme.of ( context ).iconTheme.color ,
+                  ),
+                ) ,
+              ) ,
 
 
 
@@ -290,7 +287,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                 imageUrl: '${state.model.xFeaturedMediaLarge}' ,
                                 placeholder: (context , url) =>
                                 const Center (
-                                  child: CircularProgressIndicator ( ) , ) ,
+                                  child: CircularProgressIndicator (color: mainColor) , ) ,
                                 errorWidget: (context , url , error) =>
                                 Image.asset ( 'assets/punchLogo.png' ) ,
                                 // Ico n ( Icons.close ) ,
@@ -306,13 +303,29 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                           mainAxisSize: MainAxisSize.max ,
                           crossAxisAlignment: CrossAxisAlignment.end ,
                           children: <Widget>[
-                            const SizedBox ( height: 9 , ) ,
+                            const SizedBox ( height: 15 , ) ,
                             Align(
                               alignment: Alignment.topRight,
                               child: Container (
                                 padding: const EdgeInsets.symmetric( vertical: 5 ) ,
                                 child: Column(
                                   children: [
+
+                                    Material (
+                                        type: MaterialType.transparency ,
+                                        child: Html(
+                                          data:  '${state.model.title!.rendered}',
+                                          style: {
+                                            "body": Style(
+                                                fontSize:  FontSize(9*_fontSizeController.value),
+                                                fontWeight: FontWeight.w400,
+                                                color:Theme.of(context).textTheme.bodyText1!.color
+                                            ),
+                                          },
+                                        )
+                                    ) ,
+                                    const SizedBox  ( height: 10 , ) ,
+
                                     Row (
                                       children: <Widget>[
                                         Container (
@@ -340,7 +353,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                               ),
                             ) ,
 
-                            const SizedBox  ( height: 9 , ) ,
+                            const SizedBox  ( height: 10 , ) ,
 
                             Row (
                               children: [
@@ -351,8 +364,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                     itemCount: 1 ,
                                     shrinkWrap: true ,
                                     itemBuilder: (BuildContext context, int index) {
-                                      return
-                                        Container (
+                                      return Container (
                                           padding: const EdgeInsets.symmetric ( horizontal: 5 , vertical: 3 ) ,
                                           margin: const EdgeInsets.only ( right: 5.0 ) ,
                                           decoration: BoxDecoration ( borderRadius: BorderRadius.circular ( 5 ) ,
@@ -386,21 +398,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
                               ] ,
                             ) ,
-                            const SizedBox ( height: 5 ) ,
 
-                            Material (
-                                type: MaterialType.transparency ,
-                                child: Html(
-                                  data:  '${state.model.title!.rendered}',
-                                  style: {
-                                    "body": Style(
-                                        fontSize:  FontSize(9*_fontSizeController.value),
-                                        fontWeight: FontWeight.w400,
-                                        color:Theme.of(context).textTheme.bodyText1!.color
-                                    ),
-                                  },
-                                )
-                            ) ,
                           ] ,
                         ),
 
@@ -408,11 +406,14 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
                         const SizedBox ( height: 15 ) ,
 
-                        SizedBox (
-                          child: mediumWidget ,
-                          width: MediaQuery.of ( context ).size.width ,
-                          height: 250,
-                        ) ,
+                        //FOR AD MANAGER UNITS
+                        adShown?  Center(
+                            child: SizedBox(
+                              width: 300,
+                              height: 250,
+                              child: adManagerBannerWidget,
+                            ))
+                            : Container(height: 0),
 
                         //NEWS DETAILS BODY
                         ListView.separated(

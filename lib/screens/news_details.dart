@@ -13,6 +13,7 @@ import 'package:punch_ios_android/news_tag/news_tag_state.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/disqus.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
+import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/utility/favorite_helper.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
@@ -72,7 +73,7 @@ class _NewsDetailsState extends State<NewsDetails> {
   );
 
   final AdManagerBannerAd adManagerBannerAd = AdManagerBannerAd(
-    adUnitId: '/6499/example/banner',
+    adUnitId: AdHelper.adManagerBannerUnitId,
     // sizes: [AdSize.largeBanner],
     sizes: [AdSize(width: 300, height: 250)],
     request: AdManagerAdRequest(),
@@ -80,14 +81,14 @@ class _NewsDetailsState extends State<NewsDetails> {
   );
 
   final BannerAd articleMedium = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId:AdHelper.articleMedium,
     size: AdSize.mediumRectangle,
     request: AdRequest(),
     listener: BannerAdListener(),
   );
 
   final BannerAd inArticleAds = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdHelper.homeBanner,
     size: AdSize.largeBanner,
     request: AdRequest(),
     listener: BannerAdListener(),
@@ -104,8 +105,8 @@ class _NewsDetailsState extends State<NewsDetails> {
   void _createInterstitialAd() {
     InterstitialAd.load(
         adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/1033173712'
-            : 'ca-app-pub-3940256099942544/4411468910',
+            ? 'ca-app-pub-7167863529667065/3759929490'
+            : 'ca-app-pub-7167863529667065/7063763571',
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
@@ -202,7 +203,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                             // _showInterstitialAd();
+                             _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),
@@ -217,34 +218,6 @@ class _NewsDetailsState extends State<NewsDetails> {
                               color: Theme.of(context).textTheme.bodyText1!.color
                           ) ,
                         ) ,
-
-                        // IconButton (
-                        //   onPressed: () async {
-                        //     if ( isSaved == true ) {
-                        //       detailsProvider.removeFav ( widget.newsModel!.id! );
-                        //
-                        //       setState ( () {
-                        //         isSaved = false;
-                        //       } );
-                        //     } else {
-                        //       detailsProvider.addFav ( widget!.newsModel! );
-                        //       setState ( () {
-                        //         isSaved = true;
-                        //       } );
-                        //       print("what I am trying to save in news details = " +  widget!.newsModel!.toJson().toString());
-                        //     }
-                        //   } ,
-                        //   icon: Icon (
-                        //     isSaved == true
-                        //         ? Icons.favorite : Icons.favorite_border ,
-                        //     color: isSaved == true
-                        //         ? Colors.red
-                        //         : Theme
-                        //         .of ( context )
-                        //         .iconTheme
-                        //         .color ,
-                        //   ) ,
-                        // ) ,
 
 
                         IconButton (
@@ -483,8 +456,8 @@ class _NewsDetailsState extends State<NewsDetails> {
                               separatorBuilder: ( context, index) {
                                 return index != 0 && index % 5 == 0
                                     ? Container(
-                                  // child: inArticleWidget,
-                                  color: Colors.grey,
+                                  child: inArticleWidget,
+                                  // color: Colors.grey,
                                   height: 100,
                                 )
                                     : Container(height: 10);
