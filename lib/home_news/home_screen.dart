@@ -178,7 +178,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                         if ( state is FeaturedNewsRefreshingState ) {
                           // Scaffold.of ( context ).showSnackBar ( SnackBar (
                           //   content: Text ( 'Refreshing' ) , ) );
-                        } else if ( state is FeaturedNewsLoadedState && state.message != null ) {
+                        } else if ( state is FeaturedNewsLoadedState ) {
 
                         }else if ( state is FeaturedCachedNewsLoadedState  ) {
                           // a message will only come when it is updating the feed.
@@ -192,7 +192,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
                       child: BlocBuilder<FeaturedNewsBloc, FeaturedNewsState>(
                         buildWhen:(previous,current){
-                          // returning false here when we have a load faliure state means that.
+                          // returning false here when we have a load failure state means that.
                           // we do not want the widget to rebuild when there is error
                           if(current is FeaturedNewsLoadFailureState)
                             return false;

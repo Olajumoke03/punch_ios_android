@@ -97,9 +97,11 @@ class _MyAppState extends State<MyApp> {
     //Remove this method to stop OneSignal Debugging
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-    OneSignal.shared.setAppId("ebcb0294-a654-4cb7-ac97-bad77f8bb444", );
+    // OneSignal.shared.setAppId("ebcb0294-a654-4cb7-ac97-bad77f8bb444", );//old app id
+    OneSignal.shared.setAppId("b94b2dc9-b0f0-42a7-b4e0-aa5d85c7dff2", );
 
-// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt.
+// We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
       print("Accepted permission: $accepted");
     });
