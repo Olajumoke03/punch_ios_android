@@ -24,6 +24,7 @@ import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
+// import 'package:share_plus/share_plus.dart';
 import '../category_list/model.dart';
 import '../widgets/build_loading_widget.dart';
 
@@ -264,6 +265,15 @@ class _NewsDetailsState extends State<NewsDetails> {
                               linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
                               chooserTitle: 'Something for chooser title',
                             );
+
+                            // Share.share( '${widget.newsModel!.title!.rendered}'
+                            //     .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                            //     .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                            //     .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                            //     .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                            //   subject: 'Look what I made!',
+                            // );
+
                             print("share text "  '${widget.newsModel!.title!.rendered}');
                             print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
 

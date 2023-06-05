@@ -21,6 +21,7 @@ import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
+// import 'package:share_plus/share_plus.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // this is the deeplink that works for search
@@ -202,13 +203,13 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 onPressed: () async {
                   if ( isSaved==true ) {
 
-                    detailsProvider.removeFav ( newsModel!.id!);
+                    detailsProvider.removeFav ( newsModel.id!);
                     setState(() {
                       isSaved = false;
                     });
 
                   } else {
-                    detailsProvider.addFav (newsModel! );
+                    detailsProvider.addFav (newsModel );
                     setState(() {
                       isSaved = true;
                     });
@@ -239,8 +240,17 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                         .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
                     linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
                     chooserTitle: 'Something for chooser title',
-
                   );
+
+                  // Share.share( '${widget.newsModel!.title!.rendered}'
+                  //     .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                  //     .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                  //     .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                  //     .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                  //   subject: 'Look what I made!',
+                  //
+                  // );
+
                   print("share text "  '${widget.newsModel!.title!.rendered}');
                   print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
 

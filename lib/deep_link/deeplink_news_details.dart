@@ -10,6 +10,7 @@ import 'package:punch_ios_android/utility/deeplink_news_details_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
+// import 'package:share_plus/share_plus.dart';
 
 
 // this is the deeplink that works for notification from OneSignal
@@ -93,12 +94,21 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                             onPressed: () {
                               FlutterShare.share(
                                 title: 'Punch News' ,
-                                text: '${newsModel!.title!.rendered}' .replaceAll (r"\n" , "\n" )
+                                text: '${newsModel.title!.rendered}' .replaceAll (r"\n" , "\n" )
                                     .replaceAll ( r"\r" , "" ).replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" ).replaceAll ("&#8217;" , "'" )
                                     .replaceAll ("&#038;" , "&" ).replaceAll ("&#8216;" , "‘" ),
-                                linkUrl:'https:// punchng.com/' '${newsModel!.slug} ',
+                                linkUrl:'https:// punchng.com/' '${newsModel.slug} ',
                                 chooserTitle: 'Something for chooser title',
                               );
+
+                              // Share.share( '${newsModel!.title!.rendered}'
+                              //     .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                              //     .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                              //     .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                              //     .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                              //   subject: 'Look what I made!',
+                              //
+                              // );
                             } ,
                             icon:  Icon (
                               Icons.share ,color: Theme.of(context).textTheme.headline1!.color,
@@ -122,7 +132,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                               borderRadius: const BorderRadius.all (
                                 Radius.circular ( 10.0 ) , ) ,
                               child: CachedNetworkImage (
-                                imageUrl: '${newsModel!.xFeaturedMediaLarge}' ,
+                                imageUrl: '${newsModel.xFeaturedMediaLarge}' ,
                                 placeholder: (context , url) =>
                                 const Center (
                                   child: CircularProgressIndicator (color: mainColor, ) , ) ,
