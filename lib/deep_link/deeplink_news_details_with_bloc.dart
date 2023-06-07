@@ -152,7 +152,10 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
     articleMedium.load();
     inArticleAds.load();
+    adManagerBannerAd.load();
+
     _createInterstitialAd();
+
 
   }
 

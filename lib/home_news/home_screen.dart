@@ -19,6 +19,8 @@ import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart'
 import 'package:punch_ios_android/news_tag/news_tag_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
+import 'package:punch_ios_android/search_result/search_result.dart';
+import 'package:punch_ios_android/search_result/search_result_bloc.dart';
 import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/colors.dart';
@@ -52,6 +54,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   final String searchQuery = 'a';
   final RefreshController _refreshController = RefreshController(initialRefresh: true);
   final ScrollController sc = ScrollController();
+  final String _searchQuery= 'a';
 
   final double height = 0;
 
@@ -137,6 +140,25 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Image.asset('assets/punchLogo.png', width: 100, height: 40),
+          actions: [
+            IconButton (
+              onPressed: () {
+                Navigator.push( context, MaterialPageRoute(builder: (context)=>
+                    BlocProvider<SearchResultBloc>(
+                        create: (context) => SearchResultBloc(repository: Repository()),
+                        child: SearchResult(searchQuery: _searchQuery)
+                    ) )
+                );
+              } ,
+              icon: Center(
+                child: Icon (
+                    Icons.search , size: 30,
+                    color: Theme.of(context).textTheme.bodyText1!.color
+                ),
+              ) ,
+            ) ,
+            SizedBox(width: 10,)
+          ],
         ),
         body: SmartRefresher(
           enablePullDown: true,
@@ -224,7 +246,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 10.0, 0.0, 0.0),
+                        padding: const EdgeInsets.fromLTRB(8.0, 10.0, 0.0, 10.0),
                         child: Container(
                           margin:const EdgeInsets.symmetric(horizontal: 5),
                           // color: Colors.white,
@@ -232,7 +254,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           child: Text("LATEST NEWS",
                             style: TextStyle(
                                 color: Theme.of(context).textTheme.bodyText1!.color,
-                                fontSize: 16.5,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1),
                           ),
@@ -422,12 +444,10 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                 data: '${homeNewsModel[pos].title!.rendered}',
                                 style: {
                                   "body": Style(
-                                      fontSize: const FontSize(18.0),
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color),
+                                      color: Theme.of(context).textTheme.bodyText1!.color,
+                                      fontSize: FontSize(8*fontSizeController.value),
+                                      fontWeight:FontWeight.w500
+                                  ),
                                 },
                               )),
                           const SizedBox(height: 10),
@@ -450,10 +470,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               BlocProvider<NewsByCategoryBloc>(
-                                                  create: (context) =>
-                                                      NewsByCategoryBloc(
-                                                          repository:
-                                                          Repository()),
+                                                  create: (context) => NewsByCategoryBloc(repository: Repository()),
                                                   child: NewsByCategory(
                                                     model: cLM,
                                                   )),
@@ -606,9 +623,10 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               data: '${homeNewsModel[pos].title!.rendered}',
                               style: {
                                 "body": Style(
-                                    fontSize: const FontSize(18.0),
-                                    fontWeight: FontWeight.w400,
-                                    color: Theme.of(context).textTheme.bodyText1!.color),
+                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                    fontSize: FontSize(8*fontSizeController.value),
+                                    fontWeight:FontWeight.w500
+                                ),
                               },
                             )),
                         const SizedBox(height: 10),
@@ -708,7 +726,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                     fit: BoxFit.cover,
                   ),
 
-
                   Positioned(
                     bottom: 0.0, left: 0.0, right: 0.0,
                     child: Container(
@@ -724,7 +741,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           data: '${featuredNewsModel[0].title!.rendered}',
                           style: {
                             "body": Style(
-                                fontSize: const FontSize(23.0),
+                                fontSize: const FontSize(25.0),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           },
@@ -816,7 +833,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           data: '${featuredNewsModel[0].title!.rendered}',
                           style: {
                             "body": Style(
-                                fontSize: const FontSize(23.0),
+                                fontSize: const FontSize(25.0),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           },

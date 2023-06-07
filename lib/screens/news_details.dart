@@ -15,7 +15,6 @@ import 'package:punch_ios_android/screens/disqus.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
-import 'package:punch_ios_android/utility/favorite_helper.dart';
 import 'package:punch_ios_android/widgets/build_error_ui.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';

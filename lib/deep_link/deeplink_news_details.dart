@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -28,7 +29,9 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
   StreamSubscription? subscription;
   bool isSaved=false;
   bool adShown=true;
-
+  InterstitialAd? _interstitialAd;
+  int _numInterstitialLoadAttempts = 0;
+  int maxFailedLoadAttempts = 3;
 
   final BannerAd articleMedium = BannerAd(
     adUnitId: AdHelper.articleMedium2,
@@ -52,6 +55,60 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
     listener: AdManagerBannerAdListener(),
   );
 
+  static const AdRequest request = AdRequest(
+    keywords: <String>['foo', 'bar'],
+    contentUrl: 'http://foo.com/bar.html',
+    nonPersonalizedAds: true,
+  );
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: Platform.isAndroid
+            ? 'ca-app-pub-7167863529667065/3759929490'
+            : 'ca-app-pub-7167863529667065/7063763571',
+        request: request,
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (InterstitialAd ad) {
+            // print('$ad loaded');
+            _interstitialAd = ad;
+            _numInterstitialLoadAttempts = 0;
+            _interstitialAd!.setImmersiveMode(true);
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            // print('InterstitialAd failed to load: $error.');
+            _numInterstitialLoadAttempts += 1;
+            _interstitialAd = null;
+            if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
+              _createInterstitialAd();
+            }
+          },
+        ));
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd == null) {
+      // print('Warning: attempt to show interstitial before loaded.');
+      return;
+    }
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        // print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _createInterstitialAd();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createInterstitialAd();
+      },
+    );
+    _interstitialAd!.show();
+    _interstitialAd = null;
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +118,11 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
     // _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
 
     articleMedium.load();
+    inArticleAds.load();
+    adManagerBannerAd.load();
+
+    _createInterstitialAd();
+
   }
 
 
@@ -82,11 +144,11 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
+                            _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.headline1!.color,)
                       ),
-                      title:  Text("Punch News", style: TextStyle(color: Theme.of(context).textTheme.headline1!.color, fontWeight: FontWeight.w500),),
-                      centerTitle: true,
+
                       actions: <Widget>[
                         Visibility(
                           visible: deepProvider.isLoadSuccessful==true,
@@ -120,7 +182,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
 
                     body: deepProvider.loading==true?
                     const Center (
-                      child: CircularProgressIndicator ( backgroundColor: Colors.grey,) ,
+                      child: CircularProgressIndicator ( backgroundColor:mainColor,) ,
                     )
                     : ListView (
                       padding: const EdgeInsets.symmetric ( horizontal: 10 ) ,
