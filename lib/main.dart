@@ -3,7 +3,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:punch_ios_android/screens/test_fiile.dart';
 import 'package:punch_ios_android/utility/ad_open_admanager.dart';
 import 'package:punch_ios_android/utility/app_open_notifier.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
@@ -24,7 +23,10 @@ import 'home_news/home_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
   // Admob.initialize();
+  // await Admob.requestTrackingAuthorization();
+
 
   // App Tracking Transparency
   final status = await AppTrackingTransparency.requestTrackingAuthorization();
@@ -52,6 +54,7 @@ void main() async {
         //       if (favoritepage = null)
         //     }
         // )
+        
 
       ],
       child: const MyApp(),
@@ -149,6 +152,8 @@ class _MyAppState extends State<MyApp> {
     AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAd();
     _appLifecycleReactor = AppLifecycleReactor(
     appOpenAdManager: appOpenAdManager);
+
+
 
     // App Tracking Transparency
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) => initPlugin());

@@ -144,7 +144,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                            _showInterstitialAd();
+                            // _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.headline1!.color,)
                       ),

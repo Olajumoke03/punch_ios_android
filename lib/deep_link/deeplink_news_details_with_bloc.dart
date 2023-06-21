@@ -186,7 +186,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
             leading: IconButton(
                 onPressed: (){
                   Navigator.pop(context);
-                  _showInterstitialAd();
+                  // _showInterstitialAd();
                 },
                 icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
             ),

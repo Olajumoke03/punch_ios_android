@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:native_ads_flutter/native_ads.dart';
 
 class HomeNewsScreen extends StatefulWidget {
   const HomeNewsScreen({Key? key}) : super(key: key);
@@ -49,7 +51,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   late CategoryListModel categoryListModel;
   late RefreshController refreshController;
   late FontSizeController fontSizeController;
-  late StreamSubscription subscription;
+  // late StreamSubscription subscription;
   late AppProvider? appProvider;
   final String searchQuery = 'a';
   final RefreshController _refreshController = RefreshController(initialRefresh: true);
@@ -57,6 +59,10 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   final String _searchQuery= 'a';
 
   final double height = 0;
+
+  double _height =0;
+  late StreamSubscription _subscription;
+  final _nativeAdController = NativeAdmobController();
 
   // for the refresh action
   bool isRefreshing = false;
@@ -67,20 +73,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   List<HomeNewsModel> allHomeNews = [];
   int currentPage = 1;
   bool isLoadingMore = false;
-
-  final BannerAd myBanner = BannerAd(
-    adUnitId: AdHelper.homeBanner,
-    size: AdSize.largeBanner,
-    request: const AdRequest(),
-    listener: const BannerAdListener(),
-  );
-
-  final BannerAd secondBanner = BannerAd(
-    adUnitId: AdHelper.homeBanner2,
-    size: AdSize.largeBanner,
-    request: const AdRequest(),
-    listener: const BannerAdListener(),
-  );
 
   void loadMore() {
     // make sure that it is not already loading
@@ -112,6 +104,25 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     featuredNewsBloc.add(FetchFeaturedNewsEvent());
   }
 
+  void _onStateChanged(AdLoadState state) {
+  switch (state) {
+  case AdLoadState.loading:
+  setState(() {
+  _height = 0;
+  });
+  break;
+
+  case AdLoadState.loadCompleted:
+  setState(() {
+  _height = 150;
+  });
+  break;
+
+  default:
+  break;
+  }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -127,9 +138,9 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
     appProvider = Provider.of<AppProvider>(context, listen: false);
 
-    myBanner.load();
-    secondBanner.load();
+    _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
   }
+
 
   @override
   Widget build(context) {
@@ -342,186 +353,213 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     });
   }
 
+  Widget getAd() {
+    BannerAdListener bannerAdListener =
+    BannerAdListener(onAdWillDismissScreen: (ad) {
+      ad.dispose();
+    }, onAdClosed: (ad) {
+      debugPrint("Ad Got Closeed");
+    });
+    BannerAd bannerAd = BannerAd(
+      size: AdSize.banner,
+      // adUnitId: AdHelper.homeBanner2,
+      adUnitId: Platform.isAndroid
+          ? "ca-app-pub-3940256099942544/6300978111"
+          : "ca-app-pub-3940256099942544/2934735716",
+      listener: bannerAdListener,
+      request: const AdRequest(),
+    );
+
+    bannerAd.load();
+
+    return SizedBox(
+      height: 120,
+      child: AdWidget(ad: bannerAd),
+    );
+  }
+
+
 //HOME NEWS
   Widget buildHomeNewsList(List<HomeNewsModel> homeNewsModel) {
-    final AdWidget adWidget = AdWidget(ad: myBanner);
-    final AdWidget secondWidget = AdWidget(ad: secondBanner);
-
     return ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 7,),
-        scrollDirection: Axis.vertical,
-        itemCount: homeNewsModel.length + 1,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (ctx, pos) {
-          if (pos == homeNewsModel.length) {
-            return Visibility(
-              visible: false,
-              child: Container(
-                margin: const EdgeInsets.all(15),
-                height: 40,
-                width: 130,
-              ),
-            );
-          } else {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+          padding: const EdgeInsets.symmetric(horizontal: 7,),
+          scrollDirection: Axis.vertical,
+          itemCount: homeNewsModel.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (ctx, pos) {
+            if (pos % 6 == 0) {
+              return getAd();
+            } else {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context).focusColor.withOpacity(0.1),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2)),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                      color: Theme.of(context).focusColor.withOpacity(0.1),
-                      blurRadius: 5,
-                      offset: const Offset(0, 2)),
-                ],
-              ),
-              child: InkWell(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                onTap: () {
-                  HomeNewsModel lNM = homeNewsModel[pos];
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider<NewsTagBloc>(
-                            create: (context) =>
-                                NewsTagBloc(repository: Repository()),
-                            child: NewsDetails(
-                              newsModel: lNM,
-                            )),
-                      ));
-                },
-                child: Row(
-                  children: <Widget>[
-                    Card(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                child: InkWell(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  onTap: () {
+                    HomeNewsModel lNM = homeNewsModel[pos];
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider<NewsTagBloc>(
+                              create: (context) =>
+                                  NewsTagBloc(repository: Repository()),
+                              child: NewsDetails(
+                                newsModel: lNM,
+                              )),
+                        ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Card(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
                         ),
-                      ),
-                      elevation: 4,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        child: Hero(
-                          tag: pos,
-                          child: CachedNetworkImage(
-                            imageUrl: '${homeNewsModel[pos].xFeaturedMedia}',
-                            placeholder: (context, url) => SizedBox(
-                                height: 125,
-                                width: 248,
-                                child: Center(
-                                    child: CircularProgressIndicator(
-                                        color: Theme.of(context).primaryColor))),
-                            errorWidget: (context, url, error) => Image.asset(
-                              "assets/punchLogo.png",
-                              fit: BoxFit.contain,
-                              // height: 100,
-                              // width: 100,
+                        elevation: 4,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          child: Hero(
+                            tag: pos,
+                            child: CachedNetworkImage(
+                              imageUrl: '${homeNewsModel[pos].xFeaturedMedia}',
+                              placeholder: (context, url) => SizedBox(
+                                  height: 125,
+                                  width: 248,
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                          color: Theme.of(context).primaryColor))),
+                              errorWidget: (context, url, error) => Image.asset(
+                                "assets/punchLogo.png",
+                                fit: BoxFit.contain,
+                                // height: 100,
+                                // width: 100,
+                              ),
+                              fit: BoxFit.cover,
+                              height: 100,
+                              width: 100,
                             ),
-                            fit: BoxFit.cover,
-                            height: 100,
-                            width: 100,
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Material(
-                              type: MaterialType.transparency,
-                              child: Html(
-                                data: '${homeNewsModel[pos].title!.rendered}',
-                                style: {
-                                  "body": Style(
-                                      color: Theme.of(context).textTheme.bodyText1!.color,
-                                      fontSize: FontSize(8*fontSizeController.value),
-                                      fontWeight:FontWeight.w500
-                                  ),
-                                },
-                              )),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                constraints: const BoxConstraints(maxWidth: 150),
-                                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: redColor,
-                                ),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    CategoryListModel cLM = CategoryListModel();
-                                    cLM.id = homeNewsModel[pos].categories![0].toString();
-                                    cLM.categoryName = homeNewsModel[pos].categoriesString![0];
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              BlocProvider<NewsByCategoryBloc>(
-                                                  create: (context) => NewsByCategoryBloc(repository: Repository()),
-                                                  child: NewsByCategory(
-                                                    model: cLM,
-                                                  )),
-                                        ));
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Material(
+                                type: MaterialType.transparency,
+                                child: Html(
+                                  data: '${homeNewsModel[pos].title!.rendered}',
+                                  style: {
+                                    "body": Style(
+                                        color: Theme.of(context).textTheme.bodyText1!.color,
+                                        fontSize: FontSize(8*fontSizeController.value),
+                                        fontWeight:FontWeight.w500
+                                    ),
                                   },
-                                  child: Text(
-                                    homeNewsModel[pos].categoriesString![0].replaceAll("&amp;", "&"),
-                                    style: TextStyle(
-                                      fontSize: 4.5 * fontSizeController.value,
-                                      color: Colors.white,
+                                )),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  constraints: const BoxConstraints(maxWidth: 150),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: redColor,
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      CategoryListModel cLM = CategoryListModel();
+                                      cLM.id = homeNewsModel[pos].categories![0].toString();
+                                      cLM.categoryName = homeNewsModel[pos].categoriesString![0];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                BlocProvider<NewsByCategoryBloc>(
+                                                    create: (context) => NewsByCategoryBloc(repository: Repository()),
+                                                    child: NewsByCategory(
+                                                      model: cLM,
+                                                    )),
+                                          ));
+                                    },
+                                    child: Text(
+                                      homeNewsModel[pos].categoriesString![0].replaceAll("&amp;", "&"),
+                                      style: TextStyle(
+                                        fontSize: 4.5 * fontSizeController.value,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Spacer(),
-                              Container(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Text(
-                                    Jiffy('${homeNewsModel[pos].date}').fromNow(),
-                                    style: TextStyle(
-                                        fontSize: 4 * fontSizeController.value,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color)),
-                              ),
-                            ],
-                          ),
-                        ],
+                                const Spacer(),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: Text(
+                                      Jiffy('${homeNewsModel[pos].date}').fromNow(),
+                                      style: TextStyle(
+                                          fontSize: 4 * fontSizeController.value,
+                                          color: Theme.of(context).textTheme.bodyText1!.color)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
-        separatorBuilder: (context, index) {
-          return index % 5 == 0
-              ? Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: index % 10 == 0
-                  ?
-              SizedBox(child: adWidget, height: 100,)
-              // Container(color: Colors.black12, height: 120)
+              );
+            }
+          },
+          separatorBuilder: (context, index) {
+            return Container();
+            //   _bannerReady?SizedBox(
+            //   width: _bannerAd.size.width.toDouble(),
+            //   height: _bannerAd.size.height.toDouble(),
+            //   child: AdWidget(ad: _bannerAd),
+            // ):Container();
+             
+            // return Container(
+            //   width: myBanner!.size.width.toDouble(),
+            //   height: 72.0,
+            //   alignment: Alignment.center,
+            //   child: AdWidget(ad: myBanner, key: UniqueKey(),),
+            // );
+            // return index % 5 == 0
+            //     ? Container(
+            //     margin: const EdgeInsets.symmetric(vertical: 10),
+            //     child: index % 10 == 0
+            //         ?
+            //     SizedBox(child: adWidget, height: 100,)
+            //
+            //         :  SizedBox( child: secondWidget , height: 100, )
+            // )
+            //     : Container(height: 10);
 
-                  :  SizedBox( child: secondWidget , height: 100, )
-            // : Container(color: Colors.black12, height: 120)
-          )
-              : Container(height: 10);
-        });
+              }
+          );
+
   }
 
   //FOR HOME CACHED NEWS
@@ -695,7 +733,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     );
   }
 
-
   //FOR FEATURED NEWS
   Widget imageSlider(List<HomeNewsModel> featuredNewsModel){
     return  ClipRRect(
@@ -848,14 +885,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    // CategoryListModel cLM = CategoryListModel(id:"34",categoryName:"Top Stories");
-                    // Navigator.push( context, MaterialPageRoute(builder: (context)=>
-                    //     BlocProvider<NewsByCategoryBloc>(
-                    //         create: (context) => NewsByCategoryBloc(repository: Repository()),
-                    //         child: NewsByCategory(model: cLM,)
-                    //     ),
-                    // ));
-
                     CategoryListModel cLM = CategoryListModel ( );
                     cLM.id = "34";
                     cLM.categoryName = "Top Stories";
@@ -888,207 +917,5 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     );
 
   }
-
-
-  // //original FOR HOME FEATURED NEWS
-  // Widget imageSlider(List<HomeNewsModel> featuredNewsModel) {
-  //   return ClipRRect(
-  //       borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-  //       child: InkWell(
-  //         onTap: () {
-  //           HomeNewsModel fNM = featuredNewsModel[0];
-  //           Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => BlocProvider<NewsTagBloc>(
-  //                     create: (context) =>
-  //                         NewsTagBloc(repository: Repository()),
-  //                     child: NewsDetails(
-  //                       newsModel: fNM,
-  //                     )),
-  //               ));
-  //         },
-  //         child: Stack(
-  //           alignment: Alignment.topRight,
-  //           children: [
-  //             Stack(
-  //               fit: StackFit.expand,
-  //               alignment: Alignment.topRight,
-  //               children: <Widget>[
-  //                 Image.network(
-  //                   '${featuredNewsModel[0].xFeaturedMediaOriginal}',
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //                 Positioned(
-  //                   bottom: 0.0,
-  //                   left: 0.0,
-  //                   right: 0.0,
-  //                   child: Container(
-  //                       decoration: BoxDecoration(
-  //                         gradient: LinearGradient(
-  //                           colors: [
-  //                             Colors.black.withOpacity(0.8),
-  //                             Colors.black.withOpacity(0.7),
-  //                             Colors.black.withOpacity(0.5),
-  //                             Colors.black.withOpacity(0.0)
-  //                           ],
-  //                           begin: Alignment.bottomCenter,
-  //                           end: Alignment.topCenter,
-  //                         ),
-  //                       ),
-  //                       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
-  //                       child: Html(
-  //                         data: '${featuredNewsModel[0].title!.rendered}',
-  //                         style: {
-  //                           "body": Style(
-  //                               fontSize: const FontSize(23.0),
-  //                               fontWeight: FontWeight.bold,
-  //                               color: Colors.white),
-  //                         },
-  //                       )),
-  //                 ),
-  //               ],
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.all(8.0),
-  //               child: InkWell(
-  //                 onTap: () {
-  //                   CategoryListModel cLM = CategoryListModel ( );
-  //                   cLM.id = "34";
-  //                   cLM.categoryName = "Top Stories";
-  //                   Navigator.push ( context , MaterialPageRoute(builder: (context)=>
-  //                       BlocProvider<NewsByCategoryBloc> (
-  //                           create: (context) =>
-  //                               NewsByCategoryBloc (repository:Repository ( ) ) ,
-  //                           child: NewsByCategory (
-  //                             model: cLM , )
-  //                       ) ,
-  //                   ));
-  //                 },
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(8.0),
-  //                   child: Container(
-  //                       width: 35,
-  //                       height: 35,
-  //                       alignment: Alignment.topRight,
-  //                       decoration: BoxDecoration(
-  //                         color: Colors.red,
-  //                         borderRadius: BorderRadius.circular(30),
-  //                       ),
-  //                       child: const Center(
-  //                           child: Icon(Icons.arrow_forward_rounded,
-  //                               color: Colors.white))),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ));
-  // }
-  //
-  // //original FOR FEATURED CACHED NEWS
-  // Widget imageSliderCached(List<HomeNewsModel> featuredNewsModel) {
-  //   return ClipRRect(
-  //       borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-  //       child: InkWell(
-  //         onTap: () {
-  //           HomeNewsModel fNM = featuredNewsModel[0];
-  //           Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => BlocProvider<NewsTagBloc>(
-  //                     create: (context) =>
-  //                         NewsTagBloc(repository: Repository()),
-  //                     child: NewsDetails(
-  //                       newsModel: fNM,
-  //                     )),
-  //               ));
-  //         },
-  //         child: Stack(
-  //           alignment: Alignment.topRight,
-  //           children: [
-  //             Stack(
-  //               fit: StackFit.expand,
-  //               alignment: Alignment.topRight,
-  //               children: <Widget>[
-  //                 Image.network(
-  //                   '${featuredNewsModel[0].xFeaturedMediaOriginal}',
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //                 Positioned(
-  //                   bottom: 0.0,
-  //                   left: 0.0,
-  //                   right: 0.0,
-  //                   child: Container(
-  //                       decoration: BoxDecoration(
-  //                         gradient: LinearGradient(
-  //                           colors: [
-  //                             Colors.black.withOpacity(0.8),
-  //                             Colors.black.withOpacity(0.7),
-  //                             Colors.black.withOpacity(0.5),
-  //                             Colors.black.withOpacity(0.0)
-  //                           ],
-  //                           begin: Alignment.bottomCenter,
-  //                           end: Alignment.topCenter,
-  //                         ),
-  //                       ),
-  //                       padding: const EdgeInsets.symmetric(
-  //                           vertical: 5.0, horizontal: 20.0),
-  //                       child: Html(
-  //                         data: '${featuredNewsModel[0].title!.rendered}',
-  //                         style: {
-  //                           "body": Style(
-  //                               fontSize: const FontSize(23.0),
-  //                               fontWeight: FontWeight.bold,
-  //                               color: Colors.white),
-  //                         },
-  //                       )),
-  //                 ),
-  //               ],
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.all(8.0),
-  //               child: InkWell(
-  //                 onTap: () {
-  //                   // CategoryListModel cLM = CategoryListModel(id:"34",categoryName:"Top Stories");
-  //                   // Navigator.push( context, MaterialPageRoute(builder: (context)=>
-  //                   //     BlocProvider<NewsByCategoryBloc>(
-  //                   //         create: (context) => NewsByCategoryBloc(repository: Repository()),
-  //                   //         child: NewsByCategory(model: cLM,)
-  //                   //     ),
-  //                   // ));
-  //
-  //                   CategoryListModel cLM = CategoryListModel ( );
-  //                   cLM.id = "34";
-  //                   cLM.categoryName = "Top Stories";
-  //                   Navigator.push ( context , MaterialPageRoute(builder: (context)=>
-  //                       BlocProvider<NewsByCategoryBloc> (
-  //                           create: (context) =>
-  //                               NewsByCategoryBloc (repository:Repository ( ) ) ,
-  //                           child: NewsByCategory (
-  //                             model: cLM , )
-  //                       ) ,
-  //                   ));
-  //                 },
-  //
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(8.0),
-  //                   child: Container(
-  //                       width: 35,
-  //                       height: 35,
-  //                       alignment: Alignment.topRight,
-  //                       decoration: BoxDecoration(
-  //                         color: Colors.red,
-  //                         borderRadius: BorderRadius.circular(30),
-  //                       ),
-  //                       child:const  Center(
-  //                           child: Icon(Icons.arrow_forward_rounded,
-  //                               color: Colors.white))),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ));
-  // }
+  
 }

@@ -203,7 +203,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       leading: IconButton(
                           onPressed: (){
                             Navigator.pop(context);
-                             _showInterstitialAd();
+                             // _showInterstitialAd();
                           },
                           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyText1!.color,)
                       ),

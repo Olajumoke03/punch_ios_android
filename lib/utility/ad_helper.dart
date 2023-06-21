@@ -84,15 +84,15 @@ class AdHelper {
     throw new UnsupportedError("Unsupported platform");
   }
 
-  static String get interstitialAd {
-    if (Platform.isAndroid) {
-      return 'ca-app-pub-7167863529667065/3759929490';
-      // return 'ca-app-pub-3940256099942544/1033173712';
-    } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/4411468910';
-    }
-    throw new UnsupportedError("Unsupported platform");
-  }
+  // static String get interstitialAd {
+  //   if (Platform.isAndroid) {
+  //     return 'ca-app-pub-7167863529667065/3759929490';
+  //     // return 'ca-app-pub-3940256099942544/1033173712';
+  //   } else if (Platform.isIOS) {
+  //     return 'ca-app-pub-3940256099942544/4411468910';
+  //   }
+  //   throw new UnsupportedError("Unsupported platform");
+  // }
 
   static String get homeBanner {
     if (Platform.isAndroid) {

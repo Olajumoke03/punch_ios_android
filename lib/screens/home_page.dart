@@ -14,6 +14,7 @@ import 'package:punch_ios_android/screens/saved_news_screen.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/favorites_provider.dart';
+import 'package:punch_ios_android/utility/inline_ads.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 
 class HomePage extends StatefulWidget{
@@ -39,6 +40,7 @@ class _HomeState extends State<HomePage> {
         BlocProvider(create: (context) => FeaturedNewsBloc(repository: Repository()))
       ],
     ),
+    // AdListView(),
 
     BlocProvider<CategoryListBloc>(
         create: (context) => CategoryListBloc(repository: Repository()),
