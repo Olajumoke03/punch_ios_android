@@ -9,6 +9,7 @@ import 'package:punch_ios_android/live_video/live_video_response.dart';
 import 'package:punch_ios_android/model/responses/net_core_response.dart';
 import 'package:punch_ios_android/news_by_category/response.dart';
 import 'package:punch_ios_android/news_tag/news_tag_response.dart';
+import 'package:punch_ios_android/privacy_policy/privacy_model.dart';
 import 'package:punch_ios_android/repository/api_client.dart';
 import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/search_result/search_response.dart';
@@ -161,5 +162,12 @@ class Repository   {
     LiveVideoResponse liveVideo = LiveVideoResponse.fromJson(data);
     return liveVideo.liveVideos;
   }
+
+  Future<PrivacyPolicyModel>fetchPrivacyPolicy() async {
+    final response = await _apiClient.get(constants.privacyPolicy);
+    final data = json.decode(response);
+    return PrivacyPolicyModel.fromJson(data);
+  }
+
 
 }
