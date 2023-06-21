@@ -158,6 +158,35 @@ class _NewsDetailsState extends State<NewsDetails> {
     );
   }
 
+  Widget getAd() {
+    BannerAdListener bannerAdListener =
+    BannerAdListener(onAdWillDismissScreen: (ad) {
+      ad.dispose();
+    }, onAdClosed: (ad) {
+      debugPrint("Ad Got Closeed");
+    });
+    BannerAd bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: Platform.isAndroid
+      //working ad medium size
+          ? "ca-app-pub-7167863529667065/7963339325"
+          : "ca-app-pub-7167863529667065/1645777752",
+      
+      // ? "ca-app-pub-3940256099942544/6300978111"
+      // : "ca-app-pub-3940256099942544/2934735716",
+      listener: bannerAdListener,
+      request: const AdRequest(),
+    );
+
+    bannerAd.load();
+
+    return SizedBox(
+      height: 120,
+      child: AdWidget(ad: bannerAd),
+    );
+  }
+
+
   @override
   void initState() {
     _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
@@ -262,7 +291,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
                                   .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
                               linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
-                              chooserTitle: 'Something for chooser title',
+                              // chooserTitle: 'Something for chooser title',
                             );
 
                             // Share.share( '${widget.newsModel!.title!.rendered}'
@@ -451,25 +480,31 @@ class _NewsDetailsState extends State<NewsDetails> {
                               scrollDirection: Axis.vertical,
                               itemCount: widget.newsModel!.articleSplit!.length,
                               itemBuilder: (BuildContext context , int index) {
-                                return Html (
-                                  data: widget.newsModel!.articleSplit![index].toString(),
-                                  style: {
-                                    "body": Style(
-                                        fontSize:  FontSize(9*_fontSizeController.value),
-                                        fontWeight: FontWeight.w400,
-                                        color:Theme.of(context).textTheme.bodyText1!.color
-                                    ),
-                                  },
-                                );
+                                if (index != 0 && index % 5 == 0) {
+                                  return getAd();
+                                } else {
+                                  return Html (
+                                    data: widget.newsModel!.articleSplit![index].toString(),
+                                    style: {
+                                      "body": Style(
+                                          fontSize:  FontSize(9*_fontSizeController.value),
+                                          fontWeight: FontWeight.w400,
+                                          color:Theme.of(context).textTheme.bodyText1!.color
+                                      ),
+                                    },
+                                  );
+                };
                               },
                               separatorBuilder: ( context, index) {
-                                return index != 0 && index % 5 == 0
-                                    ? Container(
-                                  child: inArticleWidget,
-                                  // color: Colors.grey,
-                                  height: 100,
-                                )
-                                    : Container(height: 10);
+                                // return index != 0 && index % 5 == 0
+                                //     ? Container(
+                                //   // child: inArticleWidget,
+                                //   child: getAd(),
+                                //   // color: Colors.grey,
+                                //   height: 100,
+                                // )
+                                //     : Container(height: 10);
+                                return Container();
                               }
                           ),
 

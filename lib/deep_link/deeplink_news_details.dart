@@ -160,7 +160,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                     .replaceAll ( r"\r" , "" ).replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" ).replaceAll ("&#8217;" , "'" )
                                     .replaceAll ("&#038;" , "&" ).replaceAll ("&#8216;" , "‘" ),
                                 linkUrl:'https:// punchng.com/' '${newsModel.slug} ',
-                                chooserTitle: 'Something for chooser title',
+                                // chooserTitle: 'Something for chooser title',
                               );
 
                               // Share.share( '${newsModel!.title!.rendered}'

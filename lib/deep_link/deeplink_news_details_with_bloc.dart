@@ -242,7 +242,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                         .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
                         .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
                     linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
-                    chooserTitle: 'Something for chooser title',
+                    // chooserTitle: 'Something for chooser title',
                   );
 
                   // Share.share( '${widget.newsModel!.title!.rendered}'

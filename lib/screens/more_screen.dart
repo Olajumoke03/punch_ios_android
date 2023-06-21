@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:punch_ios_android/about_us/about_screen.dart';
 import 'package:punch_ios_android/about_us/about_us_bloc.dart';
 import 'package:punch_ios_android/about_us/contact_us.dart';
+import 'package:punch_ios_android/privacy_policy/privacy_policy_bloc.dart';
+import 'package:punch_ios_android/privacy_policy/privacy_screen.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/screens/home_page.dart';
@@ -16,6 +21,7 @@ import 'package:punch_ios_android/utility/subcribe_to_newsletter_provider.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class MoreScreen extends StatefulWidget {
@@ -267,28 +273,28 @@ class _MoreScreenState extends State<MoreScreen> {
     {
       SvgPicture: SvgPicture.asset( 'assets/icons/about.svg', height: 35.0, width: 35.0),
       "title": "AboutUs",
-      // "page": BlocProvider<AboutUsBloc>(
-      //     create: (context) => AboutUsBloc(aboutUsRepository: NewsRepository()),
-      //     child: AboutScreen()
-      // ),
+      "page": BlocProvider<AboutUsBloc>(
+          create: (context) => AboutUsBloc(repository: Repository()),
+          child: AboutScreen()
+      ),
     },
 
     {
       SvgPicture: SvgPicture.asset( 'assets/icons/contact.svg', height: 35.0, width: 35.0, ),
       "title": "Contact Us",
-      // "page": BlocProvider<AboutUsBloc>(
-      //     create: (context) => AboutUsBloc(aboutUsRepository: NewsRepository()),
-      //     child: ContactUs()
-      // ),
+      "page": BlocProvider<AboutUsBloc>(
+          create: (context) => AboutUsBloc(repository: Repository()),
+          child: ContactUs()
+      ),
     },
 
     {
       SvgPicture: SvgPicture.asset( 'assets/icons/privacy.svg', height: 35.0, width: 35.0, ),
       "title": "Privacy Policy",
-      // "page": BlocProvider<PrivacyPolicyBloc>(
-      //     create: (context) => PrivacyPolicyBloc(privacyPolicyRepository: NewsRepository()),
-      //     child: PrivacyScreen()
-      // ),
+      "page": BlocProvider<PrivacyPolicyBloc>(
+          create: (context) => PrivacyPolicyBloc(repository: Repository()),
+          child: PrivacyScreen()
+      ),
     },
 
     {
@@ -414,24 +420,31 @@ class _MoreScreenState extends State<MoreScreen> {
               InkWell(
                 child: MoreItems(name: "Privacy Policy", image: "policy.svg"),
                 onTap: () {
-                  // Navigator.push( context, MaterialPageRoute(builder: (context) => BlocProvider<PrivacyPolicyBloc>(
-                  //     create: (context) => PrivacyPolicyBloc(privacyPolicyRepository: NewsRepository()),
-                  //     child: PrivacyScreen()
-                  // ),), );
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => BlocProvider<PrivacyPolicyBloc>(
+                      create: (context) => PrivacyPolicyBloc(repository: Repository()),
+                      child: PrivacyScreen()
+                  ),), );
                 },
               ),
 
               InkWell( child: MoreItems(name: "Rate Us", image: "rate.svg"),
                 onTap: () {
-                  // launchRate() async {
-                  //   const url = 'https://apps.apple.com/ng/app/punch-news/id1416286632';
-                  //   if (await canLaunch(url)) {
-                  //     await launch(url, forceSafariVC: false,);
-                  //   } else {
-                  //     throw 'Could not launch $url';
-                  //   }
-                  // }
-                  // launchRate();
+                 launchRate() async {
+                    var url =
+                        Platform.isAndroid
+
+                   ? 'https://apps.apple.com/ng/app/punch-news/id1416286632'
+                            :  'https://apps.apple.com/ng/app/punch-news/id1416286632';
+
+                    if (await canLaunch(url)) {
+                      await launch(url, forceSafariVC: false,);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  }
+                  launchRate();
+
+
                 },
               ),
 
@@ -439,24 +452,32 @@ class _MoreScreenState extends State<MoreScreen> {
                 child:
                 MoreItems(name: "Share App", image: "share.svg"),
                 onTap: () {
-                  // Share.share (
-                  //   "Seen the Punch News App? \n\n Download App @ https://apps.apple.com/ng/app/punch-news/id1416286632",
+                  // FlutterShare.share (
+                  //   title: '',
+                  //   linkUrl:'Seen the Punch News App? \n\n Download App @ https://apps.apple.com/ng/app/punch-news/id1416286632 ',
+                  //
                   // );
+                  FlutterShare.share(
+                    title: 'Seen the Punch News App? \n\n Download App @' ,
+
+                    linkUrl:'https://apps.apple.com/ng/app/punch-news/id1416286632',
+                    // chooserTitle: 'Something for chooser title',
+                  );
                 },
               ),
 
               InkWell(
                 child: MoreItems( name: "Advertise with us", image: "advertise.svg"),
                 onTap: () {
-                  // launchAdvertise() async {
-                  //   const url = 'https://punchng.com/advertise-with-us';
-                  //   if (await canLaunch(url)) {
-                  //     await launch(url, forceWebView: true, forceSafariVC: true, );
-                  //   } else {
-                  //     throw 'Could not launch $url';
-                  //   }
-                  // }
-                  // launchAdvertise();
+                  launchAdvertise() async {
+                    const url = 'https://punchng.com/advertise-with-us';
+                    if (await canLaunch(url)) {
+                      await launch(url, forceWebView: true, forceSafariVC: true, );
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  }
+                  launchAdvertise();
                 },
               ),
 
@@ -478,15 +499,15 @@ class _MoreScreenState extends State<MoreScreen> {
 
                             InkWell(
                               onTap: (){
-                                // launchLinkedIn() async {
-                                //   const url = 'httpsA star topology is a topology for a Local Area Network (LAN) in which all nodes are individually connected to a central connection point, like a hub or a switch. A star takes more cable than e.g. a bus, but the benefit is that if a cable fails, only one node will be brought down. Star topology.://www.linkedin.com/company/punchnewspapers/mycompany/';
-                                //   if (await canLaunch(url)) {
-                                //     await launch(url);
-                                //   } else {
-                                //     throw 'Could not launch $url';
-                                //   }
-                                // }
-                                // launchLinkedIn();
+                                launchLinkedIn() async {
+                                  const url = 'https://www.linkedin.com/company/punchnewspapers/mycompany/';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                }
+                                launchLinkedIn();
                               },
 
                               child: Container(
@@ -500,15 +521,15 @@ class _MoreScreenState extends State<MoreScreen> {
 
                             InkWell(
                               onTap: (){
-                                // launchInstagram() async {
-                                //   const url = 'https://www.instagram.com/punchnewspapers/';
-                                //   if (await canLaunch(url)) {
-                                //     await launch(url);
-                                //   } else {
-                                //     throw 'Could not launch $url';
-                                //   }
-                                // }
-                                // launchInstagram();
+                                launchInstagram() async {
+                                  const url = 'https://www.instagram.com/punchnewspapers/';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                }
+                                launchInstagram();
                               },
                               child: Container(
                                 child: SvgPicture.asset(
@@ -521,15 +542,15 @@ class _MoreScreenState extends State<MoreScreen> {
 
                             InkWell(
                               onTap: (){
-                                // launchTelegram() async {
-                                //   const url = 'https://t.me/PunchNewspaper';
-                                //   if (await canLaunch(url)) {
-                                //     await launch(url);
-                                //   } else {
-                                //     throw 'Could not launch $url';
-                                //   }
-                                // }
-                                // launchTelegram();
+                                launchTelegram() async {
+                                  const url = 'https://t.me/PunchNewspaper';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                }
+                                launchTelegram();
                               },
                               child: Container(
                                 child: SvgPicture.asset(
@@ -542,15 +563,15 @@ class _MoreScreenState extends State<MoreScreen> {
 
                             InkWell(
                               onTap: (){
-                                // launchFacebook() async {
-                                //   const url = 'https://www.facebook.com/punchnewspaper/';
-                                //   if (await canLaunch(url)) {
-                                //     await launch(url);
-                                //   } else {
-                                //     throw 'Could not launch $url';
-                                //   }
-                                // }
-                                // launchFacebook();
+                                launchFacebook() async {
+                                  const url = 'https://www.facebook.com/punchnewspaper/';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                }
+                                launchFacebook();
                               },
                               child: Container(
                                 child: SvgPicture.asset(
@@ -563,15 +584,15 @@ class _MoreScreenState extends State<MoreScreen> {
 
                             InkWell(
                               onTap: (){
-                                // launchYouTube() async {
-                                //   const url = 'https://www.youtube.com/channel/UCKBMh5v6VrB0t75ryyiVsBg';
-                                //   if (await canLaunch(url)) {
-                                //     await launch(url);
-                                //   } else {
-                                //     throw 'Could not launch $url';
-                                //   }
-                                // }
-                                // launchYouTube();
+                                launchYouTube() async {
+                                  const url = 'https://www.youtube.com/channel/UCKBMh5v6VrB0t75ryyiVsBg';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                }
+                                launchYouTube();
                               },
 
                               child: Container(
@@ -585,15 +606,15 @@ class _MoreScreenState extends State<MoreScreen> {
 
                             InkWell(
                               onTap: (){
-                                // launchTwitter() async {
-                                //   const url = 'https://twitter.com/MobilePunch';
-                                //   if (await canLaunch(url)) {
-                                //     await launch(url);
-                                //   } else {
-                                //     throw 'Could not launch $url';
-                                //   }
-                                // }
-                                // launchTwitter();
+                                launchTwitter() async {
+                                  const url = 'https://twitter.com/MobilePunch';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                }
+                                launchTwitter();
                               },
 
                               child: Container(
@@ -604,7 +625,6 @@ class _MoreScreenState extends State<MoreScreen> {
                                 ),
                               ),
                             ),
-
                           ],
                         )
                     ),

@@ -17,7 +17,7 @@ const String newsTag =baseUrl+"posts?per_page=5&tags=";
 const String searchResult =baseUrl+"search?per_page=20&search=";
 const String moreSearchResult ="search?per_page=20&search=&page=";
 
-const String privacyPolicy ="pages/778714";
+const String privacyPolicy =baseUrl+"pages/778714";
 const String aboutUs =baseUrl+"pages/164902";
 
 // const String CATEGORY_LIST =BASE_URL+"categories?per_page=100";
@@ -27,6 +27,7 @@ const String featuredNews =baseUrl+"posts?categories=";
 
 const String liveVideo ="https://punchng.com/mobile-app-streaming/";
 
+// const String aboutUs ="pages/164902";
 
 
 // newly added

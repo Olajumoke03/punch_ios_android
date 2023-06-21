@@ -362,10 +362,20 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.banner,
-      // adUnitId: AdHelper.homeBanner2,
       adUnitId: Platform.isAndroid
-          ? "ca-app-pub-3940256099942544/6300978111"
-          : "ca-app-pub-3940256099942544/2934735716",
+
+
+      //working ad medium size
+      ? "ca-app-pub-7167863529667065/7963339325"
+      : "ca-app-pub-7167863529667065/1645777752",
+
+      //homeBanner
+      // ? "ca-app-pub-7167863529667065/1090906571"
+      // : "ca-app-pub-7167863529667065/1810744262",
+
+          //test ads
+          // ? "ca-app-pub-3940256099942544/6300978111"
+          // : "ca-app-pub-3940256099942544/2934735716",
       listener: bannerAdListener,
       request: const AdRequest(),
     );
