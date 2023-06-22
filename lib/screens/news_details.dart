@@ -493,7 +493,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       ),
                                     },
                                   );
-                };
+                                }
                               },
                               separatorBuilder: ( context, index) {
                                 // return index != 0 && index % 5 == 0
