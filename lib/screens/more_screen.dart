@@ -430,10 +430,8 @@ class _MoreScreenState extends State<MoreScreen> {
               InkWell( child: MoreItems(name: "Rate Us", image: "rate.svg"),
                 onTap: () {
                  launchRate() async {
-                    var url =
-                        Platform.isAndroid
-
-                   ? 'https://apps.apple.com/ng/app/punch-news/id1416286632'
+                    var url = Platform.isAndroid
+                            ? 'https://play.google.com/store/apps/details?id=punchmobile.punchng'
                             :  'https://apps.apple.com/ng/app/punch-news/id1416286632';
 
                     if (await canLaunch(url)) {
@@ -443,8 +441,6 @@ class _MoreScreenState extends State<MoreScreen> {
                     }
                   }
                   launchRate();
-
-
                 },
               ),
 
@@ -452,15 +448,13 @@ class _MoreScreenState extends State<MoreScreen> {
                 child:
                 MoreItems(name: "Share App", image: "share.svg"),
                 onTap: () {
-                  // FlutterShare.share (
-                  //   title: '',
-                  //   linkUrl:'Seen the Punch News App? \n\n Download App @ https://apps.apple.com/ng/app/punch-news/id1416286632 ',
-                  //
-                  // );
-                  FlutterShare.share(
-                    title: 'Seen the Punch News App? \n\n Download App @' ,
 
-                    linkUrl:'https://apps.apple.com/ng/app/punch-news/id1416286632',
+                  FlutterShare.share(
+                    title: 'Download Punch News App' ,
+                    text: 'Download Punch News App' ,
+                    linkUrl: Platform.isAndroid
+                    ? 'https://play.google.com/store/apps/details?id=punchmobile.punchng'
+                    : 'https://apps.apple.com/ng/app/punch-news/id1416286632',
                     // chooserTitle: 'Something for chooser title',
                   );
                 },

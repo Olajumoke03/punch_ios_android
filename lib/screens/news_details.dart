@@ -166,7 +166,7 @@ class _NewsDetailsState extends State<NewsDetails> {
       debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
-      size: AdSize.banner,
+      size: AdSize.largeBanner,
       adUnitId: Platform.isAndroid
       //working ad medium size
           ? "ca-app-pub-7167863529667065/7963339325"

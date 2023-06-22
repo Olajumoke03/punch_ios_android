@@ -361,7 +361,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
-      size: AdSize.banner,
+      size: AdSize.largeBanner,
       adUnitId: Platform.isAndroid
 
 

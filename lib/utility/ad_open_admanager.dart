@@ -123,7 +123,8 @@ import 'dart:io' show Platform;
 
 class AppOpenAdManager {
 
-  String adUnitId = '/6499/example/app-open';
+  // String adUnitId = '/6499/example/app-open';
+  String adUnitId = '/31989200/mk_punch_mobileapp';
 
   AppOpenAd? _appOpenAd;
   bool _isShowingAd = false;
