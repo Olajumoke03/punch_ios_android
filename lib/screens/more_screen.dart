@@ -56,7 +56,8 @@ class _MoreScreenState extends State<MoreScreen> {
       builder: (context) => CustomAlertDialog(
         child:   Consumer<SubscribeToNewsLetterProvider>(
             builder: ( context,  deepProvider, child) {
-              return Padding(
+              return Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
                 padding: EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -64,20 +65,21 @@ class _MoreScreenState extends State<MoreScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     SizedBox(height: 10),
-                    Text( Constants.appName, style: const TextStyle( fontWeight: FontWeight.bold, fontSize: 18,
+                    Text( Constants.appName,
+                        style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18, color: Theme.of(context).textTheme.bodyText1!.color
                     )),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     Visibility(
                       visible:!_subscribeProvider.isDialogOpen,
-                      child: const Text( "Subscription Successful.",
-                        style: TextStyle( fontWeight: FontWeight.w500, fontSize: 16,
+                      child: Text( "Subscription Successful.",
+                        style: TextStyle( fontWeight: FontWeight.w500, fontSize: 16,color: Theme.of(context).textTheme.bodyText1!.color
                         ),
                       ),
                     ),
                     Visibility(
                       visible:_subscribeProvider.isDialogOpen,
                       child: Text( "Subscribe to our newsletter",
-                        style: TextStyle( fontWeight: FontWeight.w500, fontSize: 16,
+                        style: TextStyle( fontWeight: FontWeight.w500, fontSize: 16,color: Theme.of(context).textTheme.bodyText1!.color
                         ),
                       ),
                     ),
@@ -92,13 +94,13 @@ class _MoreScreenState extends State<MoreScreen> {
                             borderRadius: const BorderRadius.all(
                               Radius.circular(10.0),
                             ),
-
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only( left: 15, right: 15, top: 3, bottom: 3),
                             child: TextField(
                               autofocus: true,
-//                          controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                         // controller: emailController,
                               onChanged: (String txt) {
                                 _subscribeProvider.setEmail(txt);
                               },
