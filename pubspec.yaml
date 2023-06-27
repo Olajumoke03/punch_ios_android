@@ -65,7 +65,7 @@ dependencies:
   favorite_button: ^0.0.4
   app_tracking_transparency: ^2.0.4
   native_ads_flutter: ^1.0.7
-#  share_plus: ^6.3.4
+  share_plus: ^6.3.4
 
 
 dev_dependencies:
