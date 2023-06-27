@@ -181,30 +181,61 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                       actions: <Widget>[
                         Visibility(
                           visible: deepProvider.isLoadSuccessful==true,
-                          child: IconButton (
+                          // child: IconButton (
+                          //   onPressed: () {
+                          //     FlutterShare.share(
+                          //       title: 'Punch News' ,
+                          //       text: '${newsModel.title!.rendered}' .replaceAll (r"\n" , "\n" )
+                          //           .replaceAll ( r"\r" , "" ).replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" ).replaceAll ("&#8217;" , "'" )
+                          //           .replaceAll ("&#038;" , "&" ).replaceAll ("&#8216;" , "‘" ),
+                          //       linkUrl:'https:// punchng.com/' '${newsModel.slug} ',
+                          //       // chooserTitle: 'Something for chooser title',
+                          //     );
+                          //
+                          //     // Share.share( '${newsModel!.title!.rendered}'
+                          //     //     .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                          //     //     .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                          //     //     .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                          //     //     .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                          //     //   subject: 'Look what I made!',
+                          //     //
+                          //     // );
+                          //   } ,
+                          //   icon:  Icon (
+                          //     Icons.share ,color: Theme.of(context).textTheme.headline1!.color,
+                          //   ) ,
+                          // ),
+                          child:                         IconButton (
                             onPressed: () {
                               FlutterShare.share(
                                 title: 'Punch News' ,
-                                text: '${newsModel.title!.rendered}' .replaceAll (r"\n" , "\n" )
-                                    .replaceAll ( r"\r" , "" ).replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" ).replaceAll ("&#8217;" , "'" )
-                                    .replaceAll ("&#038;" , "&" ).replaceAll ("&#8216;" , "‘" ),
-                                linkUrl:'https:// punchng.com/' '${newsModel.slug} ',
+                                text: '${newsModel.title!.rendered}'
+                                    .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+                                    .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+                                    .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+                                    .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+                                linkUrl:'https://punchng.com/' '${newsModel.slug} ',
                                 // chooserTitle: 'Something for chooser title',
                               );
 
-                              // Share.share( '${newsModel!.title!.rendered}'
+                              // Share.share( '${widget.newsModel!.title!.rendered}'
                               //     .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
                               //     .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
                               //     .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
                               //     .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
                               //   subject: 'Look what I made!',
-                              //
                               // );
+
+                              print("share text "  '${newsModel.title!.rendered}');
+                              print("link url " 'https://punchng.com/' '${newsModel.slug}');
+
                             } ,
                             icon:  Icon (
-                              Icons.share ,color: Theme.of(context).textTheme.headline1!.color,
+                                Icons.share ,
+                                color: Theme.of(context).textTheme.bodyText1!.color
                             ) ,
-                          ),
+                          ) ,
+
                         ) ,
                       ] ,
                     ) ,

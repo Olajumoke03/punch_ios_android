@@ -220,6 +220,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
             ),
 
             actions: <Widget>[
+
               IconButton (
                 onPressed: () {
                   fontDialog ( );
@@ -258,39 +259,36 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                 ) ,
               ) ,
 
+              // InkWell(
+              //   child: Icon (
+              //       Icons.share ,
+              //       color: Theme.of(context).textTheme.bodyText1!.color
+              //   ) ,
+              //   onTap: () {
+              //     //
+              //     // FlutterShare.share(
+              //     //   title: 'Punch News' ,
+              //     //   // text: '${widget.newsModel!.title!.rendered}',
+              //     //
+              //     //   text: 'Download Punch News App' ,
+              //     //   linkUrl: 'https://apps.apple.com/ng/app/punch-news/id1416286632',
+              //     //   // chooserTitle: 'Something for chooser title',
+              //     // );
+              //
+              //     FlutterShare.share(
+              //       title: 'Punch News' ,
+              //     text: '${newsModel.title!.rendered}'
+              //           .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
+              //           .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
+              //           .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
+              //           .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
+              //       linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
+              //       // chooserTitle: 'Something for chooser title',
+              //     );
+              //   },
+              // ),
 
-
-              IconButton (
-                onPressed: () {
-                  FlutterShare.share(
-                    title: 'Punch News' ,
-                    text: '${widget.newsModel!.title!.rendered}'
-                        .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
-                        .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
-                        .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
-                        .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
-                    linkUrl:'https://punchng.com/' '${widget.newsModel!.slug} ',
-                    // chooserTitle: 'Something for chooser title',
-                  );
-
-                  // Share.share( '${widget.newsModel!.title!.rendered}'
-                  //     .replaceAll (r"\n" , "\n" ).replaceAll ( r"\r" , "" )
-                  //     .replaceAll ( r"\'" , "'" ).replaceAll ( "<p>" , "" )
-                  //     .replaceAll ("&#8217;" , "'" ).replaceAll ("&#038;" , "&" )
-                  //     .replaceAll ("&#8216;" , "‘" ).replaceAll("&#8211;", "-"),
-                  //   subject: 'Look what I made!',
-                  //
-                  // );
-
-                  print("share text "  '${widget.newsModel!.title!.rendered}');
-                  print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
-
-                } ,
-                icon:  Icon (
-                    Icons.share ,
-                    color: Theme.of(context).textTheme.bodyText1!.color
-                ) ,
-              ) ,
+                  SizedBox(width: 20,),
             ] ,
           ) ,
 
@@ -413,8 +411,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                           ) ,
                                           child: Center (
                                             child: GestureDetector (
-                                              onTap: () {
-                                              } ,
+                                              onTap: () {} ,
                                               child:  Text (
                                                 state.model.categoriesString![0].replaceAll("&amp;", "&"),
                                                 style: const TextStyle (fontSize: 10 , color: Colors.white,
@@ -436,10 +433,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                       style: TextStyle (fontSize: 12, color: Theme.of(context).textTheme.bodyText1!.color,
                                       ) ) ,
                                 ) ,
-
                               ] ,
                             ) ,
-
                           ] ,
                         ),
 
@@ -517,6 +512,9 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
                         const SizedBox(height: 15),
 
+
+
+
                       ] ,
                     );
                   }
@@ -530,8 +528,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
               ),
             ),
           );
-              });
-            },
+           });
+          },
         );
       }
     );
