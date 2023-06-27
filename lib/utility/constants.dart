@@ -124,6 +124,7 @@ class Constants {
     scaffoldBackgroundColor: lightBG,
     primaryColorDark: whiteColor,
 
+
     appBarTheme: const AppBarTheme(
       elevation: 0,
       backgroundColor: whiteColor,
