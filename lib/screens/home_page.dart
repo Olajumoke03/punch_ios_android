@@ -116,7 +116,8 @@ class _HomeState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) => CustomAlertDialog(
-        child: Padding(
+        child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -124,15 +125,14 @@ class _HomeState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const SizedBox(height: 15),
-              Text( Constants.appName, style: const TextStyle( fontWeight: FontWeight.bold, fontSize: 18,
-                ),
+              Text( Constants.appName,
+                style:TextStyle( fontWeight: FontWeight.bold, fontSize: 20, color: Theme.of(context).textTheme.bodyText1!.color),
               ),
 
               const  SizedBox(height: 25),
 
-              const Text( "Do you really want to exit?",
-                style: TextStyle( fontWeight: FontWeight.w500, fontSize: 16,
-                ),
+               Text( "Do you really want to exit?",
+                style: TextStyle( fontWeight: FontWeight.w500, fontSize: 18, color: Theme.of(context).textTheme.bodyText1!.color),
               ),
 
               const   SizedBox(height: 40),
@@ -140,32 +140,37 @@ class _HomeState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // SizedBox(
-                  //   height: 40,
-                  //   width: 80,
-                  //   child: RaisedButton(
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(5.0),
-                  //     ),
-                  //     child: const Text( "Yes",
-                  //       style: TextStyle( color: Colors.white, fontSize: 16,
-                  //       ),
-                  //     ),
-                  //     onPressed: ()=> exit(0),
-                  //     color: Theme.of(context).colorScheme.secondary,
-                  //   ),
-                  // ),
+                  SizedBox(
+                    height: 40,
+                    width: 80,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        side: BorderSide(color: redColor),
+                      ),
+
+                      child: const Text( "Yes",
+                        style: TextStyle( color: redColor, fontSize: 16),
+                      ),
+                      onPressed: ()=> exit(0),
+                    ),
+                  ),
                   const SizedBox(width: 20),
                   SizedBox(
                     height: 40,
                     width: 80,
                     child: OutlinedButton(
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(5.0),
-                      // ),
-                      // borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
-                      child: Text( "No", style: TextStyle( color: Theme.of(context).colorScheme.secondary, fontSize: 16,
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: redColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
                       ),
+
+                      child: Text( "No",
+                        style: TextStyle( color: whiteColor, fontSize: 16,),
                       ),
                       onPressed: ()=>Navigator.pop(context),
                       // color: Colors.white,
