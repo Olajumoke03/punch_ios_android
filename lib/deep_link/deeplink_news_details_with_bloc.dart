@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:punch_ios_android/deep_link/deep_link_details_event.dart';
 import 'package:punch_ios_android/deep_link/deep_link_details_state.dart';
 import 'package:punch_ios_android/deep_link/deeplink_details_bloc.dart';
@@ -356,8 +355,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                           data:  '${state.model.title!.rendered}',
                                           style: {
                                             "body": Style(
-                                                fontSize:  FontSize(9*_fontSizeController.value),
-                                                fontWeight: FontWeight.w400,
+                                                fontSize:  FontSize(10*_fontSizeController.value),
+                                                fontWeight: FontWeight.w500,
                                                 color:Theme.of(context).textTheme.bodyText1!.color
                                             ),
                                           },
@@ -465,7 +464,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                   data: state.model.articleSplit![index].toString(),
                                   style: {
                                     "body": Style(
-                                        fontSize:  FontSize(9*_fontSizeController.value),
+                                        fontSize:  FontSize(10*_fontSizeController.value),
                                         fontWeight: FontWeight.w400,
                                         color:Theme.of(context).textTheme.bodyText1!.color
                                     ),
@@ -504,16 +503,23 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
                         const SizedBox ( height: 15 ) ,
 
-                         SizedBox (
-                          child: mediumWidget ,
-                          width: MediaQuery.of ( context ).size.width ,
-                          height: 250,
-                        ) ,
+                        //  SizedBox (
+                        //   child: mediumWidget ,
+                        //   width: MediaQuery.of ( context ).size.width ,
+                        //   height: 250,
+                        // ) ,
+
+                        //FOR AD MANAGER UNITS
+                        adShown?  Center(
+                            child: SizedBox(
+                              width: 300,
+                              height: 250,
+                              child: adManagerBannerWidget,
+                            ))
+                            : Container(height: 0),
+
 
                         const SizedBox(height: 15),
-
-
-
 
                       ] ,
                     );
@@ -533,7 +539,6 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
         );
       }
     );
-
   }
 }
 

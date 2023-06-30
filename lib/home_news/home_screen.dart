@@ -482,7 +482,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                   style: {
                                     "body": Style(
                                         color: Theme.of(context).textTheme.bodyText1!.color,
-                                        fontSize: FontSize(8*fontSizeController.value),
+                                        fontSize: FontSize(9*fontSizeController.value),
                                         fontWeight:FontWeight.w500
                                     ),
                                   },
@@ -672,7 +672,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               style: {
                                 "body": Style(
                                     color: Theme.of(context).textTheme.bodyText1!.color,
-                                    fontSize: FontSize(8*fontSizeController.value),
+                                    fontSize: FontSize(9*fontSizeController.value),
                                     fontWeight:FontWeight.w500
                                 ),
                               },
@@ -726,7 +726,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                 // Constants.readTimestamp('${homeNewsModel[pos].date}'),
                                   Jiffy('${homeNewsModel[pos].date}').fromNow(),
                                   style: TextStyle(
-                                      fontSize: 4 * fontSizeController.value,
+                                      fontSize: 4.5 * fontSizeController.value,
                                       color: Theme.of(context).textTheme.bodyText1!.color)),
                             ),
                           ],
@@ -788,7 +788,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           data: '${featuredNewsModel[0].title!.rendered}',
                           style: {
                             "body": Style(
-                                fontSize: const FontSize(25.0),
+                                fontSize: const FontSize(25.5),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           },
@@ -880,7 +880,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           data: '${featuredNewsModel[0].title!.rendered}',
                           style: {
                             "body": Style(
-                                fontSize: const FontSize(25.0),
+                                fontSize: const FontSize(25.5),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           },

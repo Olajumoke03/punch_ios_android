@@ -360,8 +360,8 @@ class _NewsDetailsState extends State<NewsDetails> {
                                     data:  '${widget.newsModel!.title!.rendered}',
                                     style: {
                                       "body": Style(
-                                          fontSize:  FontSize(9*_fontSizeController.value),
-                                          fontWeight: FontWeight.w400,
+                                          fontSize:  FontSize(10*_fontSizeController.value),
+                                          fontWeight: FontWeight.w500,
                                           color:Theme.of(context).textTheme.bodyText1!.color
                                       ),
                                     },
@@ -481,13 +481,14 @@ class _NewsDetailsState extends State<NewsDetails> {
                               itemCount: widget.newsModel!.articleSplit!.length,
                               itemBuilder: (BuildContext context , int index) {
                                 if (index != 0 && index % 5 == 0) {
-                                  return getAd();
+                                  // return getAd();
+                                  return adManagerBannerWidget;
                                 } else {
                                   return Html (
                                     data: widget.newsModel!.articleSplit![index].toString(),
                                     style: {
                                       "body": Style(
-                                          fontSize:  FontSize(9*_fontSizeController.value),
+                                          fontSize:  FontSize(10*_fontSizeController.value),
                                           fontWeight: FontWeight.w400,
                                           color:Theme.of(context).textTheme.bodyText1!.color
                                       ),
