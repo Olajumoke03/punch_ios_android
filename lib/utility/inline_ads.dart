@@ -31,7 +31,7 @@ class AdListView extends StatelessWidget {
     BannerAdListener(onAdWillDismissScreen: (ad) {
       ad.dispose();
     }, onAdClosed: (ad) {
-      debugPrint("Ad Got Closeed");
+      // debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.banner,

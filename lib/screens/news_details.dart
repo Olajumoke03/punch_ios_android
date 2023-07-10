@@ -57,19 +57,27 @@ class _NewsDetailsState extends State<NewsDetails> {
 
   final AdManagerBannerAdListener listener = AdManagerBannerAdListener(
     // Called when an ad is successfully received.
-    onAdLoaded: (Ad ad) => print('Ad loaded.'),
+    onAdLoaded: (Ad ad) =>
+        print(''),
+        // print('Ad loaded.'),
     // Called when an ad request failed.
     onAdFailedToLoad: (Ad ad, LoadAdError error) {
       // Dispose the ad here to free resources.
       ad.dispose();
-      print('Ad failed to load: $error');
+      // print('Ad failed to load: $error');
     },
     // Called when an ad opens an overlay that covers the screen.
-    onAdOpened: (Ad ad) => print('Ad opened.'),
+    onAdOpened: (Ad ad) =>
+        print(''),
+        // print('Ad opened.'),
     // Called when an ad removes an overlay that covers the screen.
-    onAdClosed: (Ad ad) => print('Ad closed.'),
+    onAdClosed: (Ad ad) =>
+        print(''),
+        // print('Ad closed.'),
     // Called when an impression occurs on the ad.
-    onAdImpression: (Ad ad) => print('Ad impression.'),
+    onAdImpression: (Ad ad) =>
+        print(''),
+        // print('Ad impression.'),
   );
 
   final AdManagerBannerAd adManagerBannerAd = AdManagerBannerAd(
@@ -128,19 +136,20 @@ class _NewsDetailsState extends State<NewsDetails> {
 
   void _showInterstitialAd() {
     if (_interstitialAd == null) {
-      print('Warning: attempt to show interstitial before loaded.');
+      // print('Warning: attempt to show interstitial before loaded.');
       return;
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+          print(''),
+          // print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+        // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         _createInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _createInterstitialAd();
       },
@@ -163,7 +172,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     BannerAdListener(onAdWillDismissScreen: (ad) {
       ad.dispose();
     }, onAdClosed: (ad) {
-      debugPrint("Ad Got Closeed");
+      // debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.largeBanner,
@@ -251,21 +260,21 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                         IconButton (
                           onPressed: () async {
-                            print("isSaved on start: " + isSaved.toString());
+                            // print("isSaved on start: " + isSaved.toString());
                             if ( isSaved == true ) {
                               detailsProvider.removeFav ( widget.newsModel!.id! );
                               // detailsProvider.removeFav ( widget.newsModel! );
                               setState ( () {
                                 isSaved = false;
                               });
-                              print("what I am trying to remove in news details = " +  widget.newsModel!.id!.toString());
+                              // print("what I am trying to remove in news details = " +  widget.newsModel!.id!.toString());
 
                             } else {
                               detailsProvider.addFav ( widget.newsModel! );
                               setState ( () {
                                 isSaved = true;
                               } );
-                              print("what I am trying to save in news details = " +  widget.newsModel!.toJson().toString());
+                              // print("what I am trying to save in news details = " +  widget.newsModel!.toJson().toString());
                             }
                           } ,
                           icon: Icon (
@@ -302,8 +311,8 @@ class _NewsDetailsState extends State<NewsDetails> {
                             //   subject: 'Look what I made!',
                             // );
 
-                            print("share text "  '${widget.newsModel!.title!.rendered}');
-                            print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
+                            // print("share text "  '${widget.newsModel!.title!.rendered}');
+                            // print("link url " 'https://punchng.com/' '${widget.newsModel!.slug}');
 
                           } ,
                           icon:  Icon (

@@ -15,7 +15,7 @@ class FavoriteDB {
   getPath() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     path = documentDirectory.path + '/favorites.db';
-    print("favorite helper path: " + path);
+    // print("favorite helper path: " + path);
     return path;
   }
   FavoriteDB(){
@@ -25,11 +25,11 @@ class FavoriteDB {
 
   //Insertion
   add(Map item) async {
-    print('trying to save in FaVDb.add');
+    // print('trying to save in FaVDb.add');
     final db = ObjectDB(FileSystemStorage(path));
 
     db.insert(item).catchError((e){
-      print('failed to save in FaVDb.add :' + e.toString());
+      // print('failed to save in FaVDb.add :' + e.toString());
     });
 
     listAll();
@@ -55,7 +55,7 @@ class FavoriteDB {
   Future<int> remove(Map item) async {
     final db = ObjectDB(FileSystemStorage(path));
       int val = await db.remove({item: "item" }); // works but  Unhandled Exception: Converting object to an encodable object failed: _LinkedHashMap len:1
-    print("val remove: " + item.toString());
+    // print("val remove: " + item.toString());
 
     await db.close();
     return val;
@@ -64,8 +64,8 @@ class FavoriteDB {
   Future<List> listAll() async {
     final db = ObjectDB(FileSystemStorage(path));
     List val = await db.find({});
-    print('items existing VDb.add :' + val.length.toString());
-    print('items existing VDb.add :' + val.toString());
+    // print('items existing VDb.add :' + val.length.toString());
+    // print('items existing VDb.add :' + val.toString());
     await db.close();
     return val;
   }

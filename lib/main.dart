@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
 // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt.
 // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-      print("Accepted permission: $accepted");
+      // print("Accepted permission: $accepted");
     });
 
     OneSignal.shared.setNotificationWillShowInForegroundHandler((OSNotificationReceivedEvent event) {
@@ -126,19 +126,18 @@ class _MyAppState extends State<MyApp> {
     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) async {
       // Will be called whenever a notification is opened/button pressed.
 
-      print ("clicked notification " + result.notification.jsonRepresentation());
-      // var data = result.notification.payload.additionalData;
+      // print ("clicked notification " + result.notification.jsonRepresentation());
 
       var data = result.notification.additionalData;
 
-      print("this is the data response for notification = " + data!["custom"].toString());
+      // print("this is the data response for notification = " + data!["custom"].toString());
 
       Navigator.push(_appProvider!.navigatorKey.currentContext!,
           MaterialPageRoute(builder: (context) =>
-              DeepLinkNewsDetails(slug: data['custom'].toString().replaceAll('https://punchng.com/', '')))
+              DeepLinkNewsDetails(slug: data!['custom'].toString().replaceAll('https://punchng.com/', '')))
       );
 
-      print("i reached here too = " + data['custom'].toString());
+      // print("i reached here too = " + data!['custom'].toString());
     });
 
     OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
@@ -186,7 +185,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
-    print("UUID: $uuid");
+    // print("UUID: $uuid");
   }
 
   Future<void> showCustomTrackingDialog(BuildContext context) async =>

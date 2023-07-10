@@ -148,12 +148,12 @@ class AppOpenAdManager {
       adManagerAdRequest: AdManagerAdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
-          print('$ad loaded');
+          // print('$ad loaded');
           _appOpenLoadTime = DateTime.now();
           _appOpenAd = ad;
         },
         onAdFailedToLoad: (error) {
-          print('AppOpenAd failed to load: $error');
+          // print('AppOpenAd failed to load: $error');
         },
       ),
     );
@@ -165,16 +165,16 @@ class AppOpenAdManager {
   /// new ad.
   void showAdIfAvailable() {
     if (!isAdAvailable) {
-      print('Tried to show ad before available.');
+      // print('Tried to show ad before available.');
       loadAd();
       return;
     }
     if (_isShowingAd) {
-      print('Tried to show ad while already showing an ad.');
+      // print('Tried to show ad while already showing an ad.');
       return;
     }
     if (DateTime.now().subtract(maxCacheDuration).isAfter(_appOpenLoadTime!)) {
-      print('Maximum cache duration exceeded. Loading another ad.');
+      // print('Maximum cache duration exceeded. Loading another ad.');
       _appOpenAd!.dispose();
       _appOpenAd = null;
       loadAd();

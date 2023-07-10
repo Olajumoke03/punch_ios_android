@@ -99,7 +99,8 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+          print(''),
+          // print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
@@ -120,7 +121,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
     BannerAdListener(onAdWillDismissScreen: (ad) {
       ad.dispose();
     }, onAdClosed: (ad) {
-      debugPrint("Ad Got Closeed");
+      // debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.largeBanner,
@@ -236,7 +237,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
 
                                   IconButton (
                                     onPressed: () async {
-                                      print("isSaved on start: " + isSaved.toString());
+                                      // print("isSaved on start: " + isSaved.toString());
                                       if ( isSaved == true ) {
                                         detailsProvider.removeFav (newsModel.id! );
                                         // detailsProvider.removeFav ( widget.newsModel! );

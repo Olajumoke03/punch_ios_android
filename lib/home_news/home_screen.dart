@@ -181,8 +181,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               Widget body;
               if (isLoadingMore == false) {
                 body = const Text("No more news");
-                print("current status of is loading more :" +
-                    isLoadingMore.toString());
+                // print("current status of is loading more :" + isLoadingMore.toString());
               } else {
                 body = const SizedBox(
                     child: CircularProgressIndicator(
@@ -358,7 +357,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     BannerAdListener(onAdWillDismissScreen: (ad) {
       ad.dispose();
     }, onAdClosed: (ad) {
-      debugPrint("Ad Got Closeed");
+      // debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.largeBanner,

@@ -147,7 +147,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
               _refreshController.refreshCompleted();
               allNewsByCategory = state.newsByCategory;
             });
-            print("I reached news loaded success");
+            // print("I reached news loaded success");
 
           }
           else if ( state is NewsByCategoryMoreLoadedState ) {
@@ -157,13 +157,13 @@ class _NewsByCategoryState extends State<NewsByCategory> {
               _refreshController.loadComplete();
               allNewsByCategory.addAll(state.newsByCategory) ;
             });
-            print("I reached pagination success");
+            // print("I reached pagination success");
           }
           else if ( state is NewsByCategoryMoreFailureState ) {
             setState(() {
               isLoadingMore = false;
             });
-            print("I reached pagination failure");
+            // print("I reached pagination failure");
 
           }
           else if ( state is NewsByCategoryLoadFailureState ) {
@@ -227,7 +227,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
               Widget body ;
               if(isLoadingMore == false){
                 body =  Text("No more news");
-                print("current status of is loading more :" + isLoadingMore.toString());
+                // print("current status of is loading more :" + isLoadingMore.toString());
               }
               else {
                 body =  SizedBox(child: CircularProgressIndicator( color: mainColor,

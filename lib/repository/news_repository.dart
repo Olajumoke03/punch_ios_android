@@ -51,7 +51,7 @@ class Repository   {
 
   Future<HomeNewsResponse>fetchSingleNews(String slug) async {
     final response = await _apiClient.get(constants.singleNews+slug);
-    print('single fetch :' + response);
+    // print('single fetch :' + response);
     var data = json.decode(response);
     return  HomeNewsResponse.fromJson(data);
   }
@@ -69,7 +69,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchFeaturedNews() async {
     final response = await _apiClient.get(constants.featuredNews+"34");
     var data = json.decode(response);
-    print("featured news response from repository " + response);
+    // print("featured news response from repository " + response);
 
     FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
     saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
@@ -79,7 +79,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchHomeNews() async {
     final response = await _apiClient.get(constants.latestNews);
     var data = json.decode(response);
-    print("home news response " + response);
+    // print("home news response " + response);
     // try{
     HomeNewsResponse  homeNewsResponse = HomeNewsResponse.fromJson(data);
     // pick just 10 out of the news
@@ -118,7 +118,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchNewsByCategory(String id) async {
     final response = await _apiClient.get(constants.newsByCategory+id);
     var data = json.decode(response);
-    print("news by category  response " + response);
+    // print("news by category  response " + response);
     NewsByCategoryResponse newsByCategory = NewsByCategoryResponse.fromJson(data);
     return newsByCategory.newsByCategorys;
   }
@@ -126,7 +126,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchMoreNewsByCategory(int page, String id) async {
     final response = await _apiClient.get(constants.moreNewsByCategory+id+"&page="+page.toString());
     var data = json.decode(response);
-    print("more home news  response " + response);
+    // print("more home news  response " + response);
     NewsByCategoryResponse  newsByCategoryResponse = NewsByCategoryResponse.fromJson(data);
     return newsByCategoryResponse.newsByCategorys;
   }
@@ -135,7 +135,7 @@ class Repository   {
     final response = await _apiClient.get(constants.searchResult+searchQuery);
     var data = json.decode(response);
     SearchResultResponse  searchResultResponse = SearchResultResponse.fromJson(data);
-    print("search result response " + searchResultResponse.toString());
+    // print("search result response " + searchResultResponse.toString());
     return searchResultResponse.searchResults;
   }
 
@@ -155,8 +155,8 @@ class Repository   {
 
   Future<List<LiveVideoModel>>fetchLiveVideo() async {
     final response = await httpClient.get(Uri.parse(constants.liveVideo));
-    print("live video url - " + constants.liveVideo);
-    print("live video " + response.body);
+    // print("live video url - " + constants.liveVideo);
+    // print("live video " + response.body);
 
     var data = json.decode(response.body);
     LiveVideoResponse liveVideo = LiveVideoResponse.fromJson(data);

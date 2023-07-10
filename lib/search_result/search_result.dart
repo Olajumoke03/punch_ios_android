@@ -160,7 +160,7 @@ class _SearchResultState extends State<SearchResult> {
 
                         ))
                     );
-                    print("search result slug " + searchResultModel[pos].url!);
+                    // print("search result slug " + searchResultModel[pos].url!);
                   },
                   child: Row(
                     children: <Widget>[

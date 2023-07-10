@@ -121,7 +121,8 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+          print(''),
+          // print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
@@ -142,7 +143,7 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     BannerAdListener(onAdWillDismissScreen: (ad) {
       ad.dispose();
     }, onAdClosed: (ad) {
-      debugPrint("Ad Got Closeed");
+      // debugPrint("Ad Got Closeed");
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.largeBanner,

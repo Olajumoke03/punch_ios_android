@@ -7,7 +7,7 @@ class FontSizeController with ChangeNotifier {
 
   FontSizeController(){
     checkFontSize();
-    print("checking font size");
+    // print("checking font size");
   }
 
   void updateFontSize(value) {
@@ -23,7 +23,7 @@ class FontSizeController with ChangeNotifier {
   Future checkFontSize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? fontSize= prefs.getString("fontSize") ?? "2.6";
-    print("fontSize :" + fontSize.toString());
+    // print("fontSize :" + fontSize.toString());
     value = double.parse(fontSize);
     notifyListeners();
 
