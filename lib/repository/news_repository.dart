@@ -118,7 +118,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchNewsByCategory(String id) async {
     final response = await _apiClient.get(constants.newsByCategory+id);
     var data = json.decode(response);
-    // print("news by category  response " + response);
+    print("news by category  response " + response);
     NewsByCategoryResponse newsByCategory = NewsByCategoryResponse.fromJson(data);
     return newsByCategory.newsByCategorys;
   }

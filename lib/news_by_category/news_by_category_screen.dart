@@ -23,9 +23,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsByCategory extends StatefulWidget {
   final  CategoryListModel model;
-  final String? id;
 
-   NewsByCategory({Key? key, required this.model, this.id}) : super(key: key);
+   NewsByCategory({Key? key, required this.model}) : super(key: key);
 
   @override
   _NewsByCategoryState createState() => _NewsByCategoryState();
@@ -65,7 +64,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       setState ( () {
         isLoadingMore=true;
       } );
-      newsByCategoryBloc.add ( FetchMoreNewsByCategoryEvent ( page: currentPage + 1, id: widget.model.id ) );
+      newsByCategoryBloc.add ( FetchMoreNewsByCategoryEvent ( page: currentPage + 1, id: widget.model.categoryId ) );
     }
   }
   final double height =0;
@@ -86,7 +85,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
       currentPage = 1;
     });
 
-    newsByCategoryBloc.add(RefreshNewsByCategoryEvent(id: widget.model.id));
+    newsByCategoryBloc.add(RefreshNewsByCategoryEvent(id: widget.model.categoryId));
   }
   RefreshController _refreshController = RefreshController(initialRefresh: true);
 
@@ -96,7 +95,7 @@ class _NewsByCategoryState extends State<NewsByCategory> {
     _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
 
     newsByCategoryBloc = BlocProvider.of<NewsByCategoryBloc>(context);
-    newsByCategoryBloc.add(FetchNewsByCategoryEvent(id: widget.model.id));
+    newsByCategoryBloc.add(FetchNewsByCategoryEvent(id: widget.model.categoryId));
     // _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
 
 
