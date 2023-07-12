@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:punch_ios_android/live_video/live_video_event.dart';
 import 'package:punch_ios_android/live_video/live_video_model.dart';
 import 'package:punch_ios_android/live_video/live_video_state.dart';
@@ -16,7 +15,6 @@ class LiveVideoBloc extends Bloc<LiveVideoEvent,LiveVideoState>{
 
   @override
   Stream<LiveVideoState> mapEventToState(LiveVideoEvent event) async* {
-
 
     if (event is FetchLiveVideosEvent) {
       yield LiveVideoLoadingState();

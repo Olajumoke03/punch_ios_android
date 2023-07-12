@@ -23,6 +23,7 @@ class LiveVideoModel {
   }
 }
 
+
 class Data {
   String? url;
   String? title;

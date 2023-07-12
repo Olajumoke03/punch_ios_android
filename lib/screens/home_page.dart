@@ -8,13 +8,13 @@ import 'package:punch_ios_android/category_list/screen.dart';
 import 'package:punch_ios_android/featured_news/featured_news_bloc.dart';
 import 'package:punch_ios_android/home_news/home_bloc.dart';
 import 'package:punch_ios_android/home_news/home_screen.dart';
+import 'package:punch_ios_android/live_video/live_video_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/more_screen.dart';
 import 'package:punch_ios_android/screens/saved_news_screen.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/favorites_provider.dart';
-import 'package:punch_ios_android/utility/inline_ads.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 
 class HomePage extends StatefulWidget{
@@ -37,7 +37,9 @@ class _HomeState extends State<HomePage> {
       providers: [
         BlocProvider(create: (context) => HomeNewsBloc(repository: Repository()),),
         BlocProvider(create: (context) => CategoryListBloc(repository: Repository()), ),
-        BlocProvider(create: (context) => FeaturedNewsBloc(repository: Repository()))
+        BlocProvider(create: (context) => FeaturedNewsBloc(repository: Repository())),
+        BlocProvider(create: (context) => LiveVideoBloc(repository: Repository()),
+        ),
       ],
     ),
     // AdListView(),

@@ -10,7 +10,6 @@ class FetchLiveVideosEvent extends LiveVideoEvent {
   List<Object> get props => [];
 }
 
-
 class RefreshLiveVideoEvent extends LiveVideoEvent {
   @override
   List<Object> get props => [];

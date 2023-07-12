@@ -1,6 +1,3 @@
-
-
-
 import 'package:punch_ios_android/live_video/live_video_model.dart';
 
 class LiveVideoResponse {

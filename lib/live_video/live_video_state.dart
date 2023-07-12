@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:punch_ios_android/live_video/live_video_model.dart';
 
 abstract class LiveVideoState extends Equatable {
