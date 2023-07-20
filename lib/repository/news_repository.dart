@@ -15,6 +15,7 @@ import 'package:punch_ios_android/search_result/search_model.dart';
 import 'package:punch_ios_android/search_result/search_response.dart';
 import 'package:punch_ios_android/utility/constants.dart' as constants;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../contact_us/contact_us_model.dart';
 import '../featured_news/featured_news_response.dart';
 import 'package:http/http.dart' as http;
 
@@ -169,5 +170,10 @@ class Repository   {
     return PrivacyPolicyModel.fromJson(data);
   }
 
+  Future<ContactModel> fetchContact() async {
+    final response = await _apiClient.get ( constants.aboutUs );
+    final data = json.decode ( response );
+    return  ContactModel.fromJson ( json.decode ( response ) );
+  }
 
 }

@@ -490,8 +490,8 @@ class _NewsDetailsState extends State<NewsDetails> {
                               itemCount: widget.newsModel!.articleSplit!.length,
                               itemBuilder: (BuildContext context , int index) {
                                 if (index != 0 && index % 5 == 0) {
-                                  // return getAd();
-                                  return adManagerBannerWidget;
+                                  return getAd();
+                                  // return adManagerBannerWidget;
                                 } else {
                                   return Html (
                                     data: widget.newsModel!.articleSplit![index].toString(),
