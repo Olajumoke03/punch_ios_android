@@ -136,6 +136,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
   List<LiveVideoModel> liveVideoModel = <LiveVideoModel>[];
 
+  String liveVideoTest = "";
+
   //API CALL
   Future<List<LiveVideoModel>>fetchLiveVideo() async {
 
@@ -150,7 +152,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     // print("length data " + data.length.toString());
     // print("length streaming value " + liveVideoModel[0].streaming.toString());
     // print("length live video model " + liveVideoModel.length.toString());
-
+    //
     // print("live video from screen length "+ liveVideoModel.length.toString());
 
     LiveVideoResponse liveVideo = LiveVideoResponse.fromJson(data);
@@ -176,6 +178,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     appProvider = Provider.of<AppProvider>(context, listen: false);
 
     subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
+    fetchLiveVideo();
   }
 
 
@@ -208,8 +211,13 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
             SizedBox(width: 10,)
           ],
         ),
-        body: liveVideoModel.isNotEmpty && liveVideoModel[0].streaming == true
-          ?liveVideoHomeScreen()
+        body:
+
+          liveVideoModel.isNotEmpty && liveVideoModel[0].streaming == true
+          // liveVideoTest.isNotEmpty
+
+      ?liveVideoHomeScreen()
+
           :mainHomeScreen()
 
       );
@@ -487,7 +495,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 Widget body ;
                 if(isLoadingMore == false){
                   body =  Text("loading more ....");
-                  print("current status of is loading more :" + isLoadingMore.toString());
+                  // print("current status of is loading more :" + isLoadingMore.toString());
                 }
                 else {
                   body =  SizedBox(child: CircularProgressIndicator(),height: 30,width: 30);
@@ -513,7 +521,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 5),
                         // color: Colors.white,
                         width: MediaQuery.of(context).size.width,
-                        child: Text( "Home NEWS",
+                        child: Text( "LATEST NEWS",
                           style: TextStyle(
                               color: Theme.of(context).textTheme.bodyText1!.color,
                               fontSize: 16.5, fontWeight: FontWeight.bold, letterSpacing: 1),

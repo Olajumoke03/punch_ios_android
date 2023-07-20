@@ -24,7 +24,7 @@ class LiveVideoBloc extends Bloc<LiveVideoEvent,LiveVideoState>{
           yield LiveVideoLoadedState(liveVideo: liveVideoModel, message: '');
           print("liveVideo loaded");
 
-          print("live video length from bloc- " + liveVideoModel.length.toString());
+          // print("live video length from bloc- " + liveVideoModel.length.toString());
         }
       }catch(e){
         yield LiveVideoLoadFailureState(error: 'Could not load link');
