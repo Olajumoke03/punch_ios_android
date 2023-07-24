@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_funding_choices/flutter_funding_choices.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
@@ -40,6 +41,7 @@ import 'package:native_ads_flutter/native_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart' as webView;
+import 'package:flutter_funding_choices/flutter_funding_choices.dart' as consent;
 
 class HomeNewsScreen extends StatefulWidget {
   const HomeNewsScreen({Key? key}) : super(key: key);
@@ -53,10 +55,11 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
   late HomeNewsBloc homeNewsBloc;
   late Repository repository;
+ late  FeaturedNewsBloc featuredNewsBloc;
+
   late HomeNewsModel homeModel;
   late CategoryListBloc categoryListBloc;
   late LiveVideoBloc liveVideoBloc;
-  late FeaturedNewsBloc featuredNewsBloc;
   late CategoryListModel categoryListModel;
   late RefreshController refreshController;
   late FontSizeController fontSizeController;
@@ -94,6 +97,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       });
 
       homeNewsBloc.add(FetchMoreHomeNewsEvent(page: currentPage + 1));
+      featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
+
     }
   }
 
@@ -112,7 +117,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       currentPage = 1;
     });
     homeNewsBloc.add(RefreshHomeNewsEvent());
-    featuredNewsBloc.add(FetchFeaturedNewsEvent());
   }
 
   void _onStateChanged(AdLoadState state) {
@@ -133,12 +137,55 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
         break;
     }
   }
+  /// The current consent info.
+  late consent.ConsentInformation consentInfo;
+
+  /// Refreshes the current consent info.
+  Future<void> refreshConsentInfo() async {
+    List<String> testDeviceId = [];
+    testDeviceId.add("EF47A78D1DFDE273A8AC31A5EE4F6FAF");
+    consent.ConsentInformation consentInfo =
+    await FlutterFundingChoices.requestConsentInformation(tagForUnderAgeOfConsent: false,testDevicesHashedIds: testDeviceId );
+    setState(() => this.consentInfo = consentInfo);
+
+  }
+  /// Converts a consent status to a human-readable string.
+  String get consentStatusString {
+    if (consentInfo.consentStatus == consent.ConsentStatus.OBTAINED) {
+      return 'Obtained';
+    }
+    if (Platform.isAndroid) {
+      if (consentInfo.consentStatus == 1) {
+        return 'Not required';
+      }
+      if (consentInfo.consentStatus == 2) {
+        return 'Required';
+      }
+    } else if (Platform.isIOS) {
+      if (consentInfo.consentStatus == 1) {
+        return 'Not required';
+      }
+      if (consentInfo.consentStatus == 2) {
+        return 'Required';
+      }
+    }
+    return 'Unknown';
+  }
+
+  /// Converts a consent type to a human-readable string.
+  // String get consentTypeString {
+  //   switch (consentInfo.consentType) {
+  //     case ConsentType.PERSONALIZED:
+  //       return 'Personalized ads';
+  //     case ConsentType.NON_PERSONALIZED:
+  //       return 'Non personalized ads';
+  //     default:
+  //       return 'Unknown';
+  //   }
+  // }
 
   List<LiveVideoModel> liveVideoModel = <LiveVideoModel>[];
-
-  String liveVideoTest = "";
-
-  //API CALL
+  //API CALL FOR LIVE VIDEO
   Future<List<LiveVideoModel>>fetchLiveVideo() async {
 
     final response = await httpClient.get(Uri.parse("https://punchng.com/mobile-app-streaming/"));
@@ -163,14 +210,16 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   void initState() {
     super.initState();
     fontSizeController = Provider.of<FontSizeController>(context, listen: false);
+
     homeNewsBloc = BlocProvider.of<HomeNewsBloc>(context);
     homeNewsBloc.add(FetchHomeNewsEvent());
+
+    featuredNewsBloc = BlocProvider.of<FeaturedNewsBloc> ( context );
+    featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
 
     categoryListBloc = BlocProvider.of<CategoryListBloc>(context);
     categoryListBloc.add(FetchCategoryListEvent());
 
-    featuredNewsBloc = BlocProvider.of<FeaturedNewsBloc>(context);
-    featuredNewsBloc.add(FetchFeaturedNewsEvent());
 
     liveVideoBloc = BlocProvider.of<LiveVideoBloc> ( context );
     liveVideoBloc.add ( FetchLiveVideosEvent () );
@@ -179,6 +228,15 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
     subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
     fetchLiveVideo();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await refreshConsentInfo();
+      if (consentInfo.isConsentFormAvailable && consentInfo.consentStatus == 2) {
+        await FlutterFundingChoices.showConsentForm();
+        await refreshConsentInfo();
+      }
+
+    });
   }
 
 
@@ -286,24 +344,21 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            Container(
               height: 250,
-              child: BlocListener<FeaturedNewsBloc, FeaturedNewsState>(
+              child:
+              BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
                   listener: (context, state){
                     if ( state is FeaturedNewsRefreshingState ) {
-                      // Scaffold.of ( context ).showSnackBar ( SnackBar (
-                      //   content: Text ( 'Refreshing' ) , ) );
+
                     } else if ( state is FeaturedNewsLoadedState ) {
 
                     }else if ( state is FeaturedCachedNewsLoadedState  ) {
                       // a message will only come when it is updating the feed.
                     }
                     else if ( state is FeaturedNewsLoadFailureState ) {
-                      // Scaffold.of ( context ).showSnackBar ( SnackBar (
-                      //   content: Text ( "Could not load news at this time" ) , ) );
-                    }
+                     }
                   },
-
 
                   child: BlocBuilder<FeaturedNewsBloc, FeaturedNewsState>(
                     buildWhen:(previous,current){
@@ -315,24 +370,37 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                         return true;
                     },
                     builder: (context, state) {
-                      if (state is FeaturedNewsInitialState) {
-                        return const BuildLoadingWidget();
-                      } else if (state is FeaturedNewsLoadingState) {
-                        return const BuildLoadingWidget();
-                      } else if (state is FeaturedNewsLoadedState) {
-                        return imageSlider(state.featuredNews);
-                      } else if (state is FeaturedNewsRefreshedState) {
-                        return imageSlider(state.featuredNews);
-                      }else if (state is FeaturedCachedNewsLoadedState) {
-                        return imageSliderCached(state.featuredCachedNews);
-                      } else if (state is FeaturedNewsLoadFailureState) {
-                        return BuildErrorUi(message: state.error);
-                      } else {
-                        return const BuildErrorUi(
-                            message: "Something went wrong!");
+                      if ( state is FeaturedNewsInitialState ) {
+                        return SizedBox(
+                            height: 125,
+                            width: 248,
+                            child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor))                        );
+                      } else if ( state is FeaturedNewsLoadingState ) {
+                        return  SizedBox(
+                            height: 125,
+                            width: 248,
+                            child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor))
+                        );
+
+                      } else if ( state is FeaturedNewsLoadedState ) {
+                        return Container(
+                            child: imageSlider( state.featuredNews));
+                        // return buildFeaturedNewsList ( state.featuredNews);
+                      }else if ( state is FeaturedCachedNewsLoadedState ) {
+                        return Container(
+                            child: imageSliderCached( state.featuredCachedNews));
+                        // return buildFeaturedNewsList ( state.featuredNews);
+                      }  else if ( state is FeaturedNewsLoadFailureState ) {
+                        return BuildErrorUi (message: state.error );
+                      }
+                      else {
+                        return BuildErrorUi (message: "Something went wrong!" );
                       }
                     },
-                  )),
+                  )
+
+              ),
+
             ),
             Container(
               color: Theme.of(context).backgroundColor,
@@ -1014,93 +1082,90 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
   //FOR FEATURED NEWS
   Widget imageSlider(List<HomeNewsModel> featuredNewsModel){
-    return  ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        child: InkWell(
-          onTap: () {
-            HomeNewsModel fNM = featuredNewsModel[0];
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BlocProvider<NewsTagBloc>(
-                      create: (context) =>
-                          NewsTagBloc(repository: Repository()),
-                      child: NewsDetails(
-                        newsModel: fNM,
-                      )),
-                ));
-          },
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Stack(
-                fit: StackFit.expand,
-                alignment: Alignment.topRight,
-                children: <Widget>[
-                  Image.network(
-                    '${featuredNewsModel[0].xFeaturedMediaOriginal}',
-                    fit: BoxFit.cover,
-                  ),
+    return ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          child: InkWell(
+            onTap: (){
+              HomeNewsModel fNM = featuredNewsModel[0];
+              Navigator.push ( context ,
+                  MaterialPageRoute(
+                    builder: (context) =>  BlocProvider<NewsTagBloc> (
+                        create: (context) => NewsTagBloc (repository: Repository ()) ,
+                        child: NewsDetails ( newsModel: fNM , )
+                    ) ,
+                  )
+              );
+            },
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Stack(
+                  fit: StackFit.expand,
+                  alignment: Alignment.topRight,
+                  children: <Widget>[
+                    Image.network(
+                      '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                      fit: BoxFit.cover,
+                    ),
 
-                  Positioned(
-                    bottom: 0.0, left: 0.0, right: 0.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.black.withOpacity(0.8),Colors.black.withOpacity(0.7), Colors.black.withOpacity(0.5),Colors.black.withOpacity(0.0)],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
+                    Positioned(
+                      bottom: 0.0, left: 0.0, right: 0.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Colors.black.withOpacity(0.8),Colors.black.withOpacity(0.7), Colors.black.withOpacity(0.5),Colors.black.withOpacity(0.0)],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
                         ),
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+                        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                         child: Html(
-                          data: '${featuredNewsModel[0].title!.rendered}',
+                          data: '${featuredNewsModel[0].title!.rendered} ',
                           style: {
                             "body": Style(
-                                fontSize: const FontSize(25.5),
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                color: Colors.white,
+                                fontSize: FontSize(25),
+                                fontWeight:FontWeight.bold
+                            ),
                           },
+                          // defaultTextStyle: TextStyle(color: Colors.white, fontSize: 23,fontWeight:FontWeight.bold),
                         ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      CategoryListModel cLM = CategoryListModel(categoryId:"34",categoryName:"Top Stories");
+                      Navigator.push( context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider<NewsByCategoryBloc>(
+                                create: (context) => NewsByCategoryBloc(repository: Repository()),
+                                child: NewsByCategory(model: cLM,)
+                            ),
+                          )
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          width: 35,
+                          height: 35,
+                          alignment: Alignment.topRight,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(child: Icon(Icons.arrow_forward_rounded, color: Colors.white))),
                     ),
                   ),
-                ],
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    CategoryListModel cLM = CategoryListModel ( );
-                    cLM.categoryId = "34";
-                    cLM.categoryName = "Top Stories";
-                    Navigator.push ( context , MaterialPageRoute(builder: (context)=>
-                        BlocProvider<NewsByCategoryBloc> (
-                            create: (context) =>
-                                NewsByCategoryBloc (repository:Repository ( ) ) ,
-                            child: NewsByCategory (
-                              model: cLM , )
-                        ) ,
-                    ));
-                  },
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        width: 35,
-                        height: 35,
-                        alignment: Alignment.topRight,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Center(child: Icon(Icons.arrow_forward_rounded, color: Colors.white))),
-                  ),
                 ),
-              ),
-            ],
-          ),
-        )
+              ],
+            ),
+          )
     );
   }
 
@@ -1109,18 +1174,16 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     return  ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: InkWell(
-          onTap: () {
+          onTap: (){
             HomeNewsModel fNM = featuredNewsModel[0];
-            Navigator.push(
-                context,
+            Navigator.push ( context ,
                 MaterialPageRoute(
-                  builder: (context) => BlocProvider<NewsTagBloc>(
-                      create: (context) =>
-                          NewsTagBloc(repository: Repository()),
-                      child: NewsDetails(
-                        newsModel: fNM,
-                      )),
-                ));
+                  builder: (context) =>   BlocProvider<NewsTagBloc> (
+                      create: (context) => NewsTagBloc (repository: Repository ()) ,
+                      child: NewsDetails ( newsModel: fNM , )
+                  ) ,
+                )
+            );
           },
           child: Stack(
             alignment: Alignment.topRight,
@@ -1144,37 +1207,37 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                           end: Alignment.topCenter,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
-                        child: Html(
-                          data: '${featuredNewsModel[0].title!.rendered}',
-                          style: {
-                            "body": Style(
-                                fontSize: const FontSize(25.5),
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          },
-                        )
-
+                      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                      child: Html(
+                        data: '${featuredNewsModel[0].title!.rendered} ',
+                        style: {
+                          "body": Style(
+                              color: Colors.white,
+                              fontSize: FontSize(25),
+                              fontWeight:FontWeight.bold
+                          ),
+                        },
+                        // defaultTextStyle: TextStyle(color: Colors.white, fontSize: 23,fontWeight:FontWeight.bold),
+                      ),
                     ),
                   ),
-
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel ( );
-                    cLM.categoryId = "34";
-                    cLM.categoryName = "Top Stories";
-                    Navigator.push ( context , MaterialPageRoute(builder: (context)=>
-                        BlocProvider<NewsByCategoryBloc> (
-                            create: (context) =>
-                                NewsByCategoryBloc (repository:Repository ( ) ) ,
-                            child: NewsByCategory (
-                              model: cLM , )
-                        ) ,
-                    ));
+                    CategoryListModel cLM = CategoryListModel(categoryId:"13",categoryName:"Featured News");
+                    Navigator.push( context,
+                        MaterialPageRoute(
+                          builder: (context) =>  BlocProvider<NewsByCategoryBloc>(
+                              create: (context) => NewsByCategoryBloc(repository: Repository()),
+                              child: NewsByCategory(model: cLM,)
+                          ),
+
+                        )
+
+                    );
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -1194,5 +1257,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
           ),
         )
     );
+
   }
 }

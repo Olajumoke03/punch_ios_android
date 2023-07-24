@@ -29,3 +29,14 @@ class FetchMoreHomeNewsEvent extends HomeNewsEvent {
   List<Object> get props => [];
 }
 
+class FetchFeaturedEvent extends HomeNewsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+
+class FetchCachedFeaturedEvent extends HomeNewsEvent {
+  @override
+  List<Object> get props => [];
+}
+

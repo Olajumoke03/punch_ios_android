@@ -22,7 +22,7 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
       try{
         // load news initially from cache
         String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
-        // print("home cachedJson  : "+ cachedJson);
+        print("home cachedJson  : "+ cachedJson);
 
         if(cachedJson.isNotEmpty){
           HomeNewsResponse cachedNewsResponse = HomeNewsResponse.fromJson(jsonDecode(cachedJson));
@@ -31,12 +31,14 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
           // we want to check if there's any thing cached, if nothing is cached, then yield loading state
           if(cachedNews.isEmpty){
             yield HomeNewsLoadingState();
-            // print("cachedIsEmpty  : "+ cachedJson);
+            print(" home cachedIsEmpty  : "+ cachedJson);
           }
         }
         // then try to fetch from rest
         List<HomeNewsModel>  homeNews = await repository.fetchHomeNews();
         if(homeNews.isNotEmpty){
+          // print(" home cachedIsNotEmpty  : "+ homeNews.toString());
+
           yield HomeNewsLoadedState(homeNews:homeNews,message: "News Updated");
         }
 
@@ -54,7 +56,6 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
       }
     }
 
-
     if (event is FetchMoreHomeNewsEvent) {
       yield  HomeNewsLoadingMoreState();
       try{
@@ -67,6 +68,7 @@ class HomeNewsBloc extends Bloc<HomeNewsEvent, HomeNewsState>{
 
       }
     }
+
   }
 
 
