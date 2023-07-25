@@ -55,8 +55,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
   late HomeNewsBloc homeNewsBloc;
   late Repository repository;
- late  FeaturedNewsBloc featuredNewsBloc;
-
+  late  FeaturedNewsBloc featuredNewsBloc;
   late HomeNewsModel homeModel;
   late CategoryListBloc categoryListBloc;
   late LiveVideoBloc liveVideoBloc;
@@ -862,7 +861,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                                   child: GestureDetector(
                                     onTap: () {
                                       CategoryListModel cLM = CategoryListModel();
-                                      cLM.id = homeNewsModel[pos].categories![0].toString();
+                                      cLM.categoryId = homeNewsModel[pos].categories![0].toString();
                                       cLM.categoryName = homeNewsModel[pos].categoriesString![0];
                                       Navigator.push(
                                           context,
@@ -1029,7 +1028,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   CategoryListModel cLM = CategoryListModel();
-                                  cLM.id = homeNewsModel[pos].categories![0].toString();
+                                  cLM.categoryId = homeNewsModel[pos].categories![0].toString();
                                   cLM.categoryName = homeNewsModel[pos].categoriesString![0];
 
                                   Navigator.push(
@@ -1138,17 +1137,36 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
+                    // onTap: () {
+                    //   CategoryListModel cLM = CategoryListModel(categoryId:"34",categoryName:"Top Stories");
+                    //   Navigator.push( context, MaterialPageRoute(builder: (context)=>
+                    //       BlocProvider<NewsByCategoryBloc>(
+                    //           create: (context) => NewsByCategoryBloc(repository: Repository()),
+                    //           child: NewsByCategory(model: cLM,)
+                    //       ) )
+                    //   );
+                    // },
+
                     onTap: () {
-                      CategoryListModel cLM = CategoryListModel(categoryId:"34",categoryName:"Top Stories");
-                      Navigator.push( context,
+                      CategoryListModel cLM = CategoryListModel();
+                      cLM.categoryId = "34";
+                      cLM.categoryName = "Top Stories";
+
+                      Navigator.push(context,
                           MaterialPageRoute(
-                            builder: (context) => BlocProvider<NewsByCategoryBloc>(
-                                create: (context) => NewsByCategoryBloc(repository: Repository()),
-                                child: NewsByCategory(model: cLM,)
-                            ),
-                          )
-                      );
+                            builder: (context) =>
+                                BlocProvider<NewsByCategoryBloc>(
+                                    create: (context) =>
+                                        NewsByCategoryBloc(
+                                            repository:
+                                            Repository()),
+                                    child: NewsByCategory(
+                                      model: cLM,
+                                    )),
+                          ));
                     },
+
+
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -1226,19 +1244,38 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
+                  // onTap: () {
+                  //   CategoryListModel cLM = CategoryListModel(categoryId:"34",categoryName:"Top Stories");
+                  //   Navigator.push( context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) =>  BlocProvider<NewsByCategoryBloc>(
+                  //             create: (context) => NewsByCategoryBloc(repository: Repository()),
+                  //             child: NewsByCategory(model: cLM,)
+                  //         ),
+                  //
+                  //       )
+                  //   );
+                  // },
                   onTap: () {
-                    CategoryListModel cLM = CategoryListModel(categoryId:"13",categoryName:"Featured News");
-                    Navigator.push( context,
+                    CategoryListModel cLM = CategoryListModel();
+                    cLM.categoryId = "34";
+                    cLM.categoryName = "Top Stories";
+
+                    Navigator.push(
+                        context,
                         MaterialPageRoute(
-                          builder: (context) =>  BlocProvider<NewsByCategoryBloc>(
-                              create: (context) => NewsByCategoryBloc(repository: Repository()),
-                              child: NewsByCategory(model: cLM,)
-                          ),
-
-                        )
-
-                    );
+                          builder: (context) =>
+                              BlocProvider<NewsByCategoryBloc>(
+                                  create: (context) =>
+                                      NewsByCategoryBloc(
+                                          repository:
+                                          Repository()),
+                                  child: NewsByCategory(
+                                    model: cLM,
+                                  )),
+                        ));
                   },
+
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(

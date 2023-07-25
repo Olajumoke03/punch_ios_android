@@ -85,6 +85,18 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
   Stream<FeaturedNewsState> mapEventToState(FeaturedNewsEvent event) async* {
     if (event is FetchFeaturedNewsEvent) {
       try{
+
+        // then try to fetch from rest
+        List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
+        if(featuredNews.isNotEmpty){
+          yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
+        }
+
+      }catch(e){
+        yield FeaturedNewsLoadFailureState(error: e.toString());
+      }
+
+
         // load news initially from cache
         String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
         // print("Featured cachedJson  : "+ cachedJson);
@@ -99,15 +111,9 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
             // print("cachedIsEmpty  : "+ cachedJson);
           }
         }
-        // then try to fetch from rest
-        List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
-        if(featuredNews.isNotEmpty){
-          yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
-        }
 
-      }catch(e){
-        yield FeaturedNewsLoadFailureState(error: e.toString());
-      }
+
+
     }
     if (event is RefreshFeaturedNewsEvent) {
       yield FeaturedNewsRefreshingState();

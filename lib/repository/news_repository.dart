@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:punch_ios_android/about_us/about_model.dart';
 import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/category_list/responses.dart';
+import 'package:punch_ios_android/featured_news/featured_news_response.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
 import 'package:punch_ios_android/home_news/home_response.dart';
 import 'package:punch_ios_android/live_video/live_video_model.dart';
@@ -16,7 +17,6 @@ import 'package:punch_ios_android/search_result/search_response.dart';
 import 'package:punch_ios_android/utility/constants.dart' as constants;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../contact_us/contact_us_model.dart';
-import '../featured_news/featured_news_response.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -45,7 +45,7 @@ class Repository   {
   // checks shared preferences and fetches the  data saved there
   Future<String> getAnyStringValueFromCache(String key) async {
      openCache();
-    String? value = prefs.getString(key);
+     String? value = prefs.getString(key);
     return value!;
   }
 
@@ -57,30 +57,24 @@ class Repository   {
     return  HomeNewsResponse.fromJson(data);
   }
 
-
-  // Future<List<HomeNewsModel>>fetchFeaturedNews() async {
-  //   final response = await _apiClient.get(constants.featuredNews+"34");
-  //   var data = json.decode(response);
-  //     print("featured news response " + response);
-  //   FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
-  //   saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
-  //   return featuredNews.featuredNewss;
-  // }
-
   Future<List<HomeNewsModel>>fetchFeaturedNews() async {
     final response = await _apiClient.get(constants.featuredNews+"34");
     var data = json.decode(response);
-    // print("featured news response from repository " + response);
+    print("featured news response from repository " + response);
 
-    FeaturedNewsResponse featuredNews = FeaturedNewsResponse.fromJson(data);
-    saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
-    return featuredNews.featuredNewss;
+    FeaturedNewsResponse featuredNewsResponse = FeaturedNewsResponse.fromJson(data);
+    // pick just 10 out of the news
+    List<HomeNewsModel> newsToCache = featuredNewsResponse.featuredNewss;
+    // cache latest  news to shared preferences
+    saveAnyStringToCache(jsonEncode(newsToCache), constants.Constants.featuredNewsCacheKey);
+    // saveAnyStringToCache(response, constants.Constants.featuredNewsCacheKey);
+    return featuredNewsResponse.featuredNewss;
   }
 
   Future<List<HomeNewsModel>>fetchHomeNews() async {
     final response = await _apiClient.get(constants.latestNews);
     var data = json.decode(response);
-    // print("home news response " + response);
+    print("home news response from repository " + response);
     // try{
     HomeNewsResponse  homeNewsResponse = HomeNewsResponse.fromJson(data);
     // pick just 10 out of the news
