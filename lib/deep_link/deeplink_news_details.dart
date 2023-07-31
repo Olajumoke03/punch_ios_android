@@ -2,9 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
+import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
+import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart';
+import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/colors.dart';
@@ -15,7 +20,6 @@ import 'package:provider/provider.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
-
 import '../utility/constants.dart';
 // import 'package:share_plus/share_plus.dart';
 
@@ -396,7 +400,17 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
                                               ) ,
                                               child: Center (
                                                 child: GestureDetector (
-                                                  onTap: () {} ,
+                                                  onTap: () {
+                                                    CategoryListModel cLM = CategoryListModel ( );
+                                                    cLM.categoryId = newsModel.categories![0].toString ( );
+                                                    cLM.categoryName = newsModel.categoriesString![0];
+                                                    Navigator.push ( context , MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc> (
+                                                        create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
+                                                        child: NewsByCategory ( model: cLM , )
+                                                    ) ,
+                                                    )
+                                                    );
+                                                  } ,
                                                   child:  Text (
                                                     newsModel.categoriesString![0].replaceAll("&amp;", "&"),
                                                     style: const TextStyle (fontSize: 10 , color: Colors.white,

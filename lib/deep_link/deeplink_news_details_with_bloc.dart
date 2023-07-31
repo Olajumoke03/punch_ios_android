@@ -4,10 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:punch_ios_android/category_list/model.dart';
 import 'package:punch_ios_android/deep_link/deep_link_details_event.dart';
 import 'package:punch_ios_android/deep_link/deep_link_details_state.dart';
 import 'package:punch_ios_android/deep_link/deeplink_details_bloc.dart';
 import 'package:punch_ios_android/home_news/home_model.dart';
+import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
+import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart';
+import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/colors.dart';
@@ -20,7 +24,6 @@ import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
-// import 'package:share_plus/share_plus.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // this is the deeplink that works for search
@@ -411,7 +414,17 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
                                           ) ,
                                           child: Center (
                                             child: GestureDetector (
-                                              onTap: () {} ,
+                                              onTap: () {
+                                                CategoryListModel cLM = CategoryListModel ( );
+                                                cLM.categoryId = state.model.categories![0].toString ( );
+                                                cLM.categoryName = state.model.categoriesString![0];
+                                                Navigator.push ( context , MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc> (
+                                                    create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
+                                                    child: NewsByCategory ( model: cLM , )
+                                                    ) ,
+                                                  )
+                                                );
+                                              } ,
                                               child:  Text (
                                                 state.model.categoriesString![0].replaceAll("&amp;", "&"),
                                                 style: const TextStyle (fontSize: 10 , color: Colors.white,

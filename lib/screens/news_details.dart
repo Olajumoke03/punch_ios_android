@@ -23,7 +23,6 @@ import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:punch_ios_android/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
-// import 'package:share_plus/share_plus.dart';
 import '../category_list/model.dart';
 import '../widgets/build_loading_widget.dart';
 
@@ -432,7 +431,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                               child: GestureDetector (
                                                 onTap: () {
                                                   CategoryListModel cLM = CategoryListModel ( );
-                                                  cLM.id = widget.newsModel!.categories![index].toString ( );
+                                                  cLM.categoryId = widget.newsModel!.categories![index].toString ( );
                                                   cLM.categoryName = widget.newsModel!.categoriesString![index];
                                                   Navigator.push ( context , MaterialPageRoute(builder: (context)=>
                                                       BlocProvider<NewsByCategoryBloc> (
@@ -443,6 +442,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                                       ) ,
                                                   ));
                                                 } ,
+
                                                 child:  Text (
                                                   widget.newsModel!.categoriesString![0].replaceAll("&amp;", "&"),
                                                   style: const TextStyle (fontSize: 10 , color: Colors.white,) ,
@@ -710,18 +710,17 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 color: redColor,
                               ),
                               child: GestureDetector (
-                                // onTap: () {
-                                //   CategoryListModel cLM = CategoryListModel ( );
-                                //   cLM.id = homeNewsModel[pos].categories![0].toString ( );
-                                //   cLM.categoryName = homeNewsModel[pos].categoriesString![0];
-                                //
-                                //   Navigator.push ( context , MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc> (
-                                //       create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
-                                //       child: NewsByCategory ( model: cLM , )
-                                //       ) ,
-                                //     )
-                                //   );
-                                // } ,
+                                onTap: () {
+                                  CategoryListModel cLM = CategoryListModel ( );
+                                  cLM.categoryId = newsTagModel[pos].categories![0].toString ( );
+                                  cLM.categoryName = newsTagModel[pos].categoriesString![0];
+                                  Navigator.push ( context , MaterialPageRoute(builder: (context)=>BlocProvider<NewsByCategoryBloc> (
+                                      create: (context) => NewsByCategoryBloc (repository: Repository ()) ,
+                                      child: NewsByCategory ( model: cLM , )
+                                      ) ,
+                                    )
+                                  );
+                                } ,
                                 child: Text (newsTagModel[pos].categoriesString![0].replaceAll("&amp;", "&") ,
                                   style: TextStyle ( fontSize: 5*_fontSizeController.value , color: Colors.white ,
                                   ) ,
