@@ -44,19 +44,6 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
   int maxFailedLoadAttempts = 3;
   late FontSizeController _fontSizeController;
 
-  final BannerAd articleMedium = BannerAd(
-    adUnitId: AdHelper.articleMedium2,
-    size: AdSize.mediumRectangle,
-    request: const AdRequest(),
-    listener: const BannerAdListener(),
-  );
-
-  final BannerAd inArticleAds = BannerAd(
-    adUnitId: AdHelper.homeBanner,
-    size: AdSize.largeBanner,
-    request: const AdRequest(),
-    listener: const BannerAdListener(),
-  );
 
   final AdManagerBannerAd adManagerBannerAd = AdManagerBannerAd(
     adUnitId: AdHelper.adManagerBannerUnitId,
@@ -167,8 +154,6 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
     // _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
     _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
 
-    articleMedium.load();
-    inArticleAds.load();
     adManagerBannerAd.load();
 
     _createInterstitialAd();
@@ -178,9 +163,7 @@ class _DeepLinkNewsDetailsState extends State<DeepLinkNewsDetails> {
 
   @override
   Widget build (BuildContext context) {
-    final AdWidget mediumWidget = AdWidget(ad: articleMedium);
     final AdWidget adManagerBannerWidget = AdWidget(ad: adManagerBannerAd);
-    final AdWidget inArticleWidget = AdWidget(ad: inArticleAds);
 
     return Consumer<FontSizeController>(
         builder: ( context,  fontScale,  child) {

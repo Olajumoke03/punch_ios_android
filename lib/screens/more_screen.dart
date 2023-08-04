@@ -13,6 +13,7 @@ import 'package:punch_ios_android/privacy_policy/privacy_screen.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/font_test.dart';
 import 'package:punch_ios_android/screens/home_page.dart';
+import 'package:punch_ios_android/screens/interest_screen.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/constants.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
@@ -381,10 +382,15 @@ class _MoreScreenState extends State<MoreScreen> {
                         context, MaterialPageRoute(builder: (context)=>
                         HomePage(),
                     ));
-
                   }
                 },
+              ),
 
+              InkWell(
+                child: MoreItems( name: "Update Categories", image: "contactus.svg"),
+                onTap: () {
+                  Navigator.push( context, MaterialPageRoute( builder: (context) => InterestWidget()), );
+                },
               ),
 
               InkWell(

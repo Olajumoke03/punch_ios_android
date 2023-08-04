@@ -94,13 +94,6 @@ class _NewsDetailsState extends State<NewsDetails> {
     listener: BannerAdListener(),
   );
 
-  final BannerAd inArticleAds = BannerAd(
-    adUnitId: AdHelper.homeBanner,
-    size: AdSize.largeBanner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
-
   final AdSize adSize = AdSize(width: 300, height: 250);
 
   static const AdRequest request = AdRequest(
@@ -209,7 +202,6 @@ class _NewsDetailsState extends State<NewsDetails> {
     });
 
     articleMedium.load();
-    inArticleAds.load();
 
     _createInterstitialAd();
 
@@ -228,7 +220,6 @@ class _NewsDetailsState extends State<NewsDetails> {
   @override
   Widget build (BuildContext context) {
     final AdWidget mediumWidget = AdWidget(ad: articleMedium);
-    final AdWidget inArticleWidget = AdWidget(ad: inArticleAds);
     final AdWidget adManagerBannerWidget = AdWidget(ad: adManagerBannerAd);
 
     return Consumer<FontSizeController>(

@@ -3,6 +3,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:punch_ios_android/test_folder/News_detail_sreen.dart';
+import 'package:punch_ios_android/test_folder/home_sreen.dart';
 import 'package:punch_ios_android/utility/ad_open_admanager.dart';
 import 'package:punch_ios_android/utility/app_open_notifier.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
@@ -19,8 +22,11 @@ import 'deep_link/bloc.dart';
 import 'deep_link/deeplink_news_details.dart';
 import 'deep_link/deeplink_wrapper.dart';
 import 'home_news/home_model.dart';
+import 'package:hive/hive.dart';
 
 void main() async {
+  Hive.initFlutter();
+
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
 
@@ -54,7 +60,7 @@ void main() async {
         //       if (favoritepage = null)
         //     }
         // )
-        
+
 
       ],
       child: const MyApp(),
@@ -223,21 +229,21 @@ class _MyAppState extends State<MyApp> {
             navigatorObservers: [
               FirebaseAnalyticsObserver(analytics: analytics),
             ],
-            home:
-            Scaffold(
+            home: Scaffold(
                 body:Provider<DeepLinkBloc>(
                     create: (context) => _bloc,
                     child:DeepLinkWrapper())
             )
-            // Scaffold(
-            //     body:Provider<DeepLinkBloc>(
-            //         create: (context) => _bloc,
-            //         child:DeepLinkWrapper())
-            // )
-
-
+          // home: MyHomePage(),
+          // routes: {
+          //   "DetailedNewsPage": (context) => NewsDetailPage(),
+          // },
         );
       },
     );
   }
 }
+
+
+
+

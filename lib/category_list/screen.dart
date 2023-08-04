@@ -8,11 +8,14 @@ import 'package:punch_ios_android/category_list/state.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_screen.dart';
 import 'package:punch_ios_android/news_by_category/news_by_category_bloc.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
+import 'package:punch_ios_android/screens/interest_screen.dart';
 import 'package:punch_ios_android/search_result/search_result.dart';
 import 'package:punch_ios_android/search_result/search_result_bloc.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:punch_ios_android/widgets/build_error_ui.dart';
+import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 
 class CategoryListScreen extends StatefulWidget {
    final  CategoryListModel? categoryListModel;
@@ -29,6 +32,10 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   late FontSizeController fontSizeController;
 
  final String _searchQuery= 'a';
+
+  List<String> sportInterest = [
+    "PickleBall","Badminton", "UI/UX", "Playing guitar", "Indoor soccer", "Volleyball", "Reading/writing poems",
+  ];
 
   @override
   void initState() {
@@ -52,9 +59,55 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
               body: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getSearchBarUI(context),
+                    const SizedBox(height: 10,),
 
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text("Favorite Categories",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          // fontSize: 5.2*_fontSizeController.value,
+                          fontSize: 20,
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        )),
+                    ),
+
+                    const SizedBox(height: 10,),
+
+                    Container(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child:
+                      Row(
+                        children: [
+                          Icon(Icons.access_alarm, color: redColor,
+                          ),
+                          const SizedBox(width: 10,),
+
+                          Text("Category",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              // fontSize: 5.2*_fontSizeController.value,
+                              fontSize: 14,
+                              color: Theme.of(context).textTheme.bodyText1!.color,
+                            ),),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text("All Categories",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            // fontSize: 5.2*_fontSizeController.value,
+                            fontSize: 20,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          )),
+                    ),
                     const SizedBox(height: 10,),
 
                     BlocListener<CategoryListBloc, CategoryListState>(
@@ -71,16 +124,16 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                       child: BlocBuilder<CategoryListBloc, CategoryListState>(
                         builder: (context, state) {
                           if (state is CategoryListInitialState) {
-                            return buildLoading();
+                            return BuildLoadingWidget();
                           } else if (state is CategoryListLoadingState) {
-                            return buildLoading();
+                            return BuildLoadingWidget();
                           } else if (state is CategoryListLoadedState) {
                             return buildCategoryList(state.categoryList);
                           } else if (state is CategoryListLoadFailureState) {
-                            return buildErrorUi(state.error);
+                            return BuildErrorUi(message:state.error);
                           }
                           else {
-                            return buildErrorUi("Something went wrong!");
+                            return BuildErrorUi(message:"Something went wrong!");
                           }
                         },
                       ),
@@ -90,19 +143,6 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
               )
             );
         }
-    );
-  }
-
-  Widget buildLoading ( ) {
-    return const Center (
-      child: CircularProgressIndicator ( ) ,
-    );
-  }
-
-  Widget buildErrorUi ( String message ) {
-    return Center (
-      child: Text ( message , style: const TextStyle ( color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20 ) ,
-      ) ,
     );
   }
 

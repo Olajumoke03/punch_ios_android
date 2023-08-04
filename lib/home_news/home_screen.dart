@@ -118,24 +118,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     homeNewsBloc.add(RefreshHomeNewsEvent());
   }
 
-  void _onStateChanged(AdLoadState state) {
-    switch (state) {
-      case AdLoadState.loading:
-        setState(() {
-          height = 0;
-        });
-        break;
-
-      case AdLoadState.loadCompleted:
-        setState(() {
-          height = 150;
-        });
-        break;
-
-      default:
-        break;
-    }
-  }
   /// The current consent info.
   late consent.ConsentInformation consentInfo;
 
@@ -225,7 +207,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
     appProvider = Provider.of<AppProvider>(context, listen: false);
 
-    subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
     fetchLiveVideo();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {

@@ -98,10 +98,6 @@ class _NewsByCategoryState extends State<NewsByCategory> {
     newsByCategoryBloc.add(FetchNewsByCategoryEvent(id: widget.model.categoryId));
     // _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
 
-
-    // myBanner.load();
-    // secondBanner.load();
-
     articleMedium.load();
     articleMedium2.load();
 

@@ -63,20 +63,6 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     );
   }
 
-  final BannerAd articleMedium = BannerAd(
-    adUnitId: AdHelper.articleMedium,
-    size: AdSize.mediumRectangle,
-    request: const AdRequest(),
-    listener:  const BannerAdListener(),
-  );
-
-  final BannerAd inArticleAds = BannerAd(
-    adUnitId: AdHelper.homeBanner,
-    size: AdSize.largeBanner,
-    request: const AdRequest(),
-    listener: const BannerAdListener(),
-  );
-
   final AdManagerBannerAd adManagerBannerAd = AdManagerBannerAd(
     adUnitId: AdHelper.adManagerBannerUnitId,
     // sizes: [AdSize.largeBanner],
@@ -181,13 +167,10 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     _deepDetailsProvider =BlocProvider.of<DeepLinkDetailsBloc>(context);
    _deepDetailsProvider.add(FetchDeepLinkDetailsEvent(slug:widget.slug!));
 
-    articleMedium.load();
-    inArticleAds.load();
     adManagerBannerAd.load();
 
     _createInterstitialAd();
-
-
+    
   }
 
   @override
@@ -199,8 +182,6 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
 
   @override
   Widget build (BuildContext context) {
-    final AdWidget mediumWidget = AdWidget(ad: articleMedium);
-    final AdWidget inArticleWidget = AdWidget(ad: inArticleAds);
     final AdWidget adManagerBannerWidget = AdWidget(ad: adManagerBannerAd);
 
 
