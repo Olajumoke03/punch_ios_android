@@ -8,6 +8,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:punch_ios_android/about_us/about_screen.dart';
 import 'package:punch_ios_android/about_us/about_us_bloc.dart';
 import 'package:punch_ios_android/about_us/contact_us.dart';
+import 'package:punch_ios_android/category_list/bloc.dart';
+import 'package:punch_ios_android/category_list/model.dart';
+import 'package:punch_ios_android/category_list/screen.dart';
 import 'package:punch_ios_android/privacy_policy/privacy_policy_bloc.dart';
 import 'package:punch_ios_android/privacy_policy/privacy_screen.dart';
 import 'package:punch_ios_android/repository/news_repository.dart';
@@ -388,8 +391,17 @@ class _MoreScreenState extends State<MoreScreen> {
 
               InkWell(
                 child: MoreItems( name: "Update Categories", image: "contactus.svg"),
+                // onTap: () {
+                //   Navigator.push( context, MaterialPageRoute( builder: (context) => InterestWidget()), );
+                // },
                 onTap: () {
-                  Navigator.push( context, MaterialPageRoute( builder: (context) => InterestWidget()), );
+                  Navigator.push( context, MaterialPageRoute(builder: (context)=>
+                      BlocProvider<CategoryListBloc>(
+                          create: (context) => CategoryListBloc(repository: Repository()),
+                          child:  InterestWidget(categoryListModel: CategoryListModel(),)
+                      ),
+                  )
+                  );
                 },
               ),
 
