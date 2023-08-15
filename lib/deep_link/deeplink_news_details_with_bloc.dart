@@ -136,10 +136,11 @@ class _DeepLinkNewsDetailsBlocState extends State<DeepLinkNewsDetailsBloc> {
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.largeBanner,
-      adUnitId: Platform.isAndroid
+      adUnitId: AdHelper.articleMedium,
+      // adUnitId: Platform.isAndroid
       //working ad medium size
-          ? "ca-app-pub-7167863529667065/7963339325"
-          : "ca-app-pub-7167863529667065/1645777752",
+      //     ? "ca-app-pub-7167863529667065/7963339325"
+      //     : "ca-app-pub-7167863529667065/1645777752",
 
       // ? "ca-app-pub-3940256099942544/6300978111"
       // : "ca-app-pub-3940256099942544/2934735716",

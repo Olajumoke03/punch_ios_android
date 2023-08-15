@@ -29,6 +29,7 @@ import 'package:punch_ios_android/repository/news_repository.dart';
 import 'package:punch_ios_android/screens/news_details.dart';
 import 'package:punch_ios_android/search_result/search_result.dart';
 import 'package:punch_ios_android/search_result/search_result_bloc.dart';
+import 'package:punch_ios_android/utility/ad_helper.dart';
 import 'package:punch_ios_android/utility/app_provider.dart';
 import 'package:punch_ios_android/utility/colors.dart';
 import 'package:punch_ios_android/utility/font_controller.dart';
@@ -271,12 +272,14 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     });
     BannerAd bannerAd = BannerAd(
       size: AdSize.largeBanner,
-      adUnitId: Platform.isAndroid
+      adUnitId: AdHelper.articleMedium,
 
-
-      //working ad medium size
-      ? "ca-app-pub-7167863529667065/7963339325"
-      : "ca-app-pub-7167863529667065/1645777752",
+      // adUnitId: Platform.isAndroid
+      //
+      //
+      // //working ad medium size
+      // ? "ca-app-pub-7167863529667065/7963339325"
+      // : "ca-app-pub-7167863529667065/1645777752",
 
       listener: bannerAdListener,
       request: const AdRequest(),
@@ -480,8 +483,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       ),
     );
   }
-
-
+  
   //Home screen for live video
   Widget liveVideoHomeScreen(){
     return Column(
@@ -1241,7 +1243,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                     CategoryListModel cLM = CategoryListModel();
                     cLM.categoryId = "34";
                     cLM.categoryName = "Top Stories";
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1249,8 +1250,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                               BlocProvider<NewsByCategoryBloc>(
                                   create: (context) =>
                                       NewsByCategoryBloc(
-                                          repository:
-                                          Repository()),
+                                          repository: Repository()),
                                   child: NewsByCategory(
                                     model: cLM,
                                   )),
@@ -1275,6 +1275,5 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
           ),
         )
     );
-
   }
 }
