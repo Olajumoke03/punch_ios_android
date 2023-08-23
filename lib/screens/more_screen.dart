@@ -389,21 +389,21 @@ class _MoreScreenState extends State<MoreScreen> {
                 },
               ),
 
-              InkWell(
-                child: MoreItems( name: "Update Categories", image: "contactus.svg"),
-                // onTap: () {
-                //   Navigator.push( context, MaterialPageRoute( builder: (context) => InterestWidget()), );
-                // },
-                onTap: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context)=>
-                      BlocProvider<CategoryListBloc>(
-                          create: (context) => CategoryListBloc(repository: Repository()),
-                          child:  InterestWidget(categoryListModel: CategoryListModel(),)
-                      ),
-                  )
-                  );
-                },
-              ),
+              // InkWell(
+              //   child: MoreItems( name: "Update Categories", image: "contactus.svg"),
+              //   // onTap: () {
+              //   //   Navigator.push( context, MaterialPageRoute( builder: (context) => InterestWidget()), );
+              //   // },
+              //   onTap: () {
+              //     Navigator.push( context, MaterialPageRoute(builder: (context)=>
+              //         BlocProvider<CategoryListBloc>(
+              //             create: (context) => CategoryListBloc(repository: Repository()),
+              //             child:  InterestWidget(categoryListModel: CategoryListModel(),)
+              //         ),
+              //     )
+              //     );
+              //   },
+              // ),
 
               InkWell(
                 child: MoreItems(name: "Font Size", image: "font.svg"),

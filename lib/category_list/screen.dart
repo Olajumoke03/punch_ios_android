@@ -64,51 +64,51 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     getSearchBarUI(context),
                     const SizedBox(height: 10,),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("Favorite Categories",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          // fontSize: 5.2*_fontSizeController.value,
-                          fontSize: 20,
-                          color: Theme.of(context).textTheme.bodyText1!.color,
-                        )),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 10.0),
+                    //   child: Text("Favorite Categories",
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.w500,
+                    //       // fontSize: 5.2*_fontSizeController.value,
+                    //       fontSize: 20,
+                    //       color: Theme.of(context).textTheme.bodyText1!.color,
+                    //     )),
+                    // ),
+                    //
+                    // const SizedBox(height: 10,),
 
-                    const SizedBox(height: 10,),
-
-                    Container(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child:
-                      Row(
-                        children: [
-                          Icon(Icons.access_alarm, color: redColor,
-                          ),
-                          const SizedBox(width: 10,),
-
-                          Text("Category",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              // fontSize: 5.2*_fontSizeController.value,
-                              fontSize: 14,
-                              color: Theme.of(context).textTheme.bodyText1!.color,
-                            ),),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text("All Categories",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            // fontSize: 5.2*_fontSizeController.value,
-                            fontSize: 20,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          )),
-                    ),
-                    const SizedBox(height: 10,),
+                    // Container(
+                    //   padding: const EdgeInsets.only(left: 10.0),
+                    //   child:
+                    //   Row(
+                    //     children: [
+                    //       Icon(Icons.access_alarm, color: redColor,
+                    //       ),
+                    //       const SizedBox(width: 10,),
+                    //
+                    //       Text("Category",
+                    //         style: TextStyle(
+                    //           fontWeight: FontWeight.w500,
+                    //           // fontSize: 5.2*_fontSizeController.value,
+                    //           fontSize: 14,
+                    //           color: Theme.of(context).textTheme.bodyText1!.color,
+                    //         ),),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10,),
+                    //
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 10.0),
+                    //   child: Text("All Categories",
+                    //       style: TextStyle(
+                    //         fontWeight: FontWeight.w500,
+                    //         // fontSize: 5.2*_fontSizeController.value,
+                    //         fontSize: 20,
+                    //         color: Theme.of(context).textTheme.bodyText1!.color,
+                    //       )),
+                    // ),
+                    // const SizedBox(height: 10,),
 
                     BlocListener<CategoryListBloc, CategoryListState>(
                       listener: (context, state) {
