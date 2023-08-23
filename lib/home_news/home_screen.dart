@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_funding_choices/flutter_funding_choices.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:punch_ios_android/category_list/bloc.dart';
 import 'package:punch_ios_android/category_list/event.dart';
@@ -186,6 +187,30 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
     LiveVideoResponse liveVideo = LiveVideoResponse.fromJson(data);
     return liveVideo.liveVideos;
+  }
+
+  //IN-APP UPDATE
+  AppUpdateInfo? _updateInfo;
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+
+  bool _flexibleUpdateAvailable = false;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    }).catchError((e) {
+      showSnack(e.toString());
+    });
+  }
+
+  void showSnack(String text) {
+    if (_scaffoldKey.currentContext != null) {
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!)
+          .showSnackBar(SnackBar(content: Text(text)));
+    }
   }
 
   @override

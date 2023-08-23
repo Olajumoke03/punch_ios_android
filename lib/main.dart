@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:punch_ios_android/test_folder/News_detail_sreen.dart';
 import 'package:punch_ios_android/test_folder/home_sreen.dart';
 import 'package:punch_ios_android/utility/ad_open_admanager.dart';
@@ -82,6 +83,31 @@ class _MyAppState extends State<MyApp> {
   AppProvider? _appProvider;
   late AppLifecycleReactor _appLifecycleReactor;
   String _authStatus = 'Unknown';
+
+  //IN-APP UPDATE
+  AppUpdateInfo? _updateInfo;
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+
+  bool _flexibleUpdateAvailable = false;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    }).catchError((e) {
+      showSnack(e.toString());
+    });
+  }
+
+  void showSnack(String text) {
+    if (_scaffoldKey.currentContext != null) {
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!)
+          .showSnackBar(SnackBar(content: Text(text)));
+    }
+  }
+
 
 
   // Future<String?> initialLink() async {
