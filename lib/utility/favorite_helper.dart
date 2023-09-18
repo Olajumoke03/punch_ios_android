@@ -45,7 +45,7 @@ class FavoriteDB {
   //   // int val = await db.remove({"id": item });//doesnt work.. unexpected character error {"id-{"id":{"id":1415085}}
   //
   //   // int val = await db.remove(json.decode(item.toString()));// deesn't work
-  //   // int val = await db.remove(jsonDecode(item.toString()));//doesnt work
+  //   // int val = await db.remove(jsonDecode(item.toString()));/ /doesnt work
   //   print("val remove: " + val.toString());
   //
   //   await db.close();

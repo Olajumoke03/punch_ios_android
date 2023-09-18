@@ -39,7 +39,6 @@ import 'package:punch_ios_android/widgets/build_loading_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:native_ads_flutter/native_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart' as webView;
@@ -71,7 +70,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
   final String _searchQuery= 'a';
   final  httpClient = http.Client();
   late StreamSubscription subscription;
-  final _nativeAdController = NativeAdmobController();
 
   bool isLoading=true;
   double height = 0;
@@ -354,12 +352,12 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
           children: [
             Container(
               height: 250,
-              child:
-              BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
+              child: BlocListener <FeaturedNewsBloc, FeaturedNewsState>(
                   listener: (context, state){
                     if ( state is FeaturedNewsRefreshingState ) {
 
                     } else if ( state is FeaturedNewsLoadedState ) {
+                      state.featuredNews;
 
                     }else if ( state is FeaturedCachedNewsLoadedState  ) {
                       // a message will only come when it is updating the feed.

@@ -2,7 +2,12 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_funding_choices/flutter_funding_choices.dart';
+import 'package:flutter_funding_choices/flutter_funding_choices.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:punch_ios_android/test_folder/News_detail_sreen.dart';
@@ -25,15 +30,24 @@ import 'deep_link/deeplink_wrapper.dart';
 import 'home_news/home_model.dart';
 import 'package:hive/hive.dart';
 
+
+
 void main() async {
   Hive.initFlutter();
 
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
 
+  // To test ads on emulator
+  // List<String> testDeviceIds = ['0A4B0C1D7F49C398BB22D65451DF4F4D'];
+  List<String> testDeviceIds = ['0A4B0C1D7F49C398BB22D65451DF4F4D'];
+  RequestConfiguration configuration = RequestConfiguration(testDeviceIds: testDeviceIds);
+  MobileAds.instance.updateRequestConfiguration(configuration);
+
+
+
   // Admob.initialize();
   // await Admob.requestTrackingAuthorization();
-
 
   // App Tracking Transparency
   final status = await AppTrackingTransparency.requestTrackingAuthorization();
@@ -76,7 +90,6 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-
 
 class _MyAppState extends State<MyApp> {
   HomeNewsModel? homeNewsModel;
@@ -191,7 +204,6 @@ class _MyAppState extends State<MyApp> {
     AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAd();
     _appLifecycleReactor = AppLifecycleReactor(
     appOpenAdManager: appOpenAdManager);
-
 
 
     // App Tracking Transparency

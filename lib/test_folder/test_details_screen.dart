@@ -27,18 +27,18 @@ import '../category_list/model.dart';
 import '../widgets/build_loading_widget.dart';
 
 
-class NewsDetails extends StatefulWidget {
+class TestNewsDetails extends StatefulWidget {
   final HomeNewsModel? newsModel;
   final  SearchResultModel? searchResultModel;
   final String? newsId;
 
-  const NewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel}) : super( key: key );
+  const TestNewsDetails ({Key? key , this.newsModel,  this.newsId,  this.searchResultModel}) : super( key: key );
 
   @override
-  _NewsDetailsState createState() => _NewsDetailsState();
+  _TestNewsDetailsState createState() => _TestNewsDetailsState();
 }
 
-class _NewsDetailsState extends State<NewsDetails> {
+class _TestNewsDetailsState extends State<TestNewsDetails> {
   late FontSizeController _fontSizeController;
   late NewsTagBloc newsTagBloc;
 
@@ -636,7 +636,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                 Navigator.push ( context ,
                     MaterialPageRoute(builder: (context) =>  BlocProvider<NewsTagBloc> (
                         create: (context) => NewsTagBloc (repository: Repository ()) ,
-                        child: NewsDetails ( newsModel: lNM , )
+                        child: TestNewsDetails ( newsModel: lNM , )
                     ),)
                 );
               },

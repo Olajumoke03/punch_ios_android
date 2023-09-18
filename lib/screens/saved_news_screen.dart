@@ -286,7 +286,7 @@ class _SavedNewsScreenState extends State<SavedNewsScreen> {
     super.initState();
     _fontSizeController = Provider.of<FontSizeController>(context, listen: false);
     FavoritesProvider _favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
-    _favoritesProvider.getFeed();
+    // _favoritesProvider.getFeed();
 
   }
   @override

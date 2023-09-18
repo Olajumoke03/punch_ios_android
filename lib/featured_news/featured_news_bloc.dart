@@ -83,23 +83,55 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
   @override
 
   Stream<FeaturedNewsState> mapEventToState(FeaturedNewsEvent event) async* {
+    // if (event is FetchFeaturedNewsEvent) {
+    //   try{
+    //
+    //     // then try to fetch from rest
+    //     List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
+    //     if(featuredNews.isNotEmpty){
+    //       yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
+    //       print("Featured news from bloc  : " + featuredNews.toString());
+    //
+    //     }
+    //
+    //   }catch(e){
+    //     yield FeaturedNewsLoadFailureState(error: e.toString());
+    //   }
+    //
+    //
+    //     // load news initially from cache
+    //     String cachedJson =  await repository!.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
+    //     // print("Featured cachedJson  : "+ cachedJson);
+    //
+    //     if(cachedJson.isNotEmpty){
+    //       FeaturedNewsResponse cachedNewsResponse = FeaturedNewsResponse.fromJson(jsonDecode(cachedJson));
+    //       List<HomeNewsModel> cachedNews = cachedNewsResponse.featuredNewss;
+    //       yield FeaturedCachedNewsLoadedState(featuredCachedNews:cachedNews,message: "");
+    //       // we want to check if there's any thing cached, if nothing is cached, then yield loading state
+    //       if(cachedNews.isEmpty){
+    //         yield FeaturedNewsLoadingState();
+    //         // print("cachedIsEmpty  : "+ cachedJson);
+    //       }
+    //     }
+    //
+    //
+    //
+    // }
+    // if (event is RefreshFeaturedNewsEvent) {
+    //   yield FeaturedNewsRefreshingState();
+    //   try{
+    //     List<HomeNewsModel> featuredNews = await repository.fetchFeaturedNews();
+    //     yield FeaturedNewsRefreshedState(featuredNews:featuredNews,message: "News Updated");
+    //   }catch(e){
+    //     yield FeaturedNewsLoadFailureState(error: e.toString());
+    //   }
+    // }
+
     if (event is FetchFeaturedNewsEvent) {
       try{
-
-        // then try to fetch from rest
-        List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
-        if(featuredNews.isNotEmpty){
-          yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
-        }
-
-      }catch(e){
-        yield FeaturedNewsLoadFailureState(error: e.toString());
-      }
-
-
         // load news initially from cache
-        String cachedJson =  await repository!.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
-        // print("Featured cachedJson  : "+ cachedJson);
+        String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
+        print("featured cachedJson  : "+ cachedJson);
 
         if(cachedJson.isNotEmpty){
           FeaturedNewsResponse cachedNewsResponse = FeaturedNewsResponse.fromJson(jsonDecode(cachedJson));
@@ -108,12 +140,20 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
           // we want to check if there's any thing cached, if nothing is cached, then yield loading state
           if(cachedNews.isEmpty){
             yield FeaturedNewsLoadingState();
-            // print("cachedIsEmpty  : "+ cachedJson);
+            print("Featured cachedIsEmpty  : "+ cachedJson);
           }
         }
+        // then try to fetch from rest
+        List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
+        if(featuredNews.isNotEmpty){
+          print("Featured cachedIsNotEmpty  : "+ featuredNews.toString());
 
+          yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
+        }
 
-
+      }catch(e){
+        yield FeaturedNewsLoadFailureState(error: e.toString());
+      }
     }
     if (event is RefreshFeaturedNewsEvent) {
       yield FeaturedNewsRefreshingState();

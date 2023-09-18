@@ -213,6 +213,7 @@ class _NewsDetailsState extends State<NewsDetails> {
   }
 
 
+
   @override
   void dispose() {
     super.dispose();
