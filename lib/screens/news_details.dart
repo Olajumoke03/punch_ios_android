@@ -250,7 +250,6 @@ class _NewsDetailsState extends State<NewsDetails> {
                           ) ,
                         ) ,
 
-
                         IconButton (
                           onPressed: () async {
                             // print("isSaved on start: " + isSaved.toString());
@@ -411,8 +410,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       scrollDirection: Axis.horizontal ,
                                       itemCount: 1 ,
                                       shrinkWrap: true ,
-                                      itemBuilder: (BuildContext context ,
-                                          int index) {
+                                      itemBuilder: (BuildContext context , int index) {
                                         // String cat = widget.newsModel.categoriesString[index].toString ( );
                                         return
                                           Container (
@@ -431,8 +429,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                                       BlocProvider<NewsByCategoryBloc> (
                                                           create: (context) =>
                                                               NewsByCategoryBloc (repository:Repository ( ) ) ,
-                                                          child: NewsByCategory (
-                                                            model: cLM , )
+                                                          child: NewsByCategory (model: cLM)
                                                       ) ,
                                                   ));
                                                 } ,
@@ -447,6 +444,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       } ,
                                     ) ,
                                   ) ,
+
                                   const Spacer ( ) ,
 
                                   Container (
@@ -465,15 +463,12 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                          const SizedBox ( height: 10 ) ,
 
-                        //FOR AD MANAGER UNITS
-                        adShown?  Center(
-                            child: SizedBox(
-                              width: 300,
-                              height: 250,
-                              child: adManagerBannerWidget,
-                            ))
-                            : Container(height: 0),
-
+                          //MEDIUM BANNER ADMOB
+                          SizedBox (
+                            child: mediumWidget ,
+                            width: MediaQuery.of ( context ).size.width ,
+                            height: 250,
+                          ) ,
                           const SizedBox ( height: 5 ) ,
 
                           // NEWS DETAILS BODY
@@ -578,12 +573,15 @@ class _NewsDetailsState extends State<NewsDetails> {
 
                           const SizedBox ( height: 10 ) ,
 
-                          //MEDIUM BANNER ADMOB
-                          SizedBox (
-                            child: mediumWidget ,
-                            width: MediaQuery.of ( context ).size.width ,
-                            height: 250,
-                          ) ,
+                          //FOR AD MANAGER UNITS
+                          adShown?  Center(
+                              child: SizedBox(
+                                width: 300,
+                                height: 250,
+                                child: adManagerBannerWidget,
+                              ))
+                              : Container(height: 0),
+
                         ] ,
                       ) ,
                     )

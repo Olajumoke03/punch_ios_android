@@ -245,7 +245,7 @@ class DetailsProvider extends ChangeNotifier {
   addFav(HomeNewsModel item) async {
     // print('trying to save iin adFav');
     await favDB.add({"id": item.id, "item": item.toJson()});
-    print("what I am trying to save in details provider: " +   {"id": item.id, "item": item.toJson()}.toString());
+    // print("what I am trying to save in details provider: " +   {"id": item.id, "item": item.toJson()}.toString());
     checkFav(item.id!);
   }
 
@@ -273,7 +273,7 @@ class DetailsProvider extends ChangeNotifier {
       print("error removeFav method: " + v.toString());
       checkFav(id);
     });
-    print("what I am trying to remove in details provider: " +   {"id": id}.toString());
+    // print("what I am trying to remove in details provider: " +   {"id": id}.toString());
 
   }
 

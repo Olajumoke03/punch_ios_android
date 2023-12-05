@@ -3,15 +3,10 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_funding_choices/flutter_funding_choices.dart';
 import 'package:flutter_funding_choices/flutter_funding_choices.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:in_app_update/in_app_update.dart';
-import 'package:punch_ios_android/test_folder/News_detail_sreen.dart';
-import 'package:punch_ios_android/test_folder/home_sreen.dart';
 import 'package:punch_ios_android/utility/ad_open_admanager.dart';
 import 'package:punch_ios_android/utility/app_open_notifier.dart';
 import 'package:punch_ios_android/utility/details_provider.dart';
@@ -29,6 +24,7 @@ import 'deep_link/deeplink_news_details.dart';
 import 'deep_link/deeplink_wrapper.dart';
 import 'home_news/home_model.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter_funding_choices/flutter_funding_choices.dart' as funding;
 
 
 
@@ -75,7 +71,6 @@ void main() async {
         //       if (favoritepage = null)
         //     }
         // )
-
 
       ],
       child: const MyApp(),
@@ -167,7 +162,6 @@ class _MyAppState extends State<MyApp> {
     //   });
     // });
 
-
     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) async {
       // Will be called whenever a notification is opened/button pressed.
 
@@ -208,6 +202,23 @@ class _MyAppState extends State<MyApp> {
 
     // App Tracking Transparency
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) => initPlugin());
+
+    //Flutter Funding Choices
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      funding.ConsentInformation consentInfo = await FlutterFundingChoices.requestConsentInformation();
+      if (consentInfo.isConsentFormAvailable && consentInfo.consentStatus == funding.ConsentStatus.REQUIRED_ANDROID) {
+        await FlutterFundingChoices.showConsentForm();
+        // You can check the result by calling `FlutterFundingChoices.requestConsentInformation()` again !
+      }
+      if (consentInfo.isConsentFormAvailable && consentInfo.consentStatus == funding.ConsentStatus.REQUIRED_IOS) {
+        await FlutterFundingChoices.showConsentForm();
+        // You can check the result by calling `FlutterFundingChoices.requestConsentInformation()` again !
+      }
+
+      // print("flutter funding choice something");
+      FlutterFundingChoices.requestConsentInformation();
+    });
+
 
   }
 

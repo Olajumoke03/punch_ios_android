@@ -22,22 +22,22 @@ class ApiClient {
   // }
 
   Future<dynamic> get( url) async {
-    print('Api Get, url $url');
+    // print('Api Get, url $url');
     var responseJson;
     try {
       final response = await http.get(Uri.parse(url));
       responseJson = _returnResponse(response);
     } on SocketException {
-      print('No net');
+      // print('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api get recieved!');
+    // print('api get recieved!');
     return responseJson;
   }
 
   Future<dynamic> post(String url, dynamic body) async {
-    print('Api Post, url $url');
-    print('parameters:' + body.toString());
+    // print('Api Post, url $url');
+    // print('parameters:' + body.toString());
 
     var responseJson;
     try {
@@ -47,7 +47,7 @@ class ApiClient {
       // print('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api post.');
+    // print('api post.');
     return responseJson;
   }
 
@@ -68,17 +68,17 @@ class ApiClient {
   // }
 
   Future<dynamic> put( url, dynamic body) async {
-    print('Api Put, url $url');
+    // print('Api Put, url $url');
     var responseJson;
     try {
       final response = await http.put(url, body: body);
       responseJson = _returnResponse(response);
     } on SocketException {
-      print('No net');
+      // print('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api put.');
-    print(responseJson.toString());
+    // print('api put.');
+    // print(responseJson.toString());
     return responseJson;
   }
 
@@ -98,16 +98,16 @@ class ApiClient {
   // }
 
   Future<dynamic> delete(String url) async {
-    print('Api delete, url $url');
+    // print('Api delete, url $url');
     var apiResponse;
     try {
       final response = await http.delete(Uri.parse(url));
       apiResponse = _returnResponse(response);
     } on SocketException {
-      print('No net');
+      // print('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api delete.');
+    // print('api delete.');
     return apiResponse;
   }
 

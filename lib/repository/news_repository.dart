@@ -60,7 +60,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchFeaturedNews() async {
     final response = await _apiClient.get(constants.featuredNews+"34");
     var data = json.decode(response);
-    print("featured news response from repository " + response);
+    // print("featured news response from repository " + response);
 
     FeaturedNewsResponse featuredNewsResponse = FeaturedNewsResponse.fromJson(data);
     // pick just 10 out of the news
@@ -74,7 +74,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchHomeNews() async {
     final response = await _apiClient.get(constants.latestNews);
     var data = json.decode(response);
-    print("home news response from repository " + response);
+    // print("home news response from repository " + response);
     // try{
     HomeNewsResponse  homeNewsResponse = HomeNewsResponse.fromJson(data);
     // pick just 10 out of the news
@@ -113,7 +113,7 @@ class Repository   {
   Future<List<HomeNewsModel>>fetchNewsByCategory(String id) async {
     final response = await _apiClient.get(constants.newsByCategory+id);
     var data = json.decode(response);
-    print("news by category  response " + response);
+    // print("news by category  response " + response);
     NewsByCategoryResponse newsByCategory = NewsByCategoryResponse.fromJson(data);
     return newsByCategory.newsByCategorys;
   }

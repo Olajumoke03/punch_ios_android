@@ -47,10 +47,8 @@ class LatestNewsModel {
     dateGmt = json['date_gmt'];
     link = json['link'];
     title = json['title'] != null ? Title.fromJson(json['title']) : null;
-    content =
-    json['content'] != null ? Content.fromJson(json['content']) : null;
-    excerpt =
-    json['excerpt'] != null ? Content.fromJson(json['excerpt']) : null;
+    content = json['content'] != null ? Content.fromJson(json['content']) : null;
+    excerpt = json['excerpt'] != null ? Content.fromJson(json['excerpt']) : null;
     author = json['author'];
     featuredMedia = json['featured_media'];
     categories = json['categories'].cast<int>();

@@ -131,7 +131,7 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
       try{
         // load news initially from cache
         String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
-        print("featured cachedJson  : "+ cachedJson);
+        // print("featured cachedJson  : "+ cachedJson);
 
         if(cachedJson.isNotEmpty){
           FeaturedNewsResponse cachedNewsResponse = FeaturedNewsResponse.fromJson(jsonDecode(cachedJson));
@@ -140,13 +140,13 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
           // we want to check if there's any thing cached, if nothing is cached, then yield loading state
           if(cachedNews.isEmpty){
             yield FeaturedNewsLoadingState();
-            print("Featured cachedIsEmpty  : "+ cachedJson);
+            // print("Featured cachedIsEmpty  : "+ cachedJson);
           }
         }
         // then try to fetch from rest
         List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
         if(featuredNews.isNotEmpty){
-          print("Featured cachedIsNotEmpty  : "+ featuredNews.toString());
+          // print("Featured cachedIsNotEmpty  : "+ featuredNews.toString());
 
           yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
         }

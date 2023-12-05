@@ -94,10 +94,8 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       setState(() {
         isLoadingMore = true;
       });
-
       homeNewsBloc.add(FetchMoreHomeNewsEvent(page: currentPage + 1));
       featuredNewsBloc.add ( FetchFeaturedNewsEvent () );
-
     }
   }
 
@@ -225,7 +223,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
     categoryListBloc = BlocProvider.of<CategoryListBloc>(context);
     categoryListBloc.add(FetchCategoryListEvent());
 
-
     liveVideoBloc = BlocProvider.of<LiveVideoBloc> ( context );
     liveVideoBloc.add ( FetchLiveVideosEvent () );
 
@@ -239,7 +236,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
         await FlutterFundingChoices.showConsentForm();
         await refreshConsentInfo();
       }
-
     });
   }
 
@@ -298,8 +294,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
       adUnitId: AdHelper.articleMedium,
 
       // adUnitId: Platform.isAndroid
-      //
-      //
       // //working ad medium size
       // ? "ca-app-pub-7167863529667065/7963339325"
       // : "ca-app-pub-7167863529667065/1645777752",
