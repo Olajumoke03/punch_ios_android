@@ -478,21 +478,31 @@ class _NewsDetailsState extends State<NewsDetails> {
                               scrollDirection: Axis.vertical,
                               itemCount: widget.newsModel!.articleSplit!.length,
                               itemBuilder: (BuildContext context , int index) {
-                                if (index != 0 && index % 5 == 0) {
-                                  return getAd();
-                                  // return adManagerBannerWidget;
-                                } else {
-                                  return Html (
-                                    data: widget.newsModel!.articleSplit![index].toString(),
-                                    style: {
-                                      "body": Style(
-                                          fontSize:  FontSize(10*_fontSizeController.value),
-                                          fontWeight: FontWeight.w400,
-                                          color:Theme.of(context).textTheme.bodyText1!.color
-                                      ),
-                                    },
-                                  );
-                                }
+                                return Html (
+                                  data: widget.newsModel!.articleSplit![index].toString(),
+                                  style: {
+                                    "body": Style(
+                                        fontSize:  FontSize(10*_fontSizeController.value),
+                                        fontWeight: FontWeight.w400,
+                                        color:Theme.of(context).textTheme.bodyText1!.color
+                                    ),
+                                  },
+                                );
+                                // if (index != 0 && index % 5  == 0) {
+                                //   // return getAd();
+                                //   return Container(height: 100, color: Colors.blue,);
+                                // } else {
+                                //   return Html (
+                                //     data: widget.newsModel!.articleSplit![index].toString(),
+                                //     style: {
+                                //       "body": Style(
+                                //           fontSize:  FontSize(10*_fontSizeController.value),
+                                //           fontWeight: FontWeight.w400,
+                                //           color:Theme.of(context).textTheme.bodyText1!.color
+                                //       ),
+                                //     },
+                                //   );
+                                // }
                               },
                               separatorBuilder: ( context, index) {
                                 // return index != 0 && index % 5 == 0
@@ -503,7 +513,12 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 //   height: 100,
                                 // )
                                 //     : Container(height: 10);
-                                return Container();
+
+                                if ((index + 1) % 5 == 0) {
+                                  return Container( height: 100, color: Colors.green,);
+                                } else {
+                                  return Container();
+                                }
                               }
                           ),
 
