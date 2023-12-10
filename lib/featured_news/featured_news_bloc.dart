@@ -129,6 +129,13 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
 
     if (event is FetchFeaturedNewsEvent) {
       try{
+
+        List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
+        if(featuredNews.isNotEmpty){
+          // print("Featured cachedIsNotEmpty  : "+ featuredNews.toString());
+
+          yield FeaturedNewsLoadedState(featuredNews:featuredNews,message: "News Updated");
+        }
         // load news initially from cache
         String cachedJson =  await repository.getAnyStringValueFromCache(Constants.latestNewsCacheKey);
         // print("featured cachedJson  : "+ cachedJson);
@@ -144,7 +151,7 @@ class FeaturedNewsBloc extends Bloc<FeaturedNewsEvent, FeaturedNewsState>{
           }
         }
         // then try to fetch from rest
-        List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
+        // List<HomeNewsModel>  featuredNews = await repository.fetchFeaturedNews();
         if(featuredNews.isNotEmpty){
           // print("Featured cachedIsNotEmpty  : "+ featuredNews.toString());
 

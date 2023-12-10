@@ -750,7 +750,7 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
 
   }
 
-//HOME NEWS
+  //HOME NEWS
   Widget buildHomeNewsList(List<HomeNewsModel> homeNewsModel) {
     return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 7,),
@@ -1102,9 +1102,27 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                   fit: StackFit.expand,
                   alignment: Alignment.topRight,
                   children: <Widget>[
-                    Image.network(
-                      '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                    // Image.network(
+                    //   '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                    //   fit: BoxFit.cover,
+                    // ),
+                    CachedNetworkImage(
+                      imageUrl: '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                      placeholder: (context, url) => SizedBox(
+                          height: 125,
+                          width: 248,
+                          child: Center(
+                              child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor))),
+                      errorWidget: (context, url, error) => Image.asset(
+                        "assets/punchLogo.png",
+                        fit: BoxFit.contain,
+                        // height: 100,
+                        // width: 100,
+                      ),
                       fit: BoxFit.cover,
+                      height: 100,
+                      width: 100,
                     ),
 
                     Positioned(
@@ -1137,16 +1155,6 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    // onTap: () {
-                    //   CategoryListModel cLM = CategoryListModel(categoryId:"34",categoryName:"Top Stories");
-                    //   Navigator.push( context, MaterialPageRoute(builder: (context)=>
-                    //       BlocProvider<NewsByCategoryBloc>(
-                    //           create: (context) => NewsByCategoryBloc(repository: Repository()),
-                    //           child: NewsByCategory(model: cLM,)
-                    //       ) )
-                    //   );
-                    // },
-
                     onTap: () {
                       CategoryListModel cLM = CategoryListModel();
                       cLM.categoryId = "34";
@@ -1210,9 +1218,27 @@ class _HomeNewsScreenState extends State<HomeNewsScreen> {
                 fit: StackFit.expand,
                 alignment: Alignment.topRight,
                 children: <Widget>[
-                  Image.network(
-                    '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                  // Image.network(
+                  //   '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                  //   fit: BoxFit.cover,
+                  // ),
+                  CachedNetworkImage(
+                    imageUrl: '${featuredNewsModel[0].xFeaturedMediaOriginal}',
+                    placeholder: (context, url) => SizedBox(
+                        height: 125,
+                        width: 248,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                                color: Theme.of(context).primaryColor))),
+                    errorWidget: (context, url, error) => Image.asset(
+                      "assets/punchLogo.png",
+                      fit: BoxFit.contain,
+                      // height: 100,
+                      // width: 100,
+                    ),
                     fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
                   ),
 
                   Positioned(

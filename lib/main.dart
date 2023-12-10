@@ -3,8 +3,10 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_funding_choices/flutter_funding_choices.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:punch_ios_android/utility/ad_open_admanager.dart';
@@ -36,8 +38,9 @@ void main() async {
 
   // To test ads on emulator
   // List<String> testDeviceIds = ['0A4B0C1D7F49C398BB22D65451DF4F4D'];
-  List<String> testDeviceIds = ['0A4B0C1D7F49C398BB22D65451DF4F4D'];
+  List<String> testDeviceIds = ['D78FD65D77C59942A261E6E1C9B4FE45'];
   RequestConfiguration configuration = RequestConfiguration(testDeviceIds: testDeviceIds);
+  // ConsentDebugSettings.Builder().addTestDeviceHashedId("D78FD65D77C59942A261E6E1C9B4FE45")
   MobileAds.instance.updateRequestConfiguration(configuration);
 
 
@@ -199,12 +202,34 @@ class _MyAppState extends State<MyApp> {
     _appLifecycleReactor = AppLifecycleReactor(
     appOpenAdManager: appOpenAdManager);
 
+    // ConsentDebugSettings debugSettings = ConsentDebugSettings.Builder(this)
+    //     .setDebugGeography(ConsentDebugSettings
+    //     .DebugGeography
+    //     .DEBUG_GEOGRAPHY_EEA)
+    //     .addTestDeviceHashedId("E044C97978FC060327A4C4F01EE86A88")
+    //     .build();
+    //
+    // // Google CMP implementation:
+    // ConsentRequestParameters params = new ConsentRequestParameters
+    //     .Builder()
+    //     .setTagForUnderAgeOfConsent(false)
+    //     .setConsentDebugSettings(debugSettings)
+    //     .build();
+
 
     // App Tracking Transparency
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) => initPlugin());
 
+
     //Flutter Funding Choices
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      MobileAds.instance.updateRequestConfiguration(
+        RequestConfiguration(
+            tagForChildDirectedTreatment:
+            TagForChildDirectedTreatment.unspecified,
+            testDeviceIds: <String>["D78FD65D77C59942A261E6E1C9B4FE45,0A4B0C1D7F49C398BB22D65451DF4F4D"]),
+      );
+      // ConsentDebugSettings().addTestDeviceHashedId("D78FD65D77C59942A261E6E1C9B4FE45");
       funding.ConsentInformation consentInfo = await FlutterFundingChoices.requestConsentInformation();
       if (consentInfo.isConsentFormAvailable && consentInfo.consentStatus == funding.ConsentStatus.REQUIRED_ANDROID) {
         await FlutterFundingChoices.showConsentForm();
@@ -217,6 +242,8 @@ class _MyAppState extends State<MyApp> {
 
       // print("flutter funding choice something");
       FlutterFundingChoices.requestConsentInformation();
+      print("flutter funding choice something");
+
     });
 
 
