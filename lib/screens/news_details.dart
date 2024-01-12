@@ -515,7 +515,8 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 //     : Container(height: 10);
 
                                 if ((index + 1) % 5 == 0) {
-                                  return Container( height: 100, color: Colors.green,);
+                                  return getAd();
+                                  // return Container( height: 100, color: Colors.green,);
                                 } else {
                                   return Container();
                                 }

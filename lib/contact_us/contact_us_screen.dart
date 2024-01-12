@@ -17,6 +17,7 @@ class ContactScreen extends StatefulWidget {
   _ContactScreenState createState() => _ContactScreenState();
 }
 
+
 class _ContactScreenState extends State<ContactScreen> {
   AboutUsBloc? aboutUsBloc;
   FontSizeController? _fontSizeController;
